@@ -1,15 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import SurveyMain from "../components/SurveyMain";
+import NotFound from "../components/NotFound";
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
+      path: '/survey/:id',
+      component: SurveyMain,
+      name: 'SurveyMain'
+    },
+    {
+      path: '/404',
+      component: NotFound,
+      name: 'NotFound'
+    },
   ]
 })

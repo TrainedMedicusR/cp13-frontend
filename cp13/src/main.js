@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import md5 from 'js-md5';
 
 Vue.config.productionTip = false
+Vue.prototype.$md5 = md5;
 
 /* eslint-disable no-new */
 new Vue({
@@ -13,3 +15,4 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
