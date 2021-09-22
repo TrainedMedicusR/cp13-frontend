@@ -1,7 +1,7 @@
 <template>
 
   <div class="container">
-    <div class="questionContents">{{questionContents}}</div>
+    <div class="questionContents"><h1>{{questionContents}}</h1></div>
     <div class = "range">
       <text class="rangeText" id="firstRange">{{firstRange}}</text>
       <text class="rangeText" id = "secondRange">{{secondRange}}</text>
@@ -17,9 +17,7 @@
       <button id="btn7" type="button">7</button>
       <button id="btn8" type="button">8</button>
       <button id="btn9" type="button">9</button>
-
     </div>
-
   </div>
 </template>
 
@@ -31,8 +29,7 @@ export default {
       questionContents: "Please rank the reliability",
       firstRange: "Not reliable",
       secondRange: "Neutral",
-      thirdRange: "Very reliable",
-
+      thirdRange: "Very reliable"
     }
   },
   mounted(){
@@ -84,8 +81,8 @@ export default {
   /*margin-left: 250px;*/
   margin-right: auto;
   margin-left: auto;
-  font-size:100px;
-  color: #EFF2F5;
+  font-size:20px;
+  color: black;
   border-radius: 12px;
   /*-webkit-transition-duration: 0.4s;*/
   /*transition-duration: 0.4s;*/
@@ -144,5 +141,8 @@ export default {
   color: white;
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
+}
+.buttons button {
+  margin-left: 20px;
 }
 </style>

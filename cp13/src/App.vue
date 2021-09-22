@@ -1,17 +1,12 @@
 <template>
 
   <div id="app">
-    <header>
-      <div class="header-inner">
-        <div class="row align-items-center">
-          <div class="col-3">
-            <div class="header-left">
-              <a role="button" @click="goHome" class="logo header-back"><v-icon name="smartphone"></v-icon>Survey Taker</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" role="button" @click="goHome">
+        <img src="./assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        <span>SurveyTaker</span>
+      </a>
+    </nav>
 
     <modal id="allError" v-if="showAllError !== ''" @close="showAllError === ''">
       <h3 slot="header">Error!</h3>
@@ -75,5 +70,15 @@ export default {
 
 <style>
 @import "assets/style.css";
+.navbar-brand img{
+  display: inline-block;
+}
 
+nav {
+  padding-left: 20px;
+}
+
+.navbar-brand span {
+  padding-left: 5px;
+}
 </style>

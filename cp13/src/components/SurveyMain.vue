@@ -1,29 +1,25 @@
 <template>
   <div class="wrapper">
     <hr>
-    <div class = "surveyTitle">
+    <header class = "surveyTitle">
       <h1>{{surveyTitle}}</h1>
-    </div>
-
+      <h2>Question {{counter}}:</h2>
+    </header>
     <drag-and-drop class="container" v-if="counter===1">
-
 
     </drag-and-drop>
 
     <button-question class="container" v-if="counter===2">
 
-
     </button-question>
 
     <likert class="container" v-if="counter===3">
 
-
     </likert>
 
-    <div class="container" v-if="counter===4">
+    <NumberScale class="container" v-if="counter===4">
 
-
-    </div>
+    </NumberScale>
 
 
     <div class="next">
@@ -45,13 +41,14 @@ import {getSurvey} from "../api/getSurvey";
 import {storage,tempStorage} from "../utils/storage";
 import DragAndDrop from "./DragAndDrop";
 import Likert from "./questions/Likert"
+import NumberScale from "./questions/NumberScale";
 
 
 
 
 export default {
   name: 'SurveyMain',
-  components: {ButtonQuestion, DragAndDrop, Likert},
+  components: {ButtonQuestion, DragAndDrop, Likert, NumberScale},
   data () {
     return {
       surveyTitle:null,
@@ -95,6 +92,11 @@ export default {
       // console.log("长度："+qlength)
       if (this.counter < 4){
         this.counter += 1;
+        window.scrollTo({
+          left: 0,
+          top: 0,
+          behavior: 'smooth'
+        })
       } else {
         alert("Thank you for your participation!");
       }
@@ -103,6 +105,11 @@ export default {
     forwardQuestion() {
       if (this.counter > 1) {
         this.counter -= 1;
+        window.scrollTo({
+          left: 0,
+          top: 0,
+          behavior: 'smooth'
+        })
       } else {
         alert("This is the first question")
       }

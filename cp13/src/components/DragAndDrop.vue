@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class = 'container'>
-      <div class = 'qid'>This is question {{id}} !</div>
       <div class = 'question'>
           {{isExpanded ? msg : capitalize(msg)}}
         <button>
