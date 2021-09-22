@@ -11,7 +11,6 @@
           </div>
         </div>
       </div>
-
     </header>
 
     <modal id="allError" v-if="showAllError !== ''" @close="showAllError === ''">
@@ -27,7 +26,6 @@
     </modal>
 
     <router-view/>
-
     <hr>
 
     <footer class="footer">

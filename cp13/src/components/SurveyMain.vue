@@ -2,10 +2,12 @@
   <div class="wrapper">
     <hr>
     <div class = "surveyTitle">
-      <h1>Survey title</h1>
+      <h1>{{surveyTitle}}</h1>
     </div>
+
     <div class="container">
       <div class="ele question">
+        <div class="title">Title</div>
         <div class="picWall">
         </div>
         <hr>
@@ -14,7 +16,7 @@
         </div>
         <div class = "surveyButtons">
           <button class="shareButtons">share</button>
-          <button class="checkButtons">check</button>
+          <button class="checkButtons" @click="submit">check</button>
           <button class="likeButtons">like</button>
           <button class="skipButtons">skip</button>
         </div>
@@ -26,11 +28,14 @@
 <script>
 
 import {getSurvey} from "../api/getSurvey";
+// import {postSurvey} from "../api/postSurvey";
 import storage from "../utils/storage";
+
 export default {
   name: 'SurveyMain',
   data () {
     return {
+      surveyTitle:null,
       quantityListing: null,
       bestListing: null,
       host:location.hostname,
@@ -41,19 +46,24 @@ export default {
   },
   methods: {
     initPage() {
-      const surveyJSON = getSurvey(this.$route.params.id).then(response=>{
+      const resJSON = getSurvey(this.$route.params.id).then(response=>{
         if (response.status === 200){
           let identifier = this.$route.params.id + new Date().getTime()
-          console.log(identifier)
           const hashString = this.$md5(identifier);
           storage.set(this.$route.params.id,hashString);
-          console.log(response.data);
+          const jsonString = response.data
+          console.log(jsonString);
+          this.surveyTitle = jsonString.name;
+
         } else {
           alert("Data Error!");
         }}
       ).catch(e => {
         console.log(e);
       })
+    },
+    submit() {
+      const resJSON = postSurvey()
     }
   }
 }
@@ -62,6 +72,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/bootstrap.css";
+
 body {
   background-color: #EFF2F5;
 }
