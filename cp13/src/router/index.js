@@ -4,7 +4,6 @@ import SurveyMain from "../components/SurveyMain";
 import NotFound from "../components/NotFound";
 import Dropdown from "../components/Dropdown";
 import Likert from "../components/Likert";
-import Likert3 from "../components/Likert3";
 
 
 
