@@ -11,47 +11,27 @@
         </button>
       </div>
       <hr>
-      <h5>Waiting for classification</h5>
-      <hr>
-      <div class='drop-zone'
-           @drop = 'onDrop($event,1)'
-           @dragenter.prevent
-           @dragover.prevent
-      >
-        <div v-for='item in listOne' :key='item.title' class='drag-el' draggable = "true"
-             @dragstart = 'startDrag($event,item)'
-        >
-          {{ item.title }}
-        </div>
 
-      </div>
-      <hr>
-      <h5>This is class 1</h5>
-      <hr>
-      <div class='drop-zone'
-           @drop = 'onDrop($event,2)'
+      <div v-for = 'panel in panels' :key='panel.id' class='drop-zone'
+           @drop = 'onDrop($event,panel.id)'
            @dragenter.prevent
-           @dragover.prevent
-      >
-        <div v-for='item in listTwo' :key='item.title' class='drag-el' draggable="true"
+           @dragover.prevent>
+        <hr>
+        <h5>{{panel.info}}</h5>
+        <div v-for='item in panelListItem(panel.id)' :key='item.title' class='drag-el' draggable="true"
              @dragstart = 'startDrag($event,item)'
         >
           {{ item.title }}
         </div>
       </div>
-      <hr>
-      <h5>This is class 2</h5>
-      <hr>
-      <div class='drop-zone'
-           @drop = 'onDrop($event,3)'
-           @dragenter.prevent
-           @dragover.prevent
-      >
-        <div v-for='item in listThree' :key='item.title' class='drag-el' draggable="true"
-             @dragstart = 'startDrag($event,item)'
-        >
-          {{ item.title }}
-        </div>
+
+      <div class="next">
+        <button class="btn-next btn-sm" v-on:click="share('share')">
+          <i class="glyphicon glyphicon-arrow-left"></i> Prev Question
+        </button>
+        <button class="btn-next btn-sm" v-on:click="share('share')">
+          Next Question <i class="glyphicon glyphicon-arrow-right"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -70,23 +50,38 @@ export default {
       id:100,
       isExpanded:false,
       msg:"dcfvgbhnjrcvcrxcdtfvgybgyvtrctfvgtbynuj",
+
+      panels: [
+        {
+          info: "Waiting for classification",
+          id: 0
+        },
+        {
+          info: "This is class 1",
+          id: 1
+        },
+        {
+          info: "This is class 2",
+          id: 2
+        }
+      ],
       items: [
         {
           id: 0,
           title: 'Item A',
-          list: 1
+          list: 0
         },
         {
           id: 1,
           title: 'Item B',
-          list: 1
+          list: 0
 
         },
 
         {
           id: 2,
           title: 'Item C',
-          list: 1
+          list: 0
         }]
     }
   },
@@ -95,17 +90,6 @@ export default {
     this.initPage()
   },
 
-  computed: {
-    listOne () {
-      return this.items.filter(item => item.list === 1)
-    },
-    listTwo () {
-      return this.items.filter(item => item.list === 2)
-    },
-    listThree () {
-      return this.items.filter(item => item.list === 3)
-    }
-  },
 
   methods: {
     initPage() {
@@ -147,6 +131,10 @@ export default {
       const itemID = evt.dataTransfer.getData('itemID')
       const item = this.items.find(item => item.id == itemID)
       item.list = list
+    },
+
+    panelListItem: function (value) {
+      return this.items.filter(item => item.list === value)
     }
   }
 
@@ -154,14 +142,7 @@ export default {
 </script>
 
 <style scoped>
-  /*.container {*/
-  /*  display: flex;*/
-  /*  flex-wrap: wrap;*/
-  /*  justify-content: space-between;*/
-  /*  width: 800px;*/
-  /*  margin: 0 auto;*/
-  /*  padding: 20px;*/
-  /*}*/
+
   .qid{
     font-family: Times New Roman,serif;
     font-size: 30px;
@@ -188,5 +169,8 @@ export default {
     background-color: #fff;
     margin-bottom: 10px;
     padding: 5px;
+  }
+  .next {
+    text-align: center;
   }
 </style>
