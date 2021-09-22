@@ -241,14 +241,6 @@ height: 25px;
 left: 658px;
 top: 859px;
 
-/* font-family: Roboto;
-font-style: normal;
-font-weight: normal;
-font-size: 18px;
-line-height: 21px;
-display: flex;
-align-items: center;
-text-align: center; */
 color: #FFFFFF;
 
 }
@@ -298,8 +290,6 @@ fieldset[disabled] .btn-custom:active,
 .btn-custom.disabled.active,
 .btn-custom[disabled].active,
 fieldset[disabled] .btn-custom.active{
-  /* background-color: #B4CDDE;
-  border-color: #B4CDDE; */
   -webkit-box-shadow: none;
   box-shadow: none;
   background-color: #3960e0;
@@ -326,9 +316,6 @@ fieldset[disabled] .btn-custom.active{
 .btn-skip.active {
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  /* background-color: #455ca7;
-  border-color: #0b1e5c; */
-  /* color: #FFFFFF; */
 }
 .btn-skip.disabled,
 .btn-skip[disabled],
