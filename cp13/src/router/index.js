@@ -21,16 +21,6 @@ export default new Router({
       path: '/404',
       component: NotFound,
       name: 'NotFound'
-    },
-    {
-      path: '/Dropdown',
-      component: Dropdown,
-      name: 'Dropdown'
-    },
-    {
-      path: '/Likert',
-      component: Likert,
-      name: 'Likert'
     }
   ]
 })
