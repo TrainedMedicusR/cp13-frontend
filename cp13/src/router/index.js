@@ -32,11 +32,6 @@ export default new Router({
       path: '/Likert',
       component: Likert,
       name: 'Likert'
-    },
-    {
-      path: '/Likert3',
-      component: Likert3,
-      name: 'Likert3'
     }
   ]
 })

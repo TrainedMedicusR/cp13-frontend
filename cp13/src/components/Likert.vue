@@ -1,111 +1,197 @@
 <template>
         <div class = "LikertMatrix">
-            <form class="topLabel">
-            <header class="form-header">  
-            </header> 
-            <ul>  
-                <li id="form-field" class="likert">
-                    <table cellspacing="0">
-                        <caption id="title">
-                        How important is the factor? Rank your score 1 out of 10.
-                        </caption>
-                        <thead>
-                             <th>&nbsp;</th>
-                            <td>{{column1}}</td>
-                            <td>{{column2}}</td>
-                            <td>{{column3}}</td>
-                            <td>{{column4}}</td>
-                            <td>{{column5}}</td>           
-                        </thead>
-                        
-                        <tbody>
-                          <tr v-for="item in rows" :key="item.id">
-                            <th>
-                            <label>{{item.id}}</label>
-                            </th>
-                            <td title="Extreme">
-                            <input id="Field1_1" name="Field1" type= "radio" v-bind:value= "Extreme" v-model= "picked">
-                            </td>
-                            <td title="Very">
-                            <input id="Field1_2" name="Field2" type= "radio" v-bind:value= "Very" v-model= "picked">
-                            </td>
-                            <td title="Slightly">
-                            <input id="Field1_3" name="Field3" type= "radio" v-model= "picked" v-bind:value= "slightly">
-                            </td>
-                            <td title="Not At All">
-                            <input id="Field1_4" name="Field4" type= "radio"  v-model= "picked" v-bind:value= "Not">
-                            </td>
-                            <th>
-                              <td title="Increase or Decrease">
-                                <div>
-                                <select id="Field3_5" name="Field104" class="field select medium" tabindex="31" > 
-                                  <option value="Neither increase nor decrease" selected="selected">
-                                      {{option1}}
-                                  </option>
-                                  <option value="Increase" >
-                                      {{option2}}
-                                  </option>
-                                  <option value="Decrease" >
-                                      {{option3}}
-                                  </option>
-                                </select>
-                                </div>
-                              </td>
-                            </th>
-                          </tr>
-                          <tr>
-                          <li id="form-field-9">
-                            <td>
-                                <label class="desc" id="title117" for="Field117">
-                                    {{textfield}}
-                                </label>
-                                <div>
-                                    <input id="Field" name="Field" type="url" class="field text medium" value="" maxlength="255" tabindex="36" /> 
-                                </div>
-                              </td>
-                             </li>
-                                <td title="Extrme">
-                                <input id="Field7_1" name="Field7" type="radio" value="Extreme" />
-                                </td>
-                                <td title="Very">
-                                <input id="Field7_2" name="Field7" type="radio" value="Very" />                  
-                                </td>
-                                <td title="Slightly">
-                                <input id="Field7_3" name="Field7" type="radio" value="Slightly" />
-                                </td>
-                                <td title="Not At All">
-                                <input id="Field7_4" name="Field7" type="radio" value="Not At All" />
-                                </td>
-                                <td>
-                                <div>
-                                <select v-model="selected">
-                                  <option value="Neither increase nor decrease">
-                                      {{option1}}
-                                  </option>
-                                  <option value="Increase" >
-                                      {{option2}}
-                                  </option>
-                                  <option value="Decrease" >
-                                      {{option3}}
-                                  </option>
-                                </select>
-                                <span>Selected: {{ selected }}</span>
-                                </div> 
-                                </td>
-                          </tr>
-                        </tbody>
-                    </table>
+    <li id="form-field-3" class="likert">
+        <table cellspacing="0">
+            <caption id= "title3">
+                Rank from 1 to 10.
+            </caption>
+            <thead>
+            
+                <th>&nbsp;</th>
+                <td>{{column1}}</td>
+                <td>{{column2}}</td>
+                <td>{{column3}}</td>
+                <td>{{column4}}</td>
+                <td>{{column5}}</td>
+            
+            </thead>
+            <tbody>
+
+            <tr class="statement1">
+            <th>
+                <label>
+                    {{row1}}
+                </label>
+            </th>
+
+                <li v-for="item in items" :key="item.message">
+                    <td title= item.value>
+                    <input id="Field1_1" name="Field1" type="radio" value= item.value />
+                    </td>
                 </li>
-                            
-            </ul>
-                            
-            </form>
+
+                <td title="Extrme">
+                <input id="Field1_1" name="Field1" type="radio" value="Extreme" />
+                </td>
+                <td title="Very">
+                <input id="Field1_2" name="Field1" type="radio" value="Very" />                  
+                </td>
+                <td title="Slightly">
+                <input id="Field1_3" name="Field1" type="radio" value="Slightly" />
+                </td>
+                <td title="Not At All">
+                <input id="Field1_4" name="Field1" type="radio" value="Not At All" />
+                <td>
+                <div>
+                    <select v-model="selected1">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
+                    </option>
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected1 }}</span>
+                </td>
+            </tr>
+            
+
+            <tr class="statement2">
+                
+                <th>
+                <label for="Field2">{{row2}}</label>
+                </th>
+                <td title="Extrme">
+                <input id="Field2_1" name="Field2" type="radio" value="Extreme" />
+                </td>
+                <td title="Very">
+                <input id="Field2_2" name="Field2" type="radio" value="Very" />
+                </td>
+                <td title="Slightly">
+                <input id="Field2_3" name="Field2" type="radio" value="Slightly" />
+                </td>
+                <td title="Not At All">
+                <input id="Field2_4" name="Field2" type="radio" value="not" />
+                </td>
+                <td>
+                <div>
+                    <select v-model="selected2">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
+                    </option>
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected2 }}</span>
+                </td>
+                </tr>
+
+                
+                <tr class="statement3">
+                <th><label for="Field3">{{row3}}</label></th>
+
+                <td title="Extreme">
+                <input id="Field3_1" name="Field3" type="radio" value="Extreme" />
+                
+
+                </td>
+                <td title="Very">
+                <input id="Field3_2" name="Field3" type="radio" value="Very" />
+
+                </td>
+                <td title="Slightly">
+                <input id="Field3_3" name="Field3" type="radio" value="Slightly" />
+
+                </td>
+                <td title="Not At All">
+                <input id="Field3_4" name="Field3" type="radio" value="Not At All!" />
+                </td>
+
+                <td>
+                <div>
+                
+                    <select v-model="selected3">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
+                    </option>
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected3 }}</span>
+                </td>
+            </tr>
+
+
+            <tr class="statement4">
+                <th>
+                <label for="Field4">{{row4}}</label>
+                </th>
+                <td title="Extreme">
+                <input id="Field4_1" name="Field6" type="radio" value="Extreme" />
+                </td>
+                <td title="Very">
+                <input id="Field4_2" name="Field6" type="radio" value="Very" />
+                </td>
+                <td title="Slightly">
+                <input id="Field4_3" name="Field6" type="radio" value="Slightly" />
+                </td>
+                <td title="Not At All">
+                <input id="Field4_4" name="Field6" type="radio" value="Not At All" />
+                </td>
+
+                <td>
+                <div>
+                    <div>
+                    <select v-model="selected4">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
+                    </option>
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected4 }}</span>
+                </div> 
+                </td>
+            </tr>
+
+            <tr class="statement5">
+                <th>
+                <label for="Field5">{{textfield}}</label>
+                <div>
+                    <input id="Field" name="Field" type="url" class="field text medium" value="" maxlength="25" tabindex="36" /> 
+                </div>
+                </th>
+                <td title= "Extreme">
+                <input id="Field5_1" name="Field8" type="radio" value= title />
+                </td>
+                <td title="Very">
+                <input id="Field5_2" name="Field8" type="radio" value= title />
+                </td>
+                <td title="Slightly">
+                <input id="Field5_3" name="Field8" type="radio" value= title/>
+                </td>
+                <td title="Not At All">
+                <input id="Field5_4" name="Field8" type="radio" value= title />
+                </td>
+
+                <td>
+                <div>
+                    <select v-model="selected5">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
+                    </option>
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected5 }}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </li>
         </div>
+
 </template>
+
 
 <script>
 import {getSurvey} from "../api/getSurvey";
 import storage from "../utils/storage";
+
 export default {
   name: 'SurveyMain',
   data () {
@@ -114,25 +200,33 @@ export default {
       bestListing: null,
       host:location.hostname,
 
-      selected: "Neither",
+      selected1: "Neither increase nor decrease",
+      selected2: "Neither increase nor decrease",
+      selected3: "Neither increase nor decrease",
+      selected4: "Neither increase nor decrease",
+      selected5: "Neither increase nor decrease",
       
       column1:"Extreme Important",
       column2:"Very Important",
       column3:"Slightly Important",
       column4:"Not Important",
       column5:"Increase/decrease credibility",
+      columns:[{name:"Extreme"},{name: "Very"}, {name:"Slightly"}, {name:"Not at all"}, {name:"increase or decrease"}],
       //rows:[{name:"Your prior knowledge"},{name: "News source"}, {name:"Headline claim"}, {name:"Image associated with post"}],
       textfield:"others",
       options:[{value:"Neither increase nor decrease"}, {value:"Increase"}, {value:"Decrease"}],
-      option1:"Neither",
+      option1:"Neither increase nor decrease",
       option2:"Increase",
       option3:"Decrease",
-      rows: [
-      { id: "Your prior knowledge", type1: "radio", type2: 'radio', type3:'radio', type4:'radio', type5:'radio' },
-      { id: "News source",  type1: "radio", type2: 'radio', type3:'radio', type4:'radio', type5:'radio' },
-      { id: "Headline claim", type1: "radio", type2: 'radio', type3:'radio', type4:'radio', type5:'radio' },
-      { id: "Image associated with post",  type1: "radio", type2: 'radio', type3:'radio', type4:'radio', type5:'radio' },
-    ]
+      row1:"Your prior knowledge",
+      row2:"News source",
+      row3: "Headline claim",
+      row4:"Image associated with post",
+      options: [
+        { text: 'Neither increase or decrease', value: 'Neither' },
+        { text: 'Increase', value: 'Increase' },
+        { text: 'Decrease', value: 'Decrease' }
+      ],
     }
   },
   mounted(){
@@ -154,7 +248,8 @@ export default {
         console.log(e);
       })
     }
-  }
+  },
+
 }
 
 
@@ -316,7 +411,6 @@ label.choice {
   text-align: center;
   padding: 0.25em;
   width: 100px;
-  height: 1%;
 }
 .likert thead td {
   font-size: 85%;
