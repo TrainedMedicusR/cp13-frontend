@@ -15,10 +15,10 @@
 
     </button-question>
 
-    <div class="container" v-if="counter===3">
+    <likert class="container" v-if="counter===3">
 
 
-    </div>
+    </likert>
 
     <div class="container" v-if="counter===4">
 
@@ -44,13 +44,14 @@ import {getSurvey} from "../api/getSurvey";
 // import {postSurvey} from "../api/postSurvey";
 import {storage,tempStorage} from "../utils/storage";
 import DragAndDrop from "./DragAndDrop";
+import Likert from "./questions/Likert"
 
 
 
 
 export default {
   name: 'SurveyMain',
-  components: {ButtonQuestion, DragAndDrop},
+  components: {ButtonQuestion, DragAndDrop, Likert},
   data () {
     return {
       surveyTitle:null,

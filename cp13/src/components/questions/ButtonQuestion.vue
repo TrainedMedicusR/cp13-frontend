@@ -56,16 +56,6 @@
             Twitter
           </button>
           <br>
-          <br>
-          <br>
-          <div class="next">
-              <button class="btn-next btn-sm" v-on:click="pre('prev question')">
-                  <i class="glyphicon glyphicon-arrow-left"></i> Prev Question
-              </button>
-              <button class="btn-next btn-sm" v-on:click="next('next question')">
-                    Next Question <i class="glyphicon glyphicon-arrow-right"></i>
-              </button>
-          </div>
         </div>
 
       </div>
@@ -86,9 +76,6 @@ export default {
       bestListing: null,
       host:location.hostname,
     }
-  },
-  mounted(){
-    this.initPage();
   },
   methods: {
     initPage() {

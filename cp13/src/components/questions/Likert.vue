@@ -6,14 +6,14 @@
                 Rank from 1 to 10.
             </caption>
             <thead>
-            
+
                 <th>&nbsp;</th>
                 <td>{{column1}}</td>
                 <td>{{column2}}</td>
                 <td>{{column3}}</td>
                 <td>{{column4}}</td>
                 <td>{{column5}}</td>
-            
+
             </thead>
             <tbody>
 
@@ -34,7 +34,7 @@
                 <input id="Field1_1" name="Field1" type="radio" value="Extreme" />
                 </td>
                 <td title="Very">
-                <input id="Field1_2" name="Field1" type="radio" value="Very" />                  
+                <input id="Field1_2" name="Field1" type="radio" value="Very" />
                 </td>
                 <td title="Slightly">
                 <input id="Field1_3" name="Field1" type="radio" value="Slightly" />
@@ -52,10 +52,10 @@
                     <span>Selected: {{ selected1 }}</span>
                 </td>
             </tr>
-            
+
 
             <tr class="statement2">
-                
+
                 <th>
                 <label for="Field2">{{row2}}</label>
                 </th>
@@ -83,13 +83,13 @@
                 </td>
                 </tr>
 
-                
+
                 <tr class="statement3">
                 <th><label for="Field3">{{row3}}</label></th>
 
                 <td title="Extreme">
                 <input id="Field3_1" name="Field3" type="radio" value="Extreme" />
-                
+
 
                 </td>
                 <td title="Very">
@@ -106,7 +106,7 @@
 
                 <td>
                 <div>
-                
+
                     <select v-model="selected3">
                     <option v-for="option in options" v-bind:key="option.value">
                       {{ option.text }}
@@ -145,7 +145,7 @@
                     </select>
                     </div>
                     <span>Selected: {{ selected4 }}</span>
-                </div> 
+                </div>
                 </td>
             </tr>
 
@@ -153,7 +153,7 @@
                 <th>
                 <label for="Field5">{{textfield}}</label>
                 <div>
-                    <input id="Field" name="Field" type="url" class="field text medium" value="" maxlength="25" tabindex="36" /> 
+                    <input id="Field" name="Field" type="url" class="field text medium" value="" maxlength="25" tabindex="36" />
                 </div>
                 </th>
                 <td title= "Extreme">
@@ -205,7 +205,7 @@ export default {
       selected3: "Neither increase nor decrease",
       selected4: "Neither increase nor decrease",
       selected5: "Neither increase nor decrease",
-      
+
       column1:"Extreme Important",
       column2:"Very Important",
       column3:"Slightly Important",
@@ -214,7 +214,6 @@ export default {
       columns:[{name:"Extreme"},{name: "Very"}, {name:"Slightly"}, {name:"Not at all"}, {name:"increase or decrease"}],
       //rows:[{name:"Your prior knowledge"},{name: "News source"}, {name:"Headline claim"}, {name:"Image associated with post"}],
       textfield:"others",
-      options:[{value:"Neither increase nor decrease"}, {value:"Increase"}, {value:"Decrease"}],
       option1:"Neither increase nor decrease",
       option2:"Increase",
       option3:"Decrease",
@@ -228,9 +227,6 @@ export default {
         { text: 'Decrease', value: 'Decrease' }
       ],
     }
-  },
-  mounted(){
-    this.initPage();
   },
   methods: {
     initPage() {
@@ -370,7 +366,7 @@ fieldset {
   padding: 0;
 }
 label.desc,
-legend { 
+legend {
   font-weight: bold;
   color: #222;
   padding: 0 0 0.15em 0;
@@ -417,7 +413,7 @@ label.choice {
   padding: 5px 6px;
 }
 .likert th,
-.likert td { 
+.likert td {
   border-bottom: 1px solid #dedede;
 }
 .likert tbody th {
@@ -436,7 +432,7 @@ label.choice {
 .likert tbody tr:hover th {
   background-color:#FFFFCF;
 }
-form li.section {  
+form li.section {
   padding: 1em 0 0 0;
 }
 form li.section h3 {

@@ -3,9 +3,9 @@
     <hr>
     <div class = "drop">
           <dropdown class="my-dropdown-toggle"
-          :options="arrayOfObjects" 
-          :selected="object" 
-          v-on:updateOption="methodToRunOnSelect" 
+          :options="arrayOfObjects"
+          :selected="object"
+          v-on:updateOption="methodToRunOnSelect"
           :placeholder="'Select an Item'"
           :closeOnOutsideClick="boolean">
         </dropdown>
@@ -21,7 +21,7 @@
         <div class = "shareNumber">
           <h3>2500 people liked or shared this.</h3>
         </div>
-        
+
         <div class = "surveyButtons">
           <button class="shareButtons">share</button>
           <button class="checkButtons">check</button>
@@ -60,9 +60,6 @@ export default {
    components: {
             'dropdown': dropdown,
     },
-  mounted(){
-    this.initPage();
-  },
   methods: {
     initPage() {
       const surveyJSON = getSurvey(this.$route.params.id).then(response=>{
@@ -82,7 +79,7 @@ export default {
     methodToRunOnSelect(payload) {
           this.object = payload;
           alert('Hello ' + payload.name + '!')
-      
+
     }
   }
 }

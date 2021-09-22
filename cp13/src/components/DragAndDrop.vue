@@ -24,15 +24,6 @@
           {{ item.title }}
         </div>
       </div>
-
-      <div class="next">
-        <button class="btn-next btn-sm" v-on:click="share('share')">
-          <i class="glyphicon glyphicon-arrow-left"></i> Prev Question
-        </button>
-        <button class="btn-next btn-sm" v-on:click="share('share')">
-          Next Question <i class="glyphicon glyphicon-arrow-right"></i>
-        </button>
-      </div>
     </div>
   </div>
 </template>
@@ -84,10 +75,6 @@ export default {
           list: 0
         }]
     }
-  },
-  mounted() {
-
-    this.initPage()
   },
 
 
