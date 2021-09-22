@@ -5,39 +5,60 @@
       <h1>{{surveyTitle}}</h1>
     </div>
 
-    <div class="container">
-      <div class="ele question">
-        <div class="title">Title</div>
-        <div class="picWall">
-        </div>
-        <hr>
-        <div class = "shareNumber">
-          <h3>2500 people liked or shared this.</h3>
-        </div>
-        <div class = "surveyButtons">
-          <button class="shareButtons">share</button>
-          <button class="checkButtons" @click="submit">check</button>
-          <button class="likeButtons">like</button>
-          <button class="skipButtons">skip</button>
-        </div>
-      </div>
+    <drag-and-drop class="container" v-if="counter===1">
+
+
+    </drag-and-drop>
+
+    <button-question class="container" v-if="counter===2">
+
+
+    </button-question>
+
+    <div class="container" v-if="counter===3">
+
+
     </div>
+
+    <div class="container" v-if="counter===4">
+
+
+    </div>
+
+
+    <div class="next">
+      <button class="btn-next btn-sm" v-on:click="forwardQuestion">
+        <i class="glyphicon glyphicon-arrow-left"></i> Prev Question
+      </button>
+      <button class="btn-next btn-sm" v-on:click="nextQuestion()">
+        Next Question <i class="glyphicon glyphicon-arrow-right"></i>
+      </button>
+    </div>
+
   </div>
 </template>
 
 <script>
-
+import ButtonQuestion from "./questions/ButtonQuestion";
 import {getSurvey} from "../api/getSurvey";
 // import {postSurvey} from "../api/postSurvey";
-import storage from "../utils/storage";
+import {storage,tempStorage} from "../utils/storage";
+import DragAndDrop from "./DragAndDrop";
+
+
+
 
 export default {
   name: 'SurveyMain',
+  components: {ButtonQuestion, DragAndDrop},
   data () {
     return {
       surveyTitle:null,
-      quantityListing: null,
-      bestListing: null,
+      counter:1,
+      MCQ:false,
+      SCALE:false,
+      BTN:false,
+      DRAG:false,
       host:location.hostname,
     }
   },
@@ -54,7 +75,8 @@ export default {
           const jsonString = response.data
           console.log(jsonString);
           this.surveyTitle = jsonString.name;
-
+          //Need Optimisation
+          tempStorage.set(this.$route.params.id,jsonString.block)
         } else {
           alert("Data Error!");
         }}
@@ -63,7 +85,26 @@ export default {
       })
     },
     submit() {
-      const resJSON = postSurvey()
+      alert("Submit Success!")
+    },
+    nextQuestion() {
+      console.log(tempStorage.get(this.$route.params.id))
+      // let qList = JSON.parse(tempStorage.get(this.$route.params.id)).get(0);
+      // let qlength = qList.length;
+      // console.log("长度："+qlength)
+      if (this.counter < 4){
+        this.counter += 1;
+      } else {
+        alert("Thank you for your participation!");
+      }
+
+    },
+    forwardQuestion() {
+      if (this.counter > 1) {
+        this.counter -= 1;
+      } else {
+        alert("This is the first question")
+      }
     }
   }
 }
@@ -72,7 +113,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/bootstrap.css";
+@import "../assets/css/bootstrap.css";
 
 body {
   background-color: #EFF2F5;
@@ -99,31 +140,10 @@ body {
   padding: 40px;
 }
 
-.ele {
-  width: 40%;
-  height: 400px;
-}
-
-.ele:nth-child(3n+1) {
-  width: 100%;
-}
-
-
-
-.question{
-  width: 60%;
-  background-color: white;
-  text-align: center;
-}
-
-
-.picWall{
-  width: 80%;
-  height: 230px;
-  border: 4px solid;
-  /*border-image: linear-gradient(45deg, turquoise, greenyellow) 1;*/
-  margin: 20px auto;
-  overflow: hidden;
-  text-align: left;
+.next{
+  margin:0;padding:0;
+  text-align:justify;
+  text-align-last:justify;
+  line-height:0;
 }
 </style>

@@ -61,13 +61,13 @@
           <div class="next">
               <button class="btn-next btn-sm" v-on:click="pre('prev question')">
                   <i class="glyphicon glyphicon-arrow-left"></i> Prev Question
-              </button> 
+              </button>
               <button class="btn-next btn-sm" v-on:click="next('next question')">
                     Next Question <i class="glyphicon glyphicon-arrow-right"></i>
-              </button>   
+              </button>
           </div>
         </div>
-        
+
       </div>
 
     </div>
@@ -79,7 +79,7 @@
 import {getSurvey} from "../../api/getSurvey";
 import storage from "../../utils/storage";
 export default {
-  name: 'Button',
+  name: 'ButtonQuestion',
   data () {
     return {
       quantityListing: null,
