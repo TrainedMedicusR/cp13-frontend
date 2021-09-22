@@ -23,6 +23,13 @@
                     {{row1}}
                 </label>
             </th>
+
+                <li v-for="item in items" :key="item.message">
+                    <td title= item.value>
+                    <input id="Field1_1" name="Field1" type="radio" value= item.value />
+                    </td>
+                </li>
+
                 <td title="Extrme">
                 <input id="Field1_1" name="Field1" type="radio" value="Extreme" />
                 </td>
@@ -34,27 +41,21 @@
                 </td>
                 <td title="Not At All">
                 <input id="Field1_4" name="Field1" type="radio" value="Not At All" />
-                </td>
                 <td>
                 <div>
-                <select v-model="selected1">
-                    <option value="Neither ncrease not decrease increase nor decrease">
-                        {{option1}}
+                    <select v-model="selected1">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
                     </option>
-                    <option value="Increase" >
-                        {{option2}}
-                    </option>
-                    <option value="Decrease" >
-                        {{option3}}
-                    </option>
-                </select>
-                <span>Selected: {{ selected1 }}</span>
-                </div> 
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected1 }}</span>
                 </td>
             </tr>
             
 
             <tr class="statement2">
+                
                 <th>
                 <label for="Field2">{{row2}}</label>
                 </th>
@@ -72,27 +73,23 @@
                 </td>
                 <td>
                 <div>
-                <select v-model="selected2">
-                    <option value="Neither ncrease not decrease increase nor decrease">
-                        {{option1}}
+                    <select v-model="selected2">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
                     </option>
-                    <option value="Increase" >
-                        {{option2}}
-                    </option>
-                    <option value="Decrease" >
-                        {{option3}}
-                    </option>
-                </select>
-                <span>Selected: {{ selected2 }}</span>
-                </div> 
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected2 }}</span>
                 </td>
                 </tr>
 
                 
                 <tr class="statement3">
                 <th><label for="Field3">{{row3}}</label></th>
+
                 <td title="Extreme">
                 <input id="Field3_1" name="Field3" type="radio" value="Extreme" />
+                
 
                 </td>
                 <td title="Very">
@@ -109,19 +106,14 @@
 
                 <td>
                 <div>
-                <select v-model="selected3">
-                    <option value="Neither ncrease not decrease increase nor decrease">
-                        {{option1}}
+                
+                    <select v-model="selected3">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
                     </option>
-                    <option value="Increase" >
-                        {{option2}}
-                    </option>
-                    <option value="Decrease" >
-                        {{option3}}
-                    </option>
-                </select>
-                <span>Selected: {{ selected3 }}</span>
-                </div> 
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected3 }}</span>
                 </td>
             </tr>
 
@@ -145,18 +137,14 @@
 
                 <td>
                 <div>
-                <select v-model="selected4">
-                    <option value="Neither ncrease not decrease increase nor decrease">
-                        {{option1}}
+                    <div>
+                    <select v-model="selected4">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
                     </option>
-                    <option value="Increase" >
-                        {{option2}}
-                    </option>
-                    <option value="Decrease" >
-                        {{option3}}
-                    </option>
-                </select>
-                <span>Selected: {{ selected4 }}</span>
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected4 }}</span>
                 </div> 
                 </td>
             </tr>
@@ -169,45 +157,41 @@
                 </div>
                 </th>
                 <td title= "Extreme">
-                <input id="Field5_1" name="Field8" type="radio" value="Extreme" />
+                <input id="Field5_1" name="Field8" type="radio" value= title />
                 </td>
                 <td title="Very">
-                <input id="Field5_2" name="Field8" type="radio" value="Very" />
+                <input id="Field5_2" name="Field8" type="radio" value= title />
                 </td>
                 <td title="Slightly">
-                <input id="Field5_3" name="Field8" type="radio" value="Slightly" />
+                <input id="Field5_3" name="Field8" type="radio" value= title/>
                 </td>
                 <td title="Not At All">
-                <input id="Field5_4" name="Field8" type="radio" value="Not At All" />
+                <input id="Field5_4" name="Field8" type="radio" value= title />
                 </td>
 
                 <td>
                 <div>
-                <select v-model="selected5" >
-                    <option value="Neither ncrease nor decrease">
-                        {{option1}}
+                    <select v-model="selected5">
+                    <option v-for="option in options" v-bind:key="option.value">
+                      {{ option.text }}
                     </option>
-                    <option value="Increase" >
-                        {{option2}}
-                    </option>
-                    <option value="Decrease" >
-                        {{option3}}
-                    </option>
-                </select>
-                <span>Selected: {{ selected5 }}</span>
-                </div> 
+                    </select>
+                    </div>
+                    <span>Selected: {{ selected5 }}</span>
                 </td>
             </tr>
             </tbody>
         </table>
         </li>
         </div>
+
 </template>
 
 
 <script>
 import {getSurvey} from "../api/getSurvey";
 import storage from "../utils/storage";
+
 export default {
   name: 'SurveyMain',
   data () {
@@ -227,6 +211,7 @@ export default {
       column3:"Slightly Important",
       column4:"Not Important",
       column5:"Increase/decrease credibility",
+      columns:[{name:"Extreme"},{name: "Very"}, {name:"Slightly"}, {name:"Not at all"}, {name:"increase or decrease"}],
       //rows:[{name:"Your prior knowledge"},{name: "News source"}, {name:"Headline claim"}, {name:"Image associated with post"}],
       textfield:"others",
       options:[{value:"Neither increase nor decrease"}, {value:"Increase"}, {value:"Decrease"}],
@@ -236,7 +221,12 @@ export default {
       row1:"Your prior knowledge",
       row2:"News source",
       row3: "Headline claim",
-      row4:"Image associated with post"
+      row4:"Image associated with post",
+      options: [
+        { text: 'Neither increase or decrease', value: 'Neither' },
+        { text: 'Increase', value: 'Increase' },
+        { text: 'Decrease', value: 'Decrease' }
+      ],
     }
   },
   mounted(){

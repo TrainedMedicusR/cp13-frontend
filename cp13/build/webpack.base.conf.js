@@ -11,13 +11,6 @@ function resolve (dir) {
 var webpack=require('webpack');
 
 module.exports = {
-  plugins: [  
-    new webpack.ProvidePlugin({  
-      $:"jquery",  
-      jQuery:"jquery",  
-      "windows.jQuery":"jquery"  
-    })  
-  ],
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'
