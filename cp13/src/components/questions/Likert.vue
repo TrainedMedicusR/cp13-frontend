@@ -1,7 +1,7 @@
 <template>
-        <div class = "LikertMatrix">
+   <div class = "LikertMatrix">
     <li id="form-field-3" class="likert">
-        <table cellspacing="0">
+        <table>
             <caption id= "title3">
                 Rank from 1 to 10.
             </caption>
@@ -24,12 +24,6 @@
                 </label>
             </th>
 
-                <li v-for="item in items" :key="item.message">
-                    <td title= item.value>
-                    <input id="Field1_1" name="Field1" type="radio" value= item.value />
-                    </td>
-                </li>
-
                 <td title="Extrme">
                 <input id="Field1_1" name="Field1" type="radio" value="Extreme" />
                 </td>
@@ -41,7 +35,7 @@
                 </td>
                 <td title="Not At All">
                 <input id="Field1_4" name="Field1" type="radio" value="Not At All" />
-                <td>
+                </td>
                 <div>
                     <select v-model="selected1">
                     <option v-for="option in options" v-bind:key="option.value">
@@ -50,7 +44,6 @@
                     </select>
                     </div>
                     <span>Selected: {{ selected1 }}</span>
-                </td>
             </tr>
 
 
@@ -186,6 +179,7 @@
         </div>
 
 </template>
+
 
 
 <script>
