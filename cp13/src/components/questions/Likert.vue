@@ -36,14 +36,17 @@
                 <td title="Not At All">
                 <input id="Field1_4" name="Field1" type="radio" value="Not At All" />
                 </td>
+                <td>
                 <div>
                     <select v-model="selected1">
                     <option v-for="option in options" v-bind:key="option.value">
                       {{ option.text }}
                     </option>
                     </select>
-                    </div>
+                 </div>
+                </td>
                     <span>Selected: {{ selected1 }}</span>
+                
             </tr>
             
 
