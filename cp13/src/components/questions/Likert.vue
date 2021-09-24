@@ -11,7 +11,8 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item) in tableData" :key="item.openId">
-                        <td v-for="(val,index) in tableHead" :key="index">                           
+                        <td v-for="(val,index) in tableHead" :key="index">  
+                                             
                             <div v-if="item[val.key]=='radio1'">
                                 <input id="Field1_1" name="Field1" type="radio" value= val.key />
                             </div>
@@ -27,8 +28,17 @@
                             <div v-else-if="item[val.key]=='radio5'">
                                 <input id="Field5_1" name="Field5" type="radio" value= val.key />
                             </div>
-                            <div v-else>{{item[val.key]}}</div>
+
+                            <div v-else>
+                              <div v-if= "val.key== 'category'">
+                                <div v-if="item[val.key]=='Others'">
+                                  {{item[val.key]}}<input id="Field6_1" name="Field6" type="url" class="field text medium" value="" maxlength="25" tabindex="36" /> 
+                                </div>
+                                <div v-else> {{item[val.key]}} </div>
+                              </div>
+                            </div>
                         </td>
+                        
                         <td class = "selector">
                         <div>
                             <select>
@@ -107,10 +117,6 @@ export default {
 </script>
 
 <style scoped>
-
-.tableList{
-    width: 100%;
-}
  
 .list{
   width: 98%;
