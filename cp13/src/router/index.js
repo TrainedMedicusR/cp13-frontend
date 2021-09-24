@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import SurveyMain from "../components/SurveyMain";
 import NotFound from "../components/NotFound";
-
+import Dropdown from "../components/questions/Dropdown";
+import Likert from "../components/questions/Likert";
 
 
 
@@ -20,6 +21,16 @@ export default new Router({
       path: '/404',
       component: NotFound,
       name: 'NotFound'
+    },
+    {
+      path: '/Dropdown',
+      component: Dropdown,
+      name: 'Dropdown'
+    },
+    {
+      path: '/Likert',
+      component: Likert,
+      name: 'Likert'
     }
   ]
 })
