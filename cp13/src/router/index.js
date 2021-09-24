@@ -2,8 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import SurveyMain from "../components/SurveyMain";
 import NotFound from "../components/NotFound";
-import Likert from "../components/questions/Likert";
-import Dropdown from "../components/questions/Dropdown";
+
 
 
 
