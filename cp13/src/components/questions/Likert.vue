@@ -1,187 +1,30 @@
 <template>
-   <div class = "LikertMatrix">
-    <li id="form-field-3" class="likert">
-        <table>
-            <caption id= "title3">
-                Rank from 1 to 10.
-            </caption>
-            <thead>
-            
-                <th>&nbsp;</th>
-                <td>{{column1}}</td>
-                <td>{{column2}}</td>
-                <td>{{column3}}</td>
-                <td>{{column4}}</td>
-                <td>{{column5}}</td>
-            
-            </thead>
-            <tbody>
-
-            <tr class="statement1">
-            <th>
-                <label>
-                    {{row1}}
-                </label>
-            </th>
-
-                <td title="Extrme">
-                <input id="Field1_1" name="Field1" type="radio" value="Extreme" />
-                </td>
-                <td title="Very">
-                <input id="Field1_2" name="Field1" type="radio" value="Very" />                  
-                </td>
-                <td title="Slightly">
-                <input id="Field1_3" name="Field1" type="radio" value="Slightly" />
-                </td>
-                <td title="Not At All">
-                <input id="Field1_4" name="Field1" type="radio" value="Not At All" />
-                </td>
-                <td>
-                <div>
-                    <select v-model="selected1">
-                    <option v-for="option in options" v-bind:key="option.value">
-                      {{ option.text }}
-                    </option>
-                    </select>
-                 </div>
-                </td>
-                    <span>Selected: {{ selected1 }}</span>
-                
-            </tr>
-            
-
-            <tr class="statement2">
-                
-                <th>
-                <label for="Field2">{{row2}}</label>
-                </th>
-                <td title="Extrme">
-                <input id="Field2_1" name="Field2" type="radio" value="Extreme" />
-                </td>
-                <td title="Very">
-                <input id="Field2_2" name="Field2" type="radio" value="Very" />
-                </td>
-                <td title="Slightly">
-                <input id="Field2_3" name="Field2" type="radio" value="Slightly" />
-                </td>
-                <td title="Not At All">
-                <input id="Field2_4" name="Field2" type="radio" value="not" />
-                </td>
-                <td>
-                <div>
-                    <select v-model="selected2">
-                    <option v-for="option in options" v-bind:key="option.value">
-                      {{ option.text }}
-                    </option>
-                    </select>
-                    </div>
-                    <span>Selected: {{ selected2 }}</span>
-                </td>
-                </tr>
-
-                
-                <tr class="statement3">
-                <th><label for="Field3">{{row3}}</label></th>
-
-                <td title="Extreme">
-                <input id="Field3_1" name="Field3" type="radio" value="Extreme" />
-                
-
-                </td>
-                <td title="Very">
-                <input id="Field3_2" name="Field3" type="radio" value="Very" />
-
-                </td>
-                <td title="Slightly">
-                <input id="Field3_3" name="Field3" type="radio" value="Slightly" />
-
-                </td>
-                <td title="Not At All">
-                <input id="Field3_4" name="Field3" type="radio" value="Not At All!" />
-                </td>
-
-                <td>
-                <div>
-                
-                    <select v-model="selected3">
-                    <option v-for="option in options" v-bind:key="option.value">
-                      {{ option.text }}
-                    </option>
-                    </select>
-                    </div>
-                    <span>Selected: {{ selected3 }}</span>
-                </td>
-            </tr>
-
-
-            <tr class="statement4">
-                <th>
-                <label for="Field4">{{row4}}</label>
-                </th>
-                <td title="Extreme">
-                <input id="Field4_1" name="Field6" type="radio" value="Extreme" />
-                </td>
-                <td title="Very">
-                <input id="Field4_2" name="Field6" type="radio" value="Very" />
-                </td>
-                <td title="Slightly">
-                <input id="Field4_3" name="Field6" type="radio" value="Slightly" />
-                </td>
-                <td title="Not At All">
-                <input id="Field4_4" name="Field6" type="radio" value="Not At All" />
-                </td>
-
-                <td>
-                <div>
-                    <div>
-                    <select v-model="selected4">
-                    <option v-for="option in options" v-bind:key="option.value">
-                      {{ option.text }}
-                    </option>
-                    </select>
-                    </div>
-                    <span>Selected: {{ selected4 }}</span>
-                </div> 
-                </td>
-            </tr>
-
-            <tr class="statement5">
-                <th>
-                <label for="Field5">{{textfield}}</label>
-                <div>
-                    <input id="Field" name="Field" type="url" class="field text medium" value="" maxlength="25" tabindex="36" /> 
-                </div>
-                </th>
-                <td title= "Extreme">
-                <input id="Field5_1" name="Field8" type="radio" value= title />
-                </td>
-                <td title="Very">
-                <input id="Field5_2" name="Field8" type="radio" value= title />
-                </td>
-                <td title="Slightly">
-                <input id="Field5_3" name="Field8" type="radio" value= title/>
-                </td>
-                <td title="Not At All">
-                <input id="Field5_4" name="Field8" type="radio" value= title />
-                </td>
-
-                <td>
-                <div>
-                    <select v-model="selected5">
-                    <option v-for="option in options" v-bind:key="option.value">
-                      {{ option.text }}
-                    </option>
-                    </select>
-                    </div>
-                    <span>Selected: {{ selected5 }}</span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        </li>
+<div class="TableList">
+        <div class="list">
+            <table class="listTab" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th v-for="(item) in tableHead" :key="item.key"> {{item.title}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item) in tableData" :key="item.openId">
+                        <td v-for="(val,index) in tableHead" :key="index">                           
+                            <div v-if="item[val.key]=='radio1'">
+                                <input id="Field1_1" name="Field1" type="radio" value= val.key />
+                            </div>
+                            <div v-else-if="item[val.key]=='radio2'">
+                                <input id="Field1_1" name="Field1" type="radio" value= val.key />
+                            </div>
+                            <div v-else>{{item[val.key]}}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
         </div>
-
+</div>
 </template>
+ 
 
 
 
@@ -196,34 +39,22 @@ export default {
       quantityListing: null,
       bestListing: null,
       host:location.hostname,
-
-      selected1: "Neither increase nor decrease",
-      selected2: "Neither increase nor decrease",
-      selected3: "Neither increase nor decrease",
-      selected4: "Neither increase nor decrease",
-      selected5: "Neither increase nor decrease",
       
-      column1:"Extreme Important",
-      column2:"Very Important",
-      column3:"Slightly Important",
-      column4:"Not Important",
-      column5:"Increase/decrease credibility",
-      columns:[{name:"Extreme"},{name: "Very"}, {name:"Slightly"}, {name:"Not at all"}, {name:"increase or decrease"}],
-      //rows:[{name:"Your prior knowledge"},{name: "News source"}, {name:"Headline claim"}, {name:"Image associated with post"}],
-      textfield:"others",
-      options:[{value:"Neither increase nor decrease"}, {value:"Increase"}, {value:"Decrease"}],
-      option1:"Neither increase nor decrease",
-      option2:"Increase",
-      option3:"Decrease",
-      row1:"Your prior knowledge",
-      row2:"News source",
-      row3: "Headline claim",
-      row4:"Image associated with post",
-      options: [
-        { text: 'Neither increase or decrease', value: 'Neither' },
-        { text: 'Increase', value: 'Increase' },
-        { text: 'Decrease', value: 'Decrease' }
-      ],
+      tableHead:[
+                {key:"category",title:"category"},
+                {key:"extreme",title:"extreme"},
+                {key:"very",title:"very"},
+                {key:"slight",title:"slight"},
+                {key:"not",title:"not"}
+            ],  
+      tableData:[
+          {category:"Your prior knowledge",extreme:"radio1",very:"radio1",slight:"radio1",not:"radio1"}, 
+          {category:"News source",extreme:"radio2",very:"radio2",slight:"radio2",not:"radio2"}, 
+          {category:"Headline claim",extreme:"radio",very:"radio",slight:"radio",not:"radio"}, 
+          {category:"Image associated with post",extreme:"radio",very:"radio",slight:"radio",not:"radio"}, 
+          {category:"Others",extreme:"radio",slight:"radio",very:"radio",not:"radio"}
+          
+      ]
     }
   },
   mounted(){
@@ -445,4 +276,79 @@ form li.section h3 {
 }
 
 
+
+.tableList{
+    width: 100%;
+}
+ 
+.list{
+  width: 98%;
+  margin-left: 1%;
+  overflow-x:auto;
+}
+table.listTab{
+    width: 100%;
+    font-size: 14px;
+    color: #6a6a6a;
+    border: 1px solid #ececed;
+    padding: 1px;
+    background-color: #fff;
+}
+table.listTab th{
+    background-color: #ecf0f4;
+    padding: 14px 8px;
+    text-align: left;
+    font-size: 14px;
+    border: 1px solid #ecf0f4;
+    min-width: 40px;
+    color:#292d31;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+table.listTab th.check{
+    min-width: 20px;
+}
+table.listTab tbody > tr td{
+    padding: 16px 8px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #ececed;
+    vertical-align: middle;
+    word-break: break-all;
+    min-width: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+table.listTab tbody > tr td.check{
+min-width: 20px;
+}
+table.listTab tbody > tr td:first-child{
+    width: 20px;
+}
+table.listTab tbody > tr:hover{
+    background-color: #dfeefc;
+}
+table.listTab tbody > tr.check{
+    background-color: #dfeefc;
+}
+table.listTab tbody > tr:last-child td{
+    border-bottom: 0px;
+}
+table.listTab tbody > tr td a{
+    color: #248bfc;
+}
+table.listTab tbody > tr td input{
+border:1px solid #248bfc;
+}
+table.listTab tbody > tr td .green{
+color: #72d34b;
+font-weight:bold;
+}
+table.listTab tbody > tr td .red{
+color: #f00;
+font-weight:bold;
+}
+ 
 </style>
