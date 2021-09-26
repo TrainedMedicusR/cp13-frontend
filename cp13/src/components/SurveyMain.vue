@@ -28,7 +28,7 @@
 <script>
 import ButtonQuestion from "./questions/ButtonQuestion";
 import {getSurvey} from "../api/getSurvey";
-// import {postSurvey} from "../api/postSurvey";
+
 import {storage,tempStorage} from "../utils/storage";
 import DragAndDrop from "./DragAndDrop";
 import Likert from "./questions/Likert"
