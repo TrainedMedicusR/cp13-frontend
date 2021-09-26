@@ -16,10 +16,18 @@
         <form action="#" method="get">
           <table class="choiceTab">
             <tr v-for="item in options">
-              <td>
+              <td v-if="item.textField==='false'">
                 <label>
-                  <input type="radio" :value="item.option"/>
+                  <input name="choice" type="radio" :value="item.option"/>
                   {{ item.option }}
+                </label>
+              </td>
+
+              <td v-else-if="item.textField==='true'">
+                <label>
+<!--                  <input name="choice" type="radio" :value="item.option"/>-->
+                  {{ item.option }}
+                  <input name="choice" type="text" placeholder="type your answer here"/>
                 </label>
               </td>
             </tr>
@@ -49,7 +57,7 @@ export default {
       options: [
         {id: 0, option: "option1", textField: "false"},
         {id: 1, option: "option2", textField: "false"},
-        {id: 2, option: "option3", textField: "true"}
+        {id: 2, option: "Other reasons", textField: "true"}
 
       ]
     }
@@ -134,7 +142,18 @@ export default {
 }
 
 .form{
-  border: 1px solid;
   padding: 16px;
+  text-align: left;
+}
+
+.form input[type=text]{
+  /*padding: 8px 8px;*/
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+.form input[type=text]:focus {
+  width: 100%;
 }
 </style>
