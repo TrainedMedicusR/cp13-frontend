@@ -16,11 +16,14 @@
            @dragenter.prevent
            @dragover.prevent>
         <hr>
-        <h5>{{panel.info}}</h5>
+        <h6>{{panel.info}}</h6>
+        <hr>
         <div v-for='item in panelListItem(panel.id)' :key='item.title' class='drag-el' draggable="true"
              @dragstart = 'startDrag($event,item)'
+             @mousehover.native="hover=true"
+             @mouseleave.native="hover=false"
         >
-          {{ item.title }}
+          <span>{{ item.title }}</span>
         </div>
       </div>
     </div>
@@ -58,7 +61,7 @@ export default {
       items: [
         {
           id: 0,
-          title: 'Item A',
+          title: 'Item A Item A',
           list: 0
         },
         {
@@ -147,14 +150,33 @@ export default {
     color: cornflowerblue;
   }
   .drop-zone {
-    background-color: #eee;
+    background-color: rgb(224, 192, 132);
+    border-radius:6px 6px 6px 6px;
     margin-bottom: 10px;
-    padding: 10px;
+    height: 180px;
+    align-items: center;
   }
+  .drop-zone > h6 {
+    height:3%;
+    text-align: center;
+  }
+  .drop-zone > hr {
+    height:1%;
+  }
+
   .drag-el {
-    background-color: #fff;
+    width:auto;
+    background-color: rgb(161, 197, 239);
+    border-radius:6px 6px 6px 6px;
     margin-bottom: 10px;
     padding: 5px;
+    display:inline-block;
+    vertical-align: middle;
+    margin-left: 50px;
+    text-align: -webkit-center;
+  }
+  .drag-el:hover{
+    background: #337ab7;
   }
   .next {
     text-align: center;
