@@ -22,7 +22,11 @@
                 </tbody>
             </table>
         </div>
+  <switch-button :response=responseJSON>
+
+  </switch-button>
 </div>
+
 </template>
 
 
@@ -31,15 +35,15 @@
 <script>
 import {getSurvey} from "../../api/getSurvey";
 import storage from "../../utils/storage";
+import SwitchButton from "../SwitchButton";
 
 export default {
-  name: 'SurveyMain',
+  name: 'Likert',
+  components: {SwitchButton},
   data () {
     return {
-      quantityListing: null,
-      bestListing: null,
       host:location.hostname,
-
+      responseJSON:"",
       tableHead:[
                 {key:"category",title:"category"},
                 {key:"extreme",title:"extreme"},
@@ -53,12 +57,8 @@ export default {
           {category:"Headline claim",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
           {category:"Image associated with post",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
           {category:"Others",extreme:"radio",slight:"radio",very:"radio",not:"radio"}
-
       ]
     }
-  },
-  mounted(){
-    this.initPage();
   },
   methods: {
     initPage() {

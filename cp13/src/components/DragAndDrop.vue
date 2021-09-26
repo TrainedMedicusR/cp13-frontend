@@ -27,7 +27,11 @@
         </div>
       </div>
     </div>
+    <switch-button :response=responseJSON>
+
+    </switch-button>
   </div>
+
 </template>
 
 
@@ -35,15 +39,17 @@
 
 import {getSurvey} from "../api/getSurvey";
 import storage from "../utils/storage";
+import SwitchButton from "./SwitchButton";
 
 export default {
   name: "DragAndDrop",
+  components: {SwitchButton},
   data () {
     return {
       id:100,
       isExpanded:false,
+      responseJSON:"",
       msg:"dcfvgbhnjrcvcrxcdtfvgybgyvtrctfvgtbynuj",
-
       panels: [
         {
           info: "Waiting for classification",

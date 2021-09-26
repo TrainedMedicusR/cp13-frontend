@@ -26,14 +26,20 @@
         <button id="btn9" type="button">9</button>
       </div>
     </div>
+    <switch-button :response=responseJSON>
+
+    </switch-button>
   </div>
 </template>
 
 <script>
+import SwitchButton from "../SwitchButton";
 export default {
   name: "NumberScale",
+  components: {SwitchButton},
   data() {
     return {
+      responseJSON:"",
       surveyTitle: "survey title",
       newsPicture:"",
       newsText:"news contents",
@@ -42,10 +48,7 @@ export default {
       secondRange: "Neutral",
       thirdRange: "Very reliable"
     }
-  },
-  mounted() {
-    this.initPage();
-  },
+  }
 }
 </script>
 
