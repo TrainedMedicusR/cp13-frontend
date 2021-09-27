@@ -14,19 +14,20 @@
         <text class="rangeText" id="secondRange">{{ secondRange }}</text>
         <text class="rangeText" id="thirdRange">{{ thirdRange }}</text>
       </div>
-      <div class="buttons">
-        <button id="btn1" type="button">1</button>
-        <button id="btn2" type="button">2</button>
-        <button id="btn3" type="button">3</button>
-        <button id="btn4" type="button">4</button>
-        <button id="btn5" type="button">5</button>
-        <button id="btn6" type="button">6</button>
-        <button id="btn7" type="button">7</button>
-        <button id="btn8" type="button">8</button>
-        <button id="btn9" type="button">9</button>
+      <div class="rankButtons">
+        <button id="btn1" class="rankButton">1</button>
+        <button id="btn2" class="rankButton">2</button>
+        <button id="btn3" class="rankButton">3</button>
+        <button id="btn4" class="rankButton">4</button>
+        <button id="btn5" class="rankButton">5</button>
+        <button id="btn6" class="rankButton">6</button>
+        <button id="btn7" class="rankButton">7</button>
+        <button id="btn8" class="rankButton">8</button>
+        <button id="btn9" class="rankButton">9</button>
       </div>
     </div>
-    <switch-button :response=responseJSON>
+
+    <switch-button :response="responseJSON">
 
     </switch-button>
   </div>
@@ -39,21 +40,22 @@ export default {
   components: {SwitchButton},
   data() {
     return {
-      responseJSON:"",
       surveyTitle: "survey title",
       newsPicture:"",
-      newsText:"news contents",
+      newsText:"news contentsbalabalabalabalabalabalabalabalabala",
       questionContents: "Please rank the reliability",
       firstRange: "Not reliable",
       secondRange: "Neutral",
-      thirdRange: "Very reliable"
+      thirdRange: "Very reliable",
+      responseJSON: '',
     }
   },
+  mounted() {
+    this.initPage();
+  },
   methods: {
-    generateJSON(){
-      let json = {};
-
-      this.responseJSON = JSON.stringify(json);
+    initPage(){
+      //TODO
     }
   }
 }
@@ -66,9 +68,6 @@ export default {
 
 .container {
   /*border: 1px solid grey;*/
-  /*display: flex;*/
-  /*flex-wrap: wrap;*/
-  /*justify-content: space-between;*/
   width: 700px;
   margin: 0 auto;
   padding: 20px;
@@ -82,9 +81,15 @@ export default {
   /*border: 1px solid grey;*/
   font-size: 20px;
   /*align-content: center;*/
+  margin-bottom: 20px;
+}
+
+.newsText{
+  margin-top: 12px;
+
 }
 .picture{
-  border: 1px solid grey;
+  border: 5px solid grey;
   height: 100px;
   width: 500px;
   margin: 0 auto;
@@ -102,11 +107,11 @@ export default {
 /*}*/
 
 .questionContents {
-  margin: 20px;
+  margin: 10px;
   margin-left: 30px;
   /*border: 1px solid black;*/
   text-align: left;
-  font-size: 20px;
+  font-size: 16px;
   width: 500px;
 }
 
@@ -116,81 +121,52 @@ export default {
   font-size: 12px;
 }
 
-.buttons {
-  /*margin-left: 250px;*/
+.rankButtons {
   margin-right: auto;
   margin-left: auto;
-  font-size: 25px;
-  color: black;
+  font-size: 20px;
+}
+
+.rankButton{
+  padding: 8px;
+  width: 50px;
+  height: 50px;
+  border: white;
   border-radius: 12px;
-  /*-webkit-transition-duration: 0.4s;*/
-  /*transition-duration: 0.4s;*/
+  margin: 9px;
+
 }
 
-#btn1:hover {
-  background-color: #1947E5;
-  color: white;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
+.rankButton:hover{
+    background-color: #1947E5;
+    color: white;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
 }
 
-#btn2:hover {
-  background-color: #1947E5;
-  color: white;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
+.previousButton{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #E44E33;
+  border: white;
+  text-align: center;
+
+}
+.previousButton:active{
+  /*background: black;*/
+  /*opacity: 0.5;*/
+  box-shadow: 0 3px #666;
+  transform: translateY(2px);
+}
+.previousButton img{
+  width: 30px;
 }
 
-#btn3:hover {
-  background-color: #1947E5;
-  color: white;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
+#preBtn{
+  margin-right: 200px;
 }
-
-#btn4:hover {
-  background-color: #1947E5;
-  color: white;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-}
-
-#btn5:hover {
-  background-color: #1947E5;
-  color: white;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-}
-
-#btn6:hover {
-  background-color: #1947E5;
-  color: white;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-}
-
-#btn7:hover {
-  background-color: #1947E5;
-  color: white;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-}
-
-#btn8:hover {
-  background-color: #1947E5;
-  color: white;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-}
-
-#btn9:hover {
-  background-color: #1947E5;
-  color: white;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-}
-
-.buttons button {
-  margin-left: 20px;
+#nextBtn{
+  margin-left: 200px;
 }
 </style>
