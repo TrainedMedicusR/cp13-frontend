@@ -22,6 +22,10 @@
 
     </NumberScale>
 
+    <MultipleChoice class="container" v-if="QType === 'MCQ' && this.consent">
+
+    </MultipleChoice>
+
   </div>
 </template>
 
@@ -33,13 +37,14 @@ import {storage,tempStorage} from "../utils/storage";
 import DragAndDrop from "./DragAndDrop";
 import Likert from "./questions/Likert"
 import NumberScale from "./questions/NumberScale";
+import MultipleChoice from "./questions/MultipleChoice";
 
 
 
 
 export default {
   name: 'SurveyMain',
-  components: {ButtonQuestion, DragAndDrop, Likert, NumberScale},
+  components: {MultipleChoice, ButtonQuestion, DragAndDrop, Likert, NumberScale},
   data () {
     return {
       blockTitle:"",

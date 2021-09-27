@@ -1,30 +1,33 @@
 <template>
   <div class="wrapper">
-    <div class="surveyTitle">
-      <h1>{{ surveyTitle }}</h1>
-    </div>
+<!--    <div class="surveyTitle">-->
+<!--      <h1>{{ surveyTitle }}</h1>-->
+<!--    </div>-->
     <div class="container">
-      <div class="news">
-        <div class="picture">{{ newsPicture }}</div>
-        <div class="newsText">{{ newsText }}</div>
-      </div>
+<!--      <div class="news">-->
+<!--        <div class="picture">{{ newsPicture }}</div>-->
+<!--        <div class="newsText">{{ newsText }}</div>-->
+<!--      </div>-->
       <div class="questionContents">{{ questionContents }}</div>
       <div class="range">
-        <text class="rangeText" id="firstRange">{{ firstRange }}</text>
-        <text class="rangeText" id="secondRange">{{ secondRange }}</text>
-        <text class="rangeText" id="thirdRange">{{ thirdRange }}</text>
+<!--        <text class="rangeText" id="firstRange">{{ firstRange }}</text>-->
+<!--        <text class="rangeText" id="secondRange">{{ secondRange }}</text>-->
+<!--        <text class="rangeText" id="thirdRange">{{ thirdRange }}</text>-->
       </div>
-      <div class="rankButtons">
-        <button id="btn1" class="rankButton">1</button>
-        <button id="btn2" class="rankButton">2</button>
-        <button id="btn3" class="rankButton">3</button>
-        <button id="btn4" class="rankButton">4</button>
-        <button id="btn5" class="rankButton">5</button>
-        <button id="btn6" class="rankButton">6</button>
-        <button id="btn7" class="rankButton">7</button>
-        <button id="btn8" class="rankButton">8</button>
-        <button id="btn9" class="rankButton">9</button>
+      <div class="rankButtons" v-for="n in rankNumber">
+        <button class="rankButton" :value="n" @click="click($event,n)">{{n}}</button>
       </div>
+<!--      <div class="rankButtons">-->
+<!--        <button id="btn1" class="rankButton">1</button>-->
+<!--        <button id="btn2" class="rankButton">2</button>-->
+<!--        <button id="btn3" class="rankButton">3</button>-->
+<!--        <button id="btn4" class="rankButton">4</button>-->
+<!--        <button id="btn5" class="rankButton">5</button>-->
+<!--        <button id="btn6" class="rankButton">6</button>-->
+<!--        <button id="btn7" class="rankButton">7</button>-->
+<!--        <button id="btn8" class="rankButton">8</button>-->
+<!--        <button id="btn9" class="rankButton">9</button>-->
+<!--      </div>-->
     </div>
 
     <switch-button :response="responseJSON">
@@ -34,6 +37,7 @@
 </template>
 
 <script>
+import {tempStorage} from "../../utils/storage";
 import SwitchButton from "../SwitchButton";
 export default {
   name: "NumberScale",
@@ -44,9 +48,10 @@ export default {
       newsPicture:"",
       newsText:"news contentsbalabalabalabalabalabalabalabalabala",
       questionContents: "Please rank the reliability",
-      firstRange: "Not reliable",
-      secondRange: "Neutral",
-      thirdRange: "Very reliable",
+      // firstRange: "Not reliable",
+      // secondRange: "Neutral",
+      // thirdRange: "Very reliable",
+      rankNumber: 40,
       responseJSON: '',
     }
   },
@@ -56,6 +61,20 @@ export default {
   methods: {
     initPage(){
       //TODO
+      let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
+      console.log("JSON: "+JSON.stringify(jsonQuestion));
+      let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
+
+      this.surveyTitle = jsonObject.newsTitle;
+      this.newsPicture=jsonObject.img;
+      this.newsText = jsonObject.newsDescription;
+      this.questionContents=jsonObject.questionContents;
+      this.rankNumber=jsonObject.rankNumber;
+    },
+    click(tmp,n){
+      console.log(n);
+      this.responseJSON = JSON.stringify({"answer": n});
+      console.log(this.responseJSON);
     }
   }
 }
@@ -125,6 +144,7 @@ export default {
   margin-right: auto;
   margin-left: auto;
   font-size: 20px;
+  display: inline-block;
 }
 
 .rankButton{

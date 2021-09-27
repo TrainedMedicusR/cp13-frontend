@@ -1,14 +1,14 @@
 <template>
   <div class="wrapper">
-    <div class="surveyTitle">
-      <h1>{{ surveyTitle }}</h1>
-    </div>
+<!--    <div class="surveyTitle">-->
+<!--      <h1>{{ surveyTitle }}</h1>-->
+<!--    </div>-->
     <div class="container">
 
-      <div class="news">
-        <div class="picture">{{ newsPicture }}</div>
-        <div class="newsText">{{ newsText }}</div>
-      </div>
+<!--      <div class="news">-->
+<!--        <div class="picture">{{ newsPicture }}</div>-->
+<!--        <div class="newsText">{{ newsText }}</div>-->
+<!--      </div>-->
       <div class="questionContents">{{ questionContents }}</div>
 
 
@@ -34,19 +34,23 @@
           </table>
         </form>
       </div>
-
-
     </div>
-    <div class="processButtons">
-      <button id="preBtn" class="previousButton"><img src="../../assets/leftArrow.png" alt="previous quesiton"></button>
-      <button id="nextBtn" class="previousButton"><img src="../../assets/rightArrow.png" alt="next quesiton"></button>
-    </div>
+<!--    <div class="processButtons">-->
+<!--      <button id="preBtn" class="previousButton"><img src="../../assets/leftArrow.png" alt="previous quesiton"></button>-->
+<!--      <button id="nextBtn" class="previousButton"><img src="../../assets/rightArrow.png" alt="next quesiton"></button>-->
+<!--    </div>-->
+    <switch-button :response=responseJSON>
+
+    </switch-button>
   </div>
 </template>
 
 <script>
+import SwitchButton from "../SwitchButton";
+
 export default {
   name: "MultipleChoice",
+  components: {SwitchButton},
   data() {
     return {
       surveyTitle: "survey title",
@@ -58,8 +62,8 @@ export default {
         {id: 0, option: "option1", textField: "false"},
         {id: 1, option: "option2", textField: "false"},
         {id: 2, option: "Other reasons", textField: "true"}
-
-      ]
+      ],
+      responseJSON: ""
     }
   },
   mounted() {
