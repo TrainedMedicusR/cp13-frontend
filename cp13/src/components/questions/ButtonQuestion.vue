@@ -6,29 +6,44 @@
     </div>
     <div class="container">
       <div class="ele question">
-        <div class="picWall">
+        <!-- <div class="picWall">
         </div>
         <hr>
         <div class = "shareNumber">
           <h3>{{number_people}} people liked or shared this.</h3>
-        </div>
+        </div> -->
 <!-- This section are all question buttons like share,like,check. -->
         <div class = "QuestionButtons">
-          <button class="btn-info btn-lg" v-on:click="share('share')">
-            <i class="glyphicon glyphicon-share"></i>  Share
-          </button>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button class="btn-custom btn-lg" v-on:click="check('check')">
-            <i class="glyphicon glyphicon-question-sign"></i>  Check
-          </button>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button class="btn-info btn-lg" v-on:click="like('like')">
-            <i class="glyphicon glyphicon-heart"></i> Like
-          </button>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button class="btn-skip btn-lg" v-on:click="skip('skip')">
-            <i class="glyphicon glyphicon-forward"></i> Skip
-          </button>
+          <div class = "buttoninline" v-for="item in questionbutton" v-bind:item="item" v-bind:index="index" v-bind:key="item.id">
+            <div v-if="item.title=='share'">
+              <button class="btn-primary btn-lg" v-on:click="share('share')">
+                <i class="glyphicon glyphicon-share"></i>  Share
+              </button>
+            </div>
+            <div v-else-if="item.title=='check'">
+              <button class="btn-secondary btn-lg" v-on:click="check('check')">
+                <i class="glyphicon glyphicon-question-sign"></i>  Check
+              </button>
+            </div>
+            <div v-else-if="item.title=='like'">
+              <button class="btn-info btn-lg" v-on:click="like('like')">
+                <i class="glyphicon glyphicon-heart"></i> Like
+              </button>
+            </div>
+            <div v-else-if="item.title=='skip'">
+              <button class="btn-skip btn-lg" v-on:click="skip('skip')">
+                <i class="glyphicon glyphicon-forward"></i> Skip
+              </button>
+            </div>
+            <div v-else>
+              <button class="btn-success btn-lg" v-on:click="customise_question(item.title)">
+                {{item.title}}
+              </button>
+            </div>
+            
+            
+
+          </div>
         </div>
         <hr>
 <!-- This section are all social media buttons like linkedin,fb,ins and tw -->
@@ -37,24 +52,38 @@
         </div>
 
         <div class = "ShareButtons">
-          <button class="btn btn-primary btn-lg" v-on:click="facebook('facebook')">
-            <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'facebook' }"/>
-            Facebook
-          </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button class="btn btn-warning btn-lg" v-on:click="instagram('instagram')">
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
-            <i class="fab fa-instagram-square share"></i>
-            Instagram
-          </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button class="btn btn-danger btn-lg" v-on:click="linkedin('linkedin')">
-            <i class="fab fa-linkedin"></i><!-- #0e76a8 -->
-            Linkedin
-          </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button class="btn btn-info btn-lg" v-on:click="twitter('twitter')">
-            <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
-            Twitter
-          </button>
+          <div class = "buttoninline" v-for="item in sharebutton" v-bind:item="item" v-bind:index="index" v-bind:key="item.id">
+            <div v-if="item.title=='facebook'">
+              <button class="btn btn-primary btn-lg" v-on:click="facebook('facebook')">
+                <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'facebook' }"/>
+                Facebook
+              </button>
+            </div>
+            <div v-else-if="item.title=='instagram'">
+              <button class="btn btn-warning btn-lg" v-on:click="instagram('instagram')">
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+                <i class="fab fa-instagram-square share"></i>
+                Instagram
+              </button>
+            </div>
+            <div v-else-if="item.title=='linkedin'">
+              <button class="btn btn-danger btn-lg" v-on:click="linkedin('linkedin')">
+                <i class="fab fa-linkedin"></i>
+                Linkedin
+              </button>
+            </div>
+            <div v-else-if="item.title=='twitter'">
+              <button class="btn btn-info btn-lg" v-on:click="twitter('twitter')">
+                <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
+                Twitter
+              </button>
+            </div>
+            <div v-else>
+              <button class="btn btn btn-light btn-lg" v-on:click="customise_share(item.title)">
+                <i class="glyphicon glyphicon-share"></i>  {{item.title}}
+              </button>
+            </div>
+          </div>
           <br>
         </div>
 
@@ -80,6 +109,22 @@ export default {
     return {
       responseJSON:"",
       host:location.hostname,
+      questionbutton:[
+          {title:"share"},
+          {title:"like"},
+          {title:"check"},
+          {title:"skip"},
+          {title:"randomdesign"}
+      ],
+      sharebutton:[
+          {title:"facebook"},
+          {title:"instagram"},
+          {title:"linkedin"},
+          {title:"twitter"},
+          {title:"whatever"},
+          {title:"hello"},
+          {title:"newsharelink"}
+      ]
     }
   },
   methods: {
@@ -87,12 +132,14 @@ export default {
     check: function (msg) {return(msg)},
     like: function (msg) {return(msg)},
     skip: function (msg) {return(msg)},
-    instagram: function (msg) {alert(msg)},
+    customise_question: function (msg) {return(msg)},
+    instagram: function (msg) {return(msg)},
     facebook: function (msg) {return(msg)},
     linkedin: function (msg) {return(msg)},
     twitter: function (msg) {return(msg)},
     pre: function (msg) {return(msg)},
     next: function (msg) {return(msg)},
+    customise_share: function (msg) {return(msg)}
   }
 }
 
@@ -156,6 +203,11 @@ body {
   margin: 20px auto;
   overflow: hidden;
   text-align: left;
+}
+.buttoninline{
+  margin: 20px auto;
+  margin-right:9px;
+  display:inline-block;
 }
 .checkbutton{
 width: 129px;
