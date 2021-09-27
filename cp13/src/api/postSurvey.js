@@ -9,7 +9,7 @@ export function postResp(surveyID,questionID,contactInfo,content,identifier) {
     'identifier':identifier
   });
   return request({
-    url: '/api/survey',
+    url: '/api/survey/',
     method: 'post',
     data: myData
   })
