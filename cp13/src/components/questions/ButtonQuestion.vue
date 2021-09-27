@@ -90,6 +90,9 @@
       </div>
 
     </div>
+    <SwitchButton :response=responseJSON>
+
+    </SwitchButton>
   </div>
 </template>
 
