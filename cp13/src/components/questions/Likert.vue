@@ -33,8 +33,7 @@
 
 
 <script>
-import {getSurvey} from "../../api/getSurvey";
-import storage from "../../utils/storage";
+import {tempStorage} from "../../utils/storage";
 import SwitchButton from "../SwitchButton";
 
 export default {
@@ -60,21 +59,13 @@ export default {
       ]
     }
   },
+  mounted(){
+    this.initPage();
+  },
   methods: {
     initPage() {
-      const surveyJSON = getSurvey(this.$route.params.id).then(response=>{
-        if (response.status === 200){
-          let identifier = this.$route.params.id + new Date().getTime()
-          console.log(identifier)
-          const hashString = this.$md5(identifier);
-          storage.set(this.$route.params.id,hashString);
-          console.log(response.data);
-        } else {
-          alert("Data Error!");
-        }}
-      ).catch(e => {
-        console.log(e);
-      })
+      let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
+      console.log("JSOSJOJOSJOIJSONS: "+JSON.stringify(jsonQuestion));
     }
   },
 

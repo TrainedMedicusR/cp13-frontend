@@ -19,7 +19,12 @@ export const tempStorage = {
   },
   remove(key) {
     sessionStorage.removeItem(key);
+  },
+  getQuestionJSON(uniqueID) {
+    let current = sessionStorage.getItem(uniqueID+"CURRENT");
+    return JSON.parse(sessionStorage.getItem(uniqueID+current));
   }
 };
+
 
 export default {storage,tempStorage};
