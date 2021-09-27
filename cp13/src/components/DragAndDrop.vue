@@ -2,7 +2,7 @@
   <div>
     <div class = 'container'>
       <div class = 'question'>
-          {{isExpanded ? msg : capitalize(msg)}}
+        {{isExpanded ? msg : capitalize(msg)}}
         <button>
           <span @click = "expandClick" class = "expand">
             {{isExpanded ? "show less": "show more"}}
@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <switch-button :response=JSON.stringify(responseJSON)>
+    <switch-button :response=JSON.stringify(response)>
 
     </switch-button>
   </div>
@@ -45,8 +45,9 @@ export default {
   components: {SwitchButton},
   data () {
     return {
-      responseJSON: {},
-      isExpanded:false,
+      response: "",
+      responseJSON:{},
+      isExpanded:true,
       msg:"dcfvgbhnjrcvcrxcdtfvgybgyvtrctfvgtbynuj",
       panels: [
         {
@@ -90,19 +91,11 @@ export default {
   methods: {
     initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
-      console.log("tempStorage: "+JSON.stringify(jsonQuestion));
       let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
-      console.log("msg:"+JSON.stringify(jsonObj.description));
       this.msg = jsonObj.description;
-      console.log("isExpanded:"+JSON.stringify(jsonObj.isExpanded));
       this.isExpanded = jsonObj.isExpanded;
-      console.log("panels:"+JSON.stringify(jsonObj.panels));
       this.panels = jsonObj.panels;
-      console.log("items:"+JSON.stringify(jsonObj.items));
       this.items = jsonObj.items;
-      this.responseJSON.questionid=jsonObj.order;
-      this.responseJSON.items=this.items;
-      console.log("Current Response: "+JSON.stringify(this.responseJSON));
     },
     expandClick(){
       this.isExpanded = !this.isExpanded
@@ -128,7 +121,8 @@ export default {
       const itemID = evt.dataTransfer.getData('itemID')
       const item = this.items.find(item => item.id == itemID)
       item.list = list
-      console.log("Updated Response!: "+JSON.stringify(this.responseJSON))
+      this.responseJSON.answers = this.items
+      this.response = JSON.stringify(this.responseJSON)
     },
 
     panelListItem: function (value) {
@@ -141,53 +135,53 @@ export default {
 
 <style scoped>
 
-  .qid{
-    font-family: Times New Roman,serif;
-    font-size: 30px;
-    width: 100%;
-    background-color: white;
-    text-align: center;
-  }
-  .question{
-    font-family: Arial,serif;
-    font-size: 20px;
-    width: 100%;
-    background-color: white;
-    text-align: center;
-  }
-  .expand{
-    color: cornflowerblue;
-  }
-  .drop-zone {
-    background-color: rgb(224, 192, 132);
-    border-radius:6px 6px 6px 6px;
-    margin-bottom: 10px;
-    height: 180px;
-    align-items: center;
-  }
-  .drop-zone > h6 {
-    height:3%;
-    text-align: center;
-  }
-  .drop-zone > hr {
-    height:1%;
-  }
+.qid{
+  font-family: Times New Roman,serif;
+  font-size: 30px;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+}
+.question{
+  font-family: Arial,serif;
+  font-size: 20px;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+}
+.expand{
+  color: cornflowerblue;
+}
+.drop-zone {
+  background-color: rgb(224, 192, 132);
+  border-radius:6px 6px 6px 6px;
+  margin-bottom: 10px;
+  height: 180px;
+  align-items: center;
+}
+.drop-zone > h6 {
+  height:3%;
+  text-align: center;
+}
+.drop-zone > hr {
+  height:1%;
+}
 
-  .drag-el {
-    width:auto;
-    background-color: rgb(161, 197, 239);
-    border-radius:6px 6px 6px 6px;
-    margin-bottom: 10px;
-    padding: 5px;
-    display:inline-block;
-    vertical-align: middle;
-    margin-left: 50px;
-    text-align: -webkit-center;
-  }
-  .drag-el:hover{
-    background: #337ab7;
-  }
-  .next {
-    text-align: center;
-  }
+.drag-el {
+  width:auto;
+  background-color: rgb(161, 197, 239);
+  border-radius:6px 6px 6px 6px;
+  margin-bottom: 10px;
+  padding: 5px;
+  display:inline-block;
+  vertical-align: middle;
+  margin-left: 50px;
+  text-align: -webkit-center;
+}
+.drag-el:hover{
+  background: #337ab7;
+}
+.next {
+  text-align: center;
+}
 </style>
