@@ -27,16 +27,17 @@
       </div>
     </div>
 
-    <div class = "processButtons">
-      <button id="preBtn" class="previousButton"><img src="../../assets/leftArrow.png" alt="previous quesiton"></button>
-      <button id="nextBtn" class="previousButton"><img src="../../assets/rightArrow.png" alt="next quesiton"></button>
-    </div>
+    <switch-button :response="responseJSON">
+
+    </switch-button>
   </div>
 </template>
 
 <script>
+import SwitchButton from "../SwitchButton";
 export default {
   name: "NumberScale",
+  components: {SwitchButton},
   data() {
     return {
       surveyTitle: "survey title",
@@ -45,12 +46,18 @@ export default {
       questionContents: "Please rank the reliability",
       firstRange: "Not reliable",
       secondRange: "Neutral",
-      thirdRange: "Very reliable"
+      thirdRange: "Very reliable",
+      responseJSON: '',
     }
   },
   mounted() {
     this.initPage();
   },
+  methods: {
+    initPage(){
+      //TODO
+    }
+  }
 }
 </script>
 
