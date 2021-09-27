@@ -1,21 +1,21 @@
 <template>
   <div class="wrapper">
-    <div class="surveyTitle">
-      <h1>{{ surveyTitle }}</h1>
-    </div>
+<!--    <div class="surveyTitle">-->
+<!--      <h1>{{ surveyTitle }}</h1>-->
+<!--    </div>-->
     <div class="container">
-      <div class="news">
-        <div class="picture">{{ newsPicture }}</div>
-        <div class="newsText">{{ newsText }}</div>
-      </div>
+<!--      <div class="news">-->
+<!--        <div class="picture">{{ newsPicture }}</div>-->
+<!--        <div class="newsText">{{ newsText }}</div>-->
+<!--      </div>-->
       <div class="questionContents">{{ questionContents }}</div>
       <div class="range">
-        <text class="rangeText" id="firstRange">{{ firstRange }}</text>
-        <text class="rangeText" id="secondRange">{{ secondRange }}</text>
-        <text class="rangeText" id="thirdRange">{{ thirdRange }}</text>
+<!--        <text class="rangeText" id="firstRange">{{ firstRange }}</text>-->
+<!--        <text class="rangeText" id="secondRange">{{ secondRange }}</text>-->
+<!--        <text class="rangeText" id="thirdRange">{{ thirdRange }}</text>-->
       </div>
       <div class="rankButtons" v-for="n in rankNumber">
-        <button class="rankButton">{{n}}</button>
+        <button class="rankButton" :value="n" @click="click($event,n)">{{n}}</button>
       </div>
 <!--      <div class="rankButtons">-->
 <!--        <button id="btn1" class="rankButton">1</button>-->
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import {tempStorage} from "../../utils/storage";
 import SwitchButton from "../SwitchButton";
 export default {
   name: "NumberScale",
@@ -47,9 +48,9 @@ export default {
       newsPicture:"",
       newsText:"news contentsbalabalabalabalabalabalabalabalabala",
       questionContents: "Please rank the reliability",
-      firstRange: "Not reliable",
-      secondRange: "Neutral",
-      thirdRange: "Very reliable",
+      // firstRange: "Not reliable",
+      // secondRange: "Neutral",
+      // thirdRange: "Very reliable",
       rankNumber: 40,
       responseJSON: '',
     }
@@ -60,6 +61,20 @@ export default {
   methods: {
     initPage(){
       //TODO
+      let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
+      console.log("JSON: "+JSON.stringify(jsonQuestion));
+      let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
+
+      this.surveyTitle = jsonObject.newsTitle;
+      this.newsPicture=jsonObject.img;
+      this.newsText = jsonObject.newsDescription;
+      this.questionContents=jsonObject.questionContents;
+      this.rankNumber=jsonObject.rankNumber;
+    },
+    click(tmp,n){
+      console.log(n);
+      this.responseJSON = JSON.stringify({"answer": n});
+      console.log(this.responseJSON);
     }
   }
 }
