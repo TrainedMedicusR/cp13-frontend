@@ -3,33 +3,24 @@
     <hr>
     <header class = "surveyTitle">
       <h1>{{surveyTitle}}</h1>
-      <h2>Question {{counter}}:</h2>
+      <h2>{{blockTitle}}</h2>
+      <h3>{{"Question "+QOrder}}</h3>
     </header>
-    <drag-and-drop class="container" v-if="counter===1">
+    <drag-and-drop class="container" v-if="QType === 'DRAG' && this.consent ">
 
     </drag-and-drop>
 
-    <button-question class="container" v-if="counter===2">
+    <button-question class="container" v-if="QType === 'BTN' && this.consent">
 
     </button-question>
 
-    <likert class="container" v-if="counter===3">
+    <likert class="container" v-if="QType === 'LIKERT' && this.consent">
 
     </likert>
 
-    <NumberScale class="container" v-if="counter===4">
+    <NumberScale class="container" v-if="QType === 'SCALE' && this.consent">
 
     </NumberScale>
-
-
-    <div class="next">
-      <button class="btn-next btn-sm" v-on:click="forwardQuestion">
-        <i class="glyphicon glyphicon-arrow-left"></i> Prev Question
-      </button>
-      <button class="btn-next btn-sm" v-on:click="nextQuestion()">
-        Next Question <i class="glyphicon glyphicon-arrow-right"></i>
-      </button>
-    </div>
 
   </div>
 </template>
@@ -37,7 +28,7 @@
 <script>
 import ButtonQuestion from "./questions/ButtonQuestion";
 import {getSurvey} from "../api/getSurvey";
-// import {postSurvey} from "../api/postSurvey";
+
 import {storage,tempStorage} from "../utils/storage";
 import DragAndDrop from "./DragAndDrop";
 import Likert from "./questions/Likert"
@@ -51,30 +42,46 @@ export default {
   components: {ButtonQuestion, DragAndDrop, Likert, NumberScale},
   data () {
     return {
-      surveyTitle:null,
-      counter:1,
-      MCQ:false,
-      SCALE:false,
-      BTN:false,
-      DRAG:false,
+      blockTitle:"",
+      surveyID:"",
+      consent: true,
+      surveyTitle:"",
+      QOrder:"",
+      QType: "",
+      hashString:"",
       host:location.hostname,
     }
   },
-  mounted(){
+  created(){
     this.initPage();
   },
   methods: {
     initPage() {
       const resJSON = getSurvey(this.$route.params.id).then(response=>{
         if (response.status === 200){
-          let identifier = this.$route.params.id + new Date().getTime()
+          let identifier = this.$route.params.id + new Date().getTime();
+
           const hashString = this.$md5(identifier);
+          this.hashString = hashString;
           storage.set(this.$route.params.id,hashString);
-          const jsonString = response.data
-          console.log(jsonString);
+          const jsonString = response.data;
+          this.surveyID =jsonString.id;
           this.surveyTitle = jsonString.name;
           //Need Optimisation
           tempStorage.set(this.$route.params.id,jsonString.block)
+          tempStorage.set(this.$route.params.id+"sid",this.surveyID)
+
+          let block = jsonString.block[0]
+          this.blockTitle = block.title;
+          let questions = block.questions;
+          for (let i = 0; i < questions.length; i++) {
+            tempStorage.set(this.$route.params.id+questions[i].order,questions[i])
+          }
+          if (tempStorage.get(this.$route.params.id+"CURRENT")===null) {
+            tempStorage.set(this.$route.params.id+"CURRENT",1);
+          }
+          tempStorage.set(this.$route.params.id+"TOTAL",jsonString.totalNum);
+          this.renderQuestion();
         } else {
           alert("Data Error!");
         }}
@@ -85,34 +92,13 @@ export default {
     submit() {
       alert("Submit Success!")
     },
-    nextQuestion() {
-      console.log(tempStorage.get(this.$route.params.id))
-      // let qList = JSON.parse(tempStorage.get(this.$route.params.id)).get(0);
-      // let qlength = qList.length;
-      // console.log("长度："+qlength)
-      if (this.counter < 4){
-        this.counter += 1;
-        window.scrollTo({
-          left: 0,
-          top: 0,
-          behavior: 'smooth'
-        })
-      } else {
-        alert("Thank you for your participation!");
-      }
-
-    },
-    forwardQuestion() {
-      if (this.counter > 1) {
-        this.counter -= 1;
-        window.scrollTo({
-          left: 0,
-          top: 0,
-          behavior: 'smooth'
-        })
-      } else {
-        alert("This is the first question")
-      }
+    renderQuestion(){
+      let identifier = this.$route.params.id;
+      let current = tempStorage.get(identifier+"CURRENT")
+      let questionDetails = tempStorage.get(identifier+current)
+      this.QType = questionDetails.type;
+      this.QOrder = questionDetails.order;
+      console.log(this.QType);
     }
   }
 }

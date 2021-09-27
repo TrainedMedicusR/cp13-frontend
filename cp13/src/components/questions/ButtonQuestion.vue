@@ -61,38 +61,28 @@
       </div>
 
     </div>
+    <SwitchButton :response=responseJSON>
+
+    </SwitchButton>
   </div>
+
 </template>
 
 <script>
 
 import {getSurvey} from "../../api/getSurvey";
 import storage from "../../utils/storage";
+import SwitchButton from "../SwitchButton";
 export default {
   name: 'ButtonQuestion',
+  components: {SwitchButton},
   data () {
     return {
-      quantityListing: null,
-      bestListing: null,
+      responseJSON:"",
       host:location.hostname,
     }
   },
   methods: {
-    initPage() {
-      const surveyJSON = getSurvey(this.$route.params.id).then(response=>{
-        if (response.status === 200){
-          let identifier = this.$route.params.id + new Date().getTime()
-          console.log(identifier)
-          const hashString = this.$md5(identifier);
-          storage.set(this.$route.params.id,hashString);
-          console.log(response.data);
-        } else {
-          alert("Data Error!");
-        }}
-      ).catch(e => {
-        console.log(e);
-      })
-    },
     share: function (msg) {return(msg)},
     check: function (msg) {return(msg)},
     like: function (msg) {return(msg)},
@@ -328,7 +318,6 @@ fieldset[disabled] .btn-skip.active{
   background-image: none;
 }
 
-
 .btn-next {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -341,16 +330,19 @@ fieldset[disabled] .btn-skip.active{
   background-repeat: repeat-x;
   border-color: #E44E33;
 }
+
 .btn-next:hover,
 .btn-next:focus{
   background-color: #E44E33;
   background-position: 0 -15px;
 }
+
 .btn-next:active,
 .btn-next.active {
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
 .btn-next.disabled,
 .btn-next[disabled],
 fieldset[disabled] .btn-next,
