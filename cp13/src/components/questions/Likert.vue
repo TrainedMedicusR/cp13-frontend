@@ -1,5 +1,7 @@
+var a = 1
 <template>
 <div class="TableList">
+  <div> {{msg}}</div>
         <div class="list">
             <table class="listTab" cellspacing="0" cellpadding="0">
                 <thead>
@@ -8,21 +10,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item) in tableData" :key="item.openId">
-                        <td v-for="(val,index) in tableHead" :key="index">
-                            <div v-if="item[val.key]=='radio1'">
-                                <input id="Field1_1" name="Field1" type="radio" value= val.key />
+                    <tr v-for="(item, index) in tableData" v-bind:key="index">
+                         
+                        <td v-for="(val) in tableHead" :key="val">
+
+                            <div v-if="item[val.key]=='radio'">
+                                <input id="Field1"  type="radio" value = val.key :name="index"  v-on:click="methodToRunOnSelect([index,val.key])"/>
                             </div>
-                            <div v-else-if="item[val.key]=='radio2'">
-                                <input id="Field1_1" name="Field1" type="radio" value= val.key />
+                            <div v-else>
+                              <div v-if= "val.key == 'category'">
+                                <div v-if="item[val.key]=='Others'">
+                                   {{item[val.key]}}<br>
+                                  <input id = "Field2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36"/>
+                                </div>
+                                <div v-else> {{item[val.key]}}</div>
+                              </div>
                             </div>
-                            <div v-else>{{item[val.key]}}</div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-  <switch-button :response=responseJSON>
+  <switch-button :response = JSON.stringify(responseJSON)>
 
   </switch-button>
 </div>
@@ -42,17 +51,21 @@ export default {
   data () {
     return {
       host:location.hostname,
-      responseJSON:"",
+      responseJSON:{
+        questionId: 0,
+        items:[
+        ]
+      },
       tableHead:[
-                {key:"category",title:"category"},
-                {key:"extreme",title:"extreme"},
-                {key:"very",title:"very"},
-                {key:"slight",title:"slight"},
-                {key:"not",title:"not"}
+                {key:"category",title:"Category"},
+                {key:"extreme",title:"Extreme Important"},
+                {key:"very",title:"Very Important"},
+                {key:"slight",title:"Slight Important"},
+                {key:"not",title:"Not Important"}
             ],
       tableData:[
-          {category:"Your prior knowledge",extreme:"radio1",very:"radio1",slight:"radio1",not:"radio1"},
-          {category:"News source",extreme:"radio2",very:"radio2",slight:"radio2",not:"radio2"},
+          {category:"Your prior knowledge",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
+          {category:"News source",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
           {category:"Headline claim",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
           {category:"Image associated with post",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
           {category:"Others",extreme:"radio",slight:"radio",very:"radio",not:"radio"}
@@ -61,11 +74,44 @@ export default {
   },
   mounted(){
     this.initPage();
+    for(let i = 0; i < this.tableData.length; i++){
+          console.log(i);
+          let answerObject = {};
+          answerObject.index = i;
+          answerObject.content = 0;
+          this.responseJSON.items.push(answerObject);
+    } 
+    console.log("currentTable:"+JSON.stringify(this.responseJSON.items))
   },
   methods: {
     initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
-      console.log("JSOSJOJOSJOIJSONS: "+JSON.stringify(jsonQuestion));
+      console.log("tempStorage: "+JSON.stringify(jsonQuestion));
+      let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
+      console.log("msg:"+JSON.stringify(jsonObj.description));
+      this.msg = jsonObj.description;
+      console.log("tablehead:"+JSON.stringify(jsonObj.tableHead));
+      this.tableHead = jsonObj.tableHead;
+      
+      this.tableData = jsonObj.tableData;
+      console.log("tableData len:"+JSON.stringify(this.tableData.length));
+
+      this.responseJSON.questionId = jsonObj.order;
+      
+    },
+    methodToRunOnSelect(payload) {
+        this.object = payload;
+        for(let i = 0; i< this.responseJSON.items.length; i++ ){
+          if(this.responseJSON.items[i].index == payload[0]){
+            this.responseJSON.items[i].content = payload[1];
+            console.log("updatedResponse:"+JSON.stringify(this.responseJSON))
+            
+          }
+        }
+    },
+    generateJSON(){
+      let json = {};
+      this.responseJSON = JSON.stringify(json);
     }
   },
 
