@@ -20,14 +20,14 @@
         <hr>
         <div v-for='item in panelListItem(panel.id)' :key='item.title' class='drag-el' draggable="true"
              @dragstart = 'startDrag($event,item)'
-             @mousehover.native="hover=true"
-             @mouseleave.native="hover=false"
+             @mousehover="hover=true"
+             @mouseleave="hover=false"
         >
           <span>{{ item.title }}</span>
         </div>
       </div>
     </div>
-    <switch-button :response=responseJSON>
+    <switch-button :response=JSON.stringify(responseJSON)>
 
     </switch-button>
   </div>
@@ -37,8 +37,7 @@
 
 <script>
 
-import {getSurvey} from "../api/getSurvey";
-import storage from "../utils/storage";
+import {tempStorage} from "../utils/storage";
 import SwitchButton from "./SwitchButton";
 
 export default {
@@ -46,9 +45,8 @@ export default {
   components: {SwitchButton},
   data () {
     return {
-      id:100,
+      responseJSON: {},
       isExpanded:false,
-      responseJSON:"",
       msg:"dcfvgbhnjrcvcrxcdtfvgybgyvtrctfvgtbynuj",
       panels: [
         {
@@ -85,22 +83,26 @@ export default {
     }
   },
 
+  mounted(){
+    this.initPage();
+  },
 
   methods: {
     initPage() {
-      const surveyJSON = getSurvey(this.$route.params.id).then(response=>{
-        if (response.status === 200){
-          let identifier = this.$route.params.id + new Date().getTime()
-          console.log(identifier)
-          const hashString = this.$md5(identifier);
-          storage.set(this.$route.params.id,hashString);
-          console.log(response.data);
-        } else {
-          alert("Data Error!");
-        }}
-      ).catch(e => {
-        console.log(e);
-      })
+      let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
+      console.log("tempStorage: "+JSON.stringify(jsonQuestion));
+      let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
+      console.log("msg:"+JSON.stringify(jsonObj.description));
+      this.msg = jsonObj.description;
+      console.log("isExpanded:"+JSON.stringify(jsonObj.isExpanded));
+      this.isExpanded = jsonObj.isExpanded;
+      console.log("panels:"+JSON.stringify(jsonObj.panels));
+      this.panels = jsonObj.panels;
+      console.log("items:"+JSON.stringify(jsonObj.items));
+      this.items = jsonObj.items;
+      this.responseJSON.questionid=jsonObj.order;
+      this.responseJSON.items=this.items;
+      console.log("Current Response: "+JSON.stringify(this.responseJSON));
     },
     expandClick(){
       this.isExpanded = !this.isExpanded
@@ -126,6 +128,7 @@ export default {
       const itemID = evt.dataTransfer.getData('itemID')
       const item = this.items.find(item => item.id == itemID)
       item.list = list
+      console.log("Updated Response!: "+JSON.stringify(this.responseJSON))
     },
 
     panelListItem: function (value) {
