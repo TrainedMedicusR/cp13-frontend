@@ -138,6 +138,7 @@ body {
   padding: 20px;
 }
 
+
 .wrapper{
   width: 1280px;
   max-width: 100%;
