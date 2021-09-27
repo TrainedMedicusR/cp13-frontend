@@ -48,6 +48,13 @@ export default {
       secondRange: "Neutral",
       thirdRange: "Very reliable"
     }
+  },
+  methods: {
+    generateJSON(){
+      let json = {};
+
+      this.responseJSON = JSON.stringify(json);
+    }
   }
 }
 </script>
