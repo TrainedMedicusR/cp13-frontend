@@ -71,7 +71,8 @@ export default {
       let questionID = tempStorage.get(this.$route.params.id+"CURRENT");
       let surveyID = tempStorage.get(this.$route.params.id+"sid");
       let identifier = storage.get(this.$route.params.id);
-      return postResp(surveyID, questionID, contactINFO, content, identifier);
+      let contentJSON = JSON.parse(content);
+      return postResp(surveyID, questionID, contactINFO, contentJSON, identifier);
     }
   }
 }
