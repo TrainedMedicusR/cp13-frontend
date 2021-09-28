@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
     <hr>
-    <div class = "surveyTitle">
-      <h1>{{Survey_title}}</h1>
-    </div>
+    <!-- <div class = "surveyTitle">
+      <h1>Survey_title</h1>
+    </div> -->
     <div class="container">
       <div class="ele question">
         <!-- <div class="picWall">
@@ -14,7 +14,7 @@
         </div> -->
 <!-- This section are all question buttons like share,like,check. -->
         <div class = "QuestionButtons">
-          <div class = "buttoninline" v-for="item in questionbutton" v-bind:item="item" v-bind:index="index" v-bind:key="item.id">
+          <div class = "buttoninline" v-for="item in this.questionbutton" v-bind:item="item" v-bind:index="index" v-bind:key="item.id">
             <div v-if="item.title=='share'">
               <button class="btn-primary btn-lg" v-on:click="share('share')">
                 <i class="glyphicon glyphicon-share"></i>  Share
@@ -47,11 +47,11 @@
         </div>
         <hr>
 <!-- This section are all social media buttons like linkedin,fb,ins and tw -->
-        <div class = "shareNumber">
+        <!-- <div class = "shareNumber">
           <h3>Where do you want to share to?</h3>
-        </div>
+        </div> -->
 
-        <div class = "ShareButtons">
+        <!-- <div class = "ShareButtons">
           <div class = "buttoninline" v-for="item in sharebutton" v-bind:item="item" v-bind:index="index" v-bind:key="item.id">
             <div v-if="item.title=='facebook'">
               <button class="btn btn-primary btn-lg" v-on:click="facebook('facebook')">
@@ -85,7 +85,7 @@
             </div>
           </div>
           <br>
-        </div>
+        </div> -->
 
       </div>
 
@@ -101,45 +101,81 @@
 
 import {getSurvey} from "../../api/getSurvey";
 import storage from "../../utils/storage";
+import {tempStorage} from "../../utils/storage";
 import SwitchButton from "../SwitchButton";
 export default {
   name: 'ButtonQuestion',
   components: {SwitchButton},
   data () {
     return {
-      responseJSON:"",
+      responseJSON:"absc",
+      
       host:location.hostname,
+      description:"",
       questionbutton:[
-          {title:"share"},
-          {title:"like"},
-          {title:"check"},
-          {title:"skip"},
-          {title:"randomdesign"}
+          // {title:"share"},
+          // {title:"like"},
+          // {title:"check"},
+          // {title:"skip"},
+          // {title:"randomdesign"}
       ],
-      sharebutton:[
-          {title:"facebook"},
-          {title:"instagram"},
-          {title:"linkedin"},
-          {title:"twitter"},
-          {title:"whatever"},
-          {title:"hello"},
-          {title:"newsharelink"}
-      ]
+      // sharebutton:[
+      //     {title:"facebook"},
+      //     {title:"instagram"},
+      //     {title:"linkedin"},
+      //     {title:"twitter"},
+      //     {title:"whatever"},
+      //     {title:"hello"},
+      //     {title:"newsharelink"}
+      // ]
     }
   },
+  mounted(){
+    this.initPage();
+  },
   methods: {
-    share: function (msg) {return(msg)},
-    check: function (msg) {return(msg)},
-    like: function (msg) {return(msg)},
-    skip: function (msg) {return(msg)},
-    customise_question: function (msg) {return(msg)},
-    instagram: function (msg) {return(msg)},
-    facebook: function (msg) {return(msg)},
-    linkedin: function (msg) {return(msg)},
-    twitter: function (msg) {return(msg)},
-    pre: function (msg) {return(msg)},
-    next: function (msg) {return(msg)},
-    customise_share: function (msg) {return(msg)}
+    initPage() {
+      let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
+      console.log("backend_data: "+JSON.stringify(jsonQuestion));
+
+      let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
+
+      console.log("description: "+JSON.stringify(jsonObj.description));
+      this.description = jsonObj.description;
+
+      console.log("questionbutton: "+JSON.stringify(jsonObj.questionbutton));
+      this.questionbutton = jsonObj.questionbutton;
+      
+
+    },
+    
+    share: function (msg) {
+      this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);
+      },
+    check: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    like: function (msg) {
+      this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    skip: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    customise_question: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    instagram: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    facebook: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    linkedin: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    twitter: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    pre: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    next: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);},
+    customise_share: function (msg) {this.responseJSON=msg
+      console.log("Current_Reponse: "+this.responseJSON);}
   }
 }
 
