@@ -164,6 +164,11 @@ export default {
     transition-duration: 0.4s;
 }
 
+.rankButton:focus{
+  background-color: #1947E5;
+  color: white;
+}
+
 .previousButton{
   width: 50px;
   height: 50px;
