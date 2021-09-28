@@ -57,6 +57,9 @@ export default {
       newsPicture: "",
       newsText: "news contentsbalabalabalabalabalabalabalabalabala",
       questionContents: "Please choose an option",
+      newsTitle: '',
+      imgPath:'',
+      newsDetails:'',
 
       options: [
         {id: 0, option: "option1", textField: "false"},

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-  <div class="surveyTitle">
+  <div>
     <h1>{{ newsTitle }}</h1>
   </div>
 
@@ -15,19 +15,19 @@
 <script>
 export default {
   name: "NewsFrame",
-  data() {
-    return {
-      newsTitle: "News title",
-      imgPath:"https://storage.googleapis.com/soft3888/123.jpeg",
-      description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices eros in cursus turpis. Nibh venenatis cras sed felis eget velit aliquet sagittis id. Interdum posuere lorem ipsum dolor sit amet. Tristique senectus et netus et malesuada fames. Odio ut sem nulla pharetra diam sit amet. Netus et malesuada fames ac turpis egestas. Sit amet facilisis magna etiam. Praesent tristique magna sit amet purus. Viverra justo nec ultrices dui sapien eget mi.",
-    }
-  },
-  // props: {
-  //   imgPath: String,
-  //   newsTitle: String,
-  //   description: String,
-  //   required: true
+  // data() {
+  //   return {
+  //     newsTitle: "",
+  //     imgPath:"https://storage.googleapis.com/soft3888/123.jpeg",
+  //     description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices eros in cursus turpis. Nibh venenatis cras sed felis eget velit aliquet sagittis id. Interdum posuere lorem ipsum dolor sit amet. Tristique senectus et netus et malesuada fames. Odio ut sem nulla pharetra diam sit amet. Netus et malesuada fames ac turpis egestas. Sit amet facilisis magna etiam. Praesent tristique magna sit amet purus. Viverra justo nec ultrices dui sapien eget mi.",
+  //   }
   // },
+  props: {
+    imgPath: String,
+    newsTitle: String,
+    description: String,
+    required: true
+  },
 }
 </script>
 
@@ -45,7 +45,7 @@ export default {
 .news{
   text-align: center;
   /*border: 1px solid grey;*/
-  font-size: 20px;
+  font-size: 15px;
   /*align-content: center;*/
   margin-bottom: 20px;
   /*display:table-cell;*/

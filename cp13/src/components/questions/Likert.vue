@@ -1,41 +1,46 @@
 var a = 1
 <template>
-  <div class="TableList">
-    <div> {{msg}}</div>
-    <div class="list">
-      <table class="listTab">
-        <thead>
-        <tr>
-          <th v-for="(item) in tableHead" :key="item.key"> {{item.title}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(item, index) in tableData" v-bind:key="index">
+  <div>
+    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
 
-          <td v-for="(val) in tableHead" :key="val">
+    </news-frame>
 
-            <div v-if="item[val.key]=='radio'">
-              <input id="Field1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
-            </div>
-            <div v-else>
-              <div v-if= "val.key == 'category'">
-                <div v-if="item[val.key]=='Others'">
-                  {{item[val.key]}}<br>
-                  <input id = "Field2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:keyup.enter="addThingEnter" :name="index"/>
-                </div>
-                <div v-else> {{item[val.key]}}</div>
+    <div class="TableList">
+      <div> {{msg}}</div>
+      <div class="list">
+        <table class="listTab">
+          <thead>
+          <tr>
+            <th v-for="(item) in tableHead" :key="item.key"> {{item.title}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(item, index) in tableData" v-bind:key="index">
+
+            <td v-for="(val) in tableHead" :key="val">
+
+              <div v-if="item[val.key]=='radio'">
+                <input id="Field1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
               </div>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+              <div v-else>
+                <div v-if= "val.key == 'category'">
+                  <div v-if="item[val.key]=='Others'">
+                    {{item[val.key]}}<br>
+                    <input id = "Field2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:keyup.enter="addThingEnter" :name="index"/>
+                  </div>
+                  <div v-else> {{item[val.key]}}</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <switch-button :response = JSON.stringify(responseJSON)>
+
+      </switch-button>
     </div>
-    <switch-button :response = JSON.stringify(responseJSON)>
-
-    </switch-button>
   </div>
-
 </template>
 
 
@@ -44,17 +49,18 @@ var a = 1
 <script>
 import {tempStorage} from "../../utils/storage";
 import SwitchButton from "../SwitchButton";
+import NewsFrame from "../NewsFrame";
 
 export default {
   name: 'Likert',
-  components: {SwitchButton},
+  components: {NewsFrame, SwitchButton},
   data () {
     return {
       host:location.hostname,
-      responseJSON:{
-        answer:[
-        ]
-      },
+      responseJSON:{},
+      newsTitle: '',
+      imgPath:'',
+      newsDetails:'',
       msg : "",
       tableHead:[
         {key:"category",title:"Category"},
@@ -88,6 +94,12 @@ export default {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
 
       let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
+
+      this.newsTitle = jsonObj.newsTitle;
+
+      this.imgPath = jsonObj.img;
+
+      this.newsDetails = jsonObj.newsDescription;
 
       this.msg = jsonObj.description;
 

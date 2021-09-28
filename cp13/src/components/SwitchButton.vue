@@ -23,8 +23,8 @@ export default {
   methods:{nextQuestion() {
       let current = tempStorage.get(this.$route.params.id+"CURRENT");
       let total  = tempStorage.get(this.$route.params.id+"TOTAL");
+      console.log("收到："+this.response);
       if (current < total){
-
         // window.scrollTo({
         //   left: 0,
         //   top: 0,
@@ -68,6 +68,10 @@ export default {
       }
     },
     submit(contactINFO, content) {
+      if (this.response === "" || this.response === null) {
+        alert("Please fill in the form!");
+        return;
+      }
       let questionID = tempStorage.get(this.$route.params.id+"CURRENT");
       let surveyID = tempStorage.get(this.$route.params.id+"sid");
       let identifier = storage.get(this.$route.params.id);

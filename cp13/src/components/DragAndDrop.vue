@@ -1,6 +1,11 @@
 <template>
   <div>
     <div class = 'container'>
+
+      <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
+
+      </news-frame>
+
       <div class = 'question'>
         {{isExpanded ? msg : capitalize(msg)}}
         <button>
@@ -40,16 +45,20 @@
 
 import {tempStorage} from "../utils/storage";
 import SwitchButton from "./SwitchButton";
+import NewsFrame from "./NewsFrame";
 
 export default {
   name: "DragAndDrop",
-  components: {SwitchButton},
+  components: {SwitchButton, NewsFrame},
   data () {
     return {
       response: "",
       responseJSON:{},
       isExpanded:true,
       msg:"dcfvgbhnjrcvcrxcdtfvgybgyvtrctfvgtbynuj",
+      newsTitle: '',
+      imgPath:'',
+      newsDetails:'',
       panels: [
         {
           info: "Waiting for classification",
@@ -103,6 +112,11 @@ export default {
       this.isExpanded = jsonObj.isExpanded;
       this.panels = jsonObj.panels;
       this.items = jsonObj.items;
+      this.newsTitle = jsonObj.newsTitle;
+
+      this.imgPath = jsonObj.img;
+
+      this.newsDetails = jsonObj.newsDescription;
     },
     expandClick(){
       this.isExpanded = !this.isExpanded

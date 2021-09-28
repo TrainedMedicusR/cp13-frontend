@@ -4,6 +4,11 @@
     <!-- <div class = "surveyTitle">
       <h1>Survey_title</h1>
     </div> -->
+
+    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
+
+    </news-frame>
+
     <div class="container">
       <div class="ele question">
         <!-- <div class="picWall">
@@ -40,8 +45,8 @@
                 {{item.title}}
               </button>
             </div>
-            
-            
+
+
 
           </div>
         </div>
@@ -99,17 +104,16 @@
 
 <script>
 
-import {getSurvey} from "../../api/getSurvey";
-import storage from "../../utils/storage";
 import {tempStorage} from "../../utils/storage";
 import SwitchButton from "../SwitchButton";
+import NewsFrame from "../NewsFrame";
 export default {
   name: 'ButtonQuestion',
-  components: {SwitchButton},
+  components: {SwitchButton,NewsFrame},
   data () {
     return {
-      responseJSON:"absc",
-      
+      responseJSON:"",
+
       host:location.hostname,
       description:"",
       questionbutton:[
@@ -119,6 +123,9 @@ export default {
           // {title:"skip"},
           // {title:"randomdesign"}
       ],
+      newsTitle: '',
+      imgPath:'',
+      newsDetails:''
       // sharebutton:[
       //     {title:"facebook"},
       //     {title:"instagram"},
@@ -145,10 +152,14 @@ export default {
 
       console.log("questionbutton: "+JSON.stringify(jsonObj.questionbutton));
       this.questionbutton = jsonObj.questionbutton;
-      
 
+      this.newsTitle = jsonObj.newsTitle;
+
+      this.imgPath = jsonObj.img;
+
+      this.newsDetails = jsonObj.newsDescription;
     },
-    
+
     share: function (msg) {
       this.responseJSON=msg
       console.log("Current_Reponse: "+this.responseJSON);
@@ -215,7 +226,7 @@ body {
 
 .ele {
   width: 40%;
-  height: 400px;
+  /*height: 400px;*/
 }
 
 .ele:nth-child(3n+1) {

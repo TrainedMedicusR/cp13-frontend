@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
+
+    </news-frame>
 <!--    <div class="surveyTitle">-->
 <!--      <h1>{{ surveyTitle }}</h1>-->
 <!--    </div>-->
@@ -39,14 +42,16 @@
 <script>
 import {tempStorage} from "../../utils/storage";
 import SwitchButton from "../SwitchButton";
+import NewsFrame from "../NewsFrame";
 export default {
   name: "NumberScale",
-  components: {SwitchButton},
+  components: {SwitchButton, NewsFrame},
   data() {
     return {
       surveyTitle: "survey title",
-      newsPicture:"",
-      newsText:"news contentsbalabalabalabalabalabalabalabalabala",
+      newsTitle: '',
+      imgPath:'',
+      newsDetails:'',
       questionContents: "Please rank the reliability",
       // firstRange: "Not reliable",
       // secondRange: "Neutral",
@@ -65,9 +70,9 @@ export default {
       console.log("JSON: "+JSON.stringify(jsonQuestion));
       let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
 
-      this.surveyTitle = jsonObject.newsTitle;
-      this.newsPicture=jsonObject.img;
-      this.newsText = jsonObject.newsDescription;
+      this.newsTitle = jsonObject.newsTitle;
+      this.imgPath=jsonObject.img;
+      this.newsDetails = jsonObject.newsDescription;
       this.questionContents=jsonObject.questionContents;
       this.rankNumber=jsonObject.rankNumber;
     },
