@@ -14,7 +14,8 @@
       <div v-for = 'panel in panels' :key='panel.id' class='drop-zone'
            @drop = 'onDrop($event,panel.id)'
            @dragenter.prevent
-           @dragover.prevent>
+           @dragover.prevent
+           :style="{height: dynamicHeight}">
         <hr>
         <h6>{{panel.info}}</h6>
         <hr>
@@ -88,6 +89,12 @@ export default {
     this.initPage();
   },
 
+  computed:{
+    dynamicHeight() {
+      return this.items.length*70+'px';
+    }
+  },
+
   methods: {
     initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
@@ -156,7 +163,6 @@ export default {
   background-color: rgb(224, 192, 132);
   border-radius:6px 6px 6px 6px;
   margin-bottom: 10px;
-  height: 180px;
   align-items: center;
 }
 .drop-zone > h6 {
