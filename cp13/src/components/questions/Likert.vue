@@ -1,40 +1,40 @@
 var a = 1
 <template>
-<div class="TableList">
-  <div> {{msg}}</div>
-        <div class="list">
-            <table class="listTab" cellspacing="0" cellpadding="0">
-                <thead>
-                    <tr>
-                        <th v-for="(item) in tableHead" :key="item.key"> {{item.title}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, index) in tableData" v-bind:key="index">
-                         
-                        <td v-for="(val) in tableHead" :key="val">
+  <div class="TableList">
+    <div> {{msg}}</div>
+    <div class="list">
+      <table class="listTab">
+        <thead>
+        <tr>
+          <th v-for="(item) in tableHead" :key="item.key"> {{item.title}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item, index) in tableData" v-bind:key="index">
 
-                            <div v-if="item[val.key]=='radio'">
-                                <input id="Field1"  type="radio" value = val.key :name="index"  v-on:click="methodToRunOnSelect([index,val.key])"/>
-                            </div>
-                            <div v-else>
-                              <div v-if= "val.key == 'category'">
-                                <div v-if="item[val.key]=='Others'">
-                                   {{item[val.key]}}<br>
-                                  <input id = "Field2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36"/>
-                                </div>
-                                <div v-else> {{item[val.key]}}</div>
-                              </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-  <switch-button :response = JSON.stringify(responseJSON)>
+          <td v-for="(val) in tableHead" :key="val">
 
-  </switch-button>
-</div>
+            <div v-if="item[val.key]=='radio'">
+              <input id="Field1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
+            </div>
+            <div v-else>
+              <div v-if= "val.key == 'category'">
+                <div v-if="item[val.key]=='Others'">
+                  {{item[val.key]}}<br>
+                  <input id = "Field2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:keyup.enter="addThingEnter" :name="index"/>
+                </div>
+                <div v-else> {{item[val.key]}}</div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <switch-button :response = JSON.stringify(responseJSON)>
+
+    </switch-button>
+  </div>
 
 </template>
 
@@ -52,66 +52,72 @@ export default {
     return {
       host:location.hostname,
       responseJSON:{
-        questionId: 0,
-        items:[
+        answer:[
         ]
       },
+      msg : "",
       tableHead:[
-                {key:"category",title:"Category"},
-                {key:"extreme",title:"Extreme Important"},
-                {key:"very",title:"Very Important"},
-                {key:"slight",title:"Slight Important"},
-                {key:"not",title:"Not Important"}
-            ],
+        {key:"category",title:"Category"},
+        {key:"extreme",title:"Extreme Important"},
+        {key:"very",title:"Very Important"},
+        {key:"slight",title:"Slight Important"},
+        {key:"not",title:"Not Important"}
+      ],
       tableData:[
-          {category:"Your prior knowledge",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
-          {category:"News source",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
-          {category:"Headline claim",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
-          {category:"Image associated with post",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
-          {category:"Others",extreme:"radio",slight:"radio",very:"radio",not:"radio"}
+        {category:"Your prior knowledge",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
+        {category:"News source",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
+        {category:"Headline claim",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
+        {category:"Image associated with post",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
+        {category:"Others",extreme:"radio",slight:"radio",very:"radio",not:"radio"}
       ]
     }
   },
   mounted(){
     this.initPage();
     for(let i = 0; i < this.tableData.length; i++){
-          console.log(i);
-          let answerObject = {};
-          answerObject.index = i;
-          answerObject.content = 0;
-          this.responseJSON.items.push(answerObject);
-    } 
-    console.log("currentTable:"+JSON.stringify(this.responseJSON.items))
+      let answerObject = {};
+      answerObject.index = i;
+      answerObject.selection = "";
+      answerObject.input = "";
+      this.responseJSON.answer.push(answerObject);
+    }
+
   },
   methods: {
     initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
-      console.log("tempStorage: "+JSON.stringify(jsonQuestion));
-      let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
-      console.log("msg:"+JSON.stringify(jsonObj.description));
-      this.msg = jsonObj.description;
-      console.log("tablehead:"+JSON.stringify(jsonObj.tableHead));
-      this.tableHead = jsonObj.tableHead;
-      
-      this.tableData = jsonObj.tableData;
-      console.log("tableData len:"+JSON.stringify(this.tableData.length));
 
-      this.responseJSON.questionId = jsonObj.order;
-      
+      let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
+
+      this.msg = jsonObj.description;
+
+      this.tableHead = jsonObj.tableHead;
+
+      this.tableData = jsonObj.tableData;
+
+
     },
-    methodToRunOnSelect(payload) {
-        this.object = payload;
-        for(let i = 0; i< this.responseJSON.items.length; i++ ){
-          if(this.responseJSON.items[i].index == payload[0]){
-            this.responseJSON.items[i].content = payload[1];
-            console.log("updatedResponse:"+JSON.stringify(this.responseJSON))
-            
-          }
+    methodToRunOnSelect(event) {
+
+
+      for(let i = 0; i< this.responseJSON.answer.length; i++ ){
+        if(this.responseJSON.answer[i].index == event.target.name){
+          this.responseJSON.answer[i].selection = event.target.value;
+
         }
+      }
     },
     generateJSON(){
       let json = {};
       this.responseJSON = JSON.stringify(json);
+    },
+    addThingEnter(event){
+      for(let i = 0; i< this.responseJSON.answer.length; i++ ){
+        if(this.responseJSON.answer[i].index === event.target.name){
+          this.responseJSON.answer[i].input = event.target.value;
+
+        }
+      }
     }
   },
 
@@ -176,7 +182,7 @@ body {
 }
 
 .LikertMatrix{
-    transform:scale(0.8, 0.8);
+  transform:scale(0.8, 0.8);
 }
 
 body {
@@ -316,7 +322,7 @@ form li.section h3 {
 
 
 .tableList{
-    width: 100%;
+  width: 100%;
 }
 
 .list{
@@ -325,68 +331,68 @@ form li.section h3 {
   overflow-x:auto;
 }
 table.listTab{
-    width: 100%;
-    font-size: 14px;
-    color: #6a6a6a;
-    border: 1px solid #ececed;
-    padding: 1px;
-    background-color: #fff;
+  width: 100%;
+  font-size: 14px;
+  color: #6a6a6a;
+  border: 1px solid #ececed;
+  padding: 1px;
+  background-color: #fff;
 }
 table.listTab th{
-    background-color: #ecf0f4;
-    padding: 14px 8px;
-    text-align: left;
-    font-size: 14px;
-    border: 1px solid #ecf0f4;
-    min-width: 40px;
-    color:#292d31;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  background-color: #ecf0f4;
+  padding: 14px 8px;
+  text-align: left;
+  font-size: 14px;
+  border: 1px solid #ecf0f4;
+  min-width: 40px;
+  color:#292d31;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 table.listTab th.check{
-    min-width: 20px;
+  min-width: 20px;
 }
 table.listTab tbody > tr td{
-    padding: 16px 8px;
-    text-align: left;
-    font-size: 14px;
-    border-bottom: 1px solid #ececed;
-    vertical-align: middle;
-    word-break: break-all;
-    min-width: 50px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  padding: 16px 8px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #ececed;
+  vertical-align: middle;
+  word-break: break-all;
+  min-width: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 table.listTab tbody > tr td.check{
-min-width: 20px;
+  min-width: 20px;
 }
 table.listTab tbody > tr td:first-child{
-    width: 20px;
+  width: 20px;
 }
 table.listTab tbody > tr:hover{
-    background-color: #dfeefc;
+  background-color: #dfeefc;
 }
 table.listTab tbody > tr.check{
-    background-color: #dfeefc;
+  background-color: #dfeefc;
 }
 table.listTab tbody > tr:last-child td{
-    border-bottom: 0px;
+  border-bottom: 0px;
 }
 table.listTab tbody > tr td a{
-    color: #248bfc;
+  color: #248bfc;
 }
 table.listTab tbody > tr td input{
-border:1px solid #248bfc;
+  border:1px solid #248bfc;
 }
 table.listTab tbody > tr td .green{
-color: #72d34b;
-font-weight:bold;
+  color: #72d34b;
+  font-weight:bold;
 }
 table.listTab tbody > tr td .red{
-color: #f00;
-font-weight:bold;
+  color: #f00;
+  font-weight:bold;
 }
 
 </style>
