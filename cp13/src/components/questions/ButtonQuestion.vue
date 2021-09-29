@@ -58,7 +58,7 @@ export default {
   components: {SwitchButton,NewsFrame},
   data () {
     return {
-      responseJSON:{},
+      responseJSON:'',
       host:location.hostname,
       description:"",
       newsTitle: '',
@@ -106,12 +106,11 @@ body {
 }
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 800px;
+  width: 700px;
   margin: 0 auto;
   padding: 20px;
+  text-align: center;
+  align-content: center;
 }
 
 .wrapper{
