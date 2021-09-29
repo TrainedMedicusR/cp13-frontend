@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-    <hr>
     <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
     </news-frame>
 
@@ -41,9 +40,10 @@
         </div>
         <hr>
       </div>
-      <SwitchButton :response=responseJSON>
-      </SwitchButton>
+    <SwitchButton :response=responseJSON>
+    </SwitchButton>
     </div>
+
   </div>
 
 </template>
@@ -115,11 +115,7 @@ body {
 }
 
 .wrapper{
-  width: 1280px;
-  max-width: 100%;
-  overflow: hidden;
-  margin: 0 auto;
-  padding: 40px;
+  text-align: center;
 }
 
 .ele {
