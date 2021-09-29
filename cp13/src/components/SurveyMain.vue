@@ -2,10 +2,16 @@
   <div class="wrapper">
     <hr>
     <header class = "surveyTitle">
-      <h1>{{surveyTitle}}</h1>
-      <h2>{{blockTitle}}</h2>
-      <h3>{{"Question "+QOrder}}</h3>
+      <h1 v-if="this.consent">{{surveyTitle}}</h1>
+      <h2 v-if="this.consent">{{blockTitle}}</h2>
+      <h3 v-if="this.consent">{{"Question "+QOrder}}</h3>
+      <h1 v-if="this.consent === false">Consent Page</h1>
     </header>
+
+    <consent-page v-on:consentValue="consentValue" v-if="this.consent === false" :text="consentText">
+
+    </consent-page>
+
     <drag-and-drop class="container" v-if="QType === 'DRAG' && this.consent ">
 
     </drag-and-drop>
@@ -38,13 +44,15 @@ import DragAndDrop from "./DragAndDrop";
 import Likert from "./questions/Likert"
 import NumberScale from "./questions/NumberScale";
 import MultipleChoice from "./questions/MultipleChoice";
+import ConsentPage from "./ConsentPage";
+import router from "../router";
 
 
 
 
 export default {
   name: 'SurveyMain',
-  components: {MultipleChoice, ButtonQuestion, DragAndDrop, Likert, NumberScale},
+  components: {ConsentPage, MultipleChoice, ButtonQuestion, DragAndDrop, Likert, NumberScale},
   data () {
     return {
       blockTitle:"",
@@ -54,6 +62,7 @@ export default {
       QOrder:"",
       QType: "",
       hashString:"",
+      consentText:"",
       host:location.hostname,
     }
   },
@@ -62,6 +71,16 @@ export default {
   },
   methods: {
     initPage() {
+      if(tempStorage.get(this.$route.params.id) !== null) {
+        this.renderQuestion();
+        return;
+      }
+
+      if (storage.get(this.$route.params.id) !== null){
+        router.push({name:'NotAuthorised'});
+        return;
+      }
+
       const resJSON = getSurvey(this.$route.params.id).then(response=>{
         if (response.status === 200){
           let identifier = this.$route.params.id + new Date().getTime();
@@ -72,6 +91,8 @@ export default {
           const jsonString = response.data;
           this.surveyID =jsonString.id;
           this.surveyTitle = jsonString.name;
+          this.consentText = jsonString.consentText;
+          this.consent = !eval(jsonString.consent_required);
           //Need Optimisation
           tempStorage.set(this.$route.params.id,jsonString.block)
           tempStorage.set(this.$route.params.id+"sid",this.surveyID)
@@ -96,6 +117,9 @@ export default {
     },
     submit() {
       alert("Submit Success!")
+    },
+    consentValue(value){
+      this.consent = eval(value);
     },
     renderQuestion(){
       let identifier = this.$route.params.id;

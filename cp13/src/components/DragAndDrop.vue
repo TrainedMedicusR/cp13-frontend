@@ -1,6 +1,11 @@
 <template>
   <div>
     <div class = 'container'>
+
+      <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
+
+      </news-frame>
+
       <div class = 'question'>
         {{isExpanded ? msg : capitalize(msg)}}
         <button>
@@ -14,7 +19,8 @@
       <div v-for = 'panel in panels' :key='panel.id' class='drop-zone'
            @drop = 'onDrop($event,panel.id)'
            @dragenter.prevent
-           @dragover.prevent>
+           @dragover.prevent
+           :style="{height: dynamicHeight}">
         <hr>
         <h6>{{panel.info}}</h6>
         <hr>
@@ -27,7 +33,7 @@
         </div>
       </div>
     </div>
-    <switch-button :response=JSON.stringify(response)>
+    <switch-button :response=response>
 
     </switch-button>
   </div>
@@ -39,16 +45,20 @@
 
 import {tempStorage} from "../utils/storage";
 import SwitchButton from "./SwitchButton";
+import NewsFrame from "./NewsFrame";
 
 export default {
   name: "DragAndDrop",
-  components: {SwitchButton},
+  components: {SwitchButton, NewsFrame},
   data () {
     return {
       response: "",
       responseJSON:{},
       isExpanded:true,
       msg:"dcfvgbhnjrcvcrxcdtfvgybgyvtrctfvgtbynuj",
+      newsTitle: '',
+      imgPath:'',
+      newsDetails:'',
       panels: [
         {
           info: "Waiting for classification",
@@ -88,6 +98,12 @@ export default {
     this.initPage();
   },
 
+  computed:{
+    dynamicHeight() {
+      return this.items.length*70+'px';
+    }
+  },
+
   methods: {
     initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
@@ -96,6 +112,11 @@ export default {
       this.isExpanded = jsonObj.isExpanded;
       this.panels = jsonObj.panels;
       this.items = jsonObj.items;
+      this.newsTitle = jsonObj.newsTitle;
+
+      this.imgPath = jsonObj.img;
+
+      this.newsDetails = jsonObj.newsDescription;
     },
     expandClick(){
       this.isExpanded = !this.isExpanded
@@ -156,7 +177,6 @@ export default {
   background-color: rgb(224, 192, 132);
   border-radius:6px 6px 6px 6px;
   margin-bottom: 10px;
-  height: 180px;
   align-items: center;
 }
 .drop-zone > h6 {

@@ -1,17 +1,16 @@
 <template>
   <div class="container">
     <header class = 'consent'>
-      {{isExpanded ? content : capitalize(content)}}
-      <button>
-          <span @click = "expandClick" class = "expand">
-            {{isExpanded ? "show less": "show more"}}
-          </span>
-      </button>
+      {{text}}
     </header>
     <hr>
-    <button class='agreeButton' @onclick="agreeConsent"
+    <button class='agreeButton' v-on:click="agreeConsent"
             @mousehover="hover=true"
-            @mouseleave="hover=false">I agree</button>
+            @mouseleave="hover=false">I Agree</button>
+
+    <button class='disagreeButton' v-on:click="disagreeConsent"
+            @mousehover="hover=true"
+            @mouseleave="hover=false">I Disagree</button>
   </div>
 </template>
 
@@ -21,13 +20,12 @@ export default {
   name: "ConsentPage",
 
   props:{
-    consent:Boolean
+    text:String
   },
 
   data(){
     return{
       isExpanded:true,
-      content:"This is consent page!"
     }
   },
 
@@ -54,8 +52,13 @@ export default {
     },
 
     agreeConsent(){
-      this.$emit('checkConsent',!this.consent);
+      this.$emit('consentValue',true);
+    },
+    disagreeConsent() {
+      console.log("Thank you!");
+      alert("Thank you!");
     }
+
   }
 
 }
@@ -83,11 +86,17 @@ export default {
 
 .agreeButton{
   position: absolute;
-  left: 50%;
+  left: 40%;
   transform: translate(-50%,-50%);
 }
 
-.agreeButton:hover{
+.disagreeButton{
+  position: absolute;
+  left: 60%;
+  transform: translate(-50%,-50%);
+}
+
+.disagreeButton:hover,.agreeButton:hover{
   background: #337ab7;
 }
 </style>

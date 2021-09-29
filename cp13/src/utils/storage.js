@@ -23,6 +23,15 @@ export const tempStorage = {
   getQuestionJSON(uniqueID) {
     let current = sessionStorage.getItem(uniqueID+"CURRENT");
     return JSON.parse(sessionStorage.getItem(uniqueID+current));
+  },
+  getQuestionAnswerJSON(uniqueID) {
+    let current = sessionStorage.getItem(uniqueID+"CURRENT");
+    let answer = sessionStorage.getItem(uniqueID+current+"ANSWER");
+    if (answer !==null) {
+      return JSON.parse(answer);
+    } else {
+      return {};
+    }
   }
 };
 

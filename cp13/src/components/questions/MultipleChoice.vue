@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-<!--    <div class="surveyTitle">-->
-<!--      <h1>{{ surveyTitle }}</h1>-->
-<!--    </div>-->
+    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
+
+    </news-frame>
     <div class="container">
 
 <!--      <div class="news">-->
@@ -18,16 +18,15 @@
             <tr v-for="item in options">
               <td v-if="item.textField==='false'">
                 <label>
-                  <input name="choice" type="radio" :value="item.option"/>
+                  <input name="choice" type="radio" :value="item.option" @click="setAnswer"/>
                   {{ item.option }}
                 </label>
               </td>
-
               <td v-else-if="item.textField==='true'">
                 <label>
 <!--                  <input name="choice" type="radio" :value="item.option"/>-->
                   {{ item.option }}
-                  <input name="choice" type="text" placeholder="type your answer here"/>
+                  <input name="text_choice" type="text" v-on:blur="setAnswer" placeholder="type your answer here"/>
                 </label>
               </td>
             </tr>
@@ -46,17 +45,20 @@
 </template>
 
 <script>
+import {tempStorage} from "../../utils/storage";
 import SwitchButton from "../SwitchButton";
+import NewsFrame from "../NewsFrame";
 
 export default {
+
   name: "MultipleChoice",
-  components: {SwitchButton},
+  components: {SwitchButton,NewsFrame},
   data() {
     return {
-      surveyTitle: "survey title",
-      newsPicture: "",
-      newsText: "news contentsbalabalabalabalabalabalabalabalabala",
+      imgPath: "",
+      newsDetails: "news contentsbalabalabalabalabalabalabalabalabala",
       questionContents: "Please choose an option",
+      newsTitle: '',
 
       options: [
         {id: 0, option: "option1", textField: "false"},
@@ -67,7 +69,25 @@ export default {
     }
   },
   mounted() {
+    this.initPage();
+  },
+  methods:{
+    initPage() {
+      let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
+      console.log("JSON: "+JSON.stringify(jsonQuestion));
+      let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
+
+      this.newsTitle = jsonObject.newsTitle;
+      this.imgPath=jsonObject.img;
+      this.newsDetails = jsonObject.newsDescription;
+      this.questionContents=jsonObject.questionContents;
+      this.options = jsonObject.options;
+    }, setAnswer(event){
+      let qValue = event.target.value;
+      this.responseJSON = JSON.stringify({answer: qValue});
+    }
   }
+
 }
 </script>
 
