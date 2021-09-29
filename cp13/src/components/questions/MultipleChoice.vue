@@ -166,18 +166,26 @@ export default {
 }
 
 .form{
-  padding: 16px;
+  padding: 25px;
   text-align: left;
+  font-size: 16px;
 }
 
 .form input[type=text]{
-  /*padding: 8px 8px;*/
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out;
+  padding: 5px 5px;
+  width: 300px;
+  -webkit-transition: width 0.5s ease-in-out;
+  transition: width 0.5s ease-in-out;
   border: 2px solid #ccc;
   border-radius: 4px;
 }
 .form input[type=text]:focus {
-  width: 100%;
+  /*width: 100%;*/
+  width: 500px;
+}
+
+.form label{
+  cursor: pointer;
+  margin: 10px;
 }
 </style>
