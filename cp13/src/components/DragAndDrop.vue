@@ -7,12 +7,7 @@
       </news-frame>
 
       <div class = 'question'>
-        {{isExpanded ? msg : capitalize(msg)}}
-        <button>
-          <span @click = "expandClick" class = "expand">
-            {{isExpanded ? "show less": "show more"}}
-          </span>
-        </button>
+        {{msg}}
       </div>
       <hr>
 
@@ -170,9 +165,7 @@ export default {
   background-color: white;
   text-align: center;
 }
-.expand{
-  color: cornflowerblue;
-}
+
 .drop-zone {
   background-color: #EFF2F5;
   border-radius:6px 6px 6px 6px;
