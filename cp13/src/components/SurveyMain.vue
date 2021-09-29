@@ -3,7 +3,7 @@
     <hr>
 
     <div class="progress">
-      <div class="progress-bar" role="progressbar" :style="{width:progressWidth}" :aria-valuenow="currentPage" aria-valuemin="0" :aria-valuemax="totalPage">
+      <div v-if="this.consent" class="progress-bar" role="progressbar" :style="{width:progressWidth}" :aria-valuenow="currentPage" aria-valuemin="0" :aria-valuemax="totalPage">
 
         {{ progressWidth }}
       </div>
