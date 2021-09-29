@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <switch-button :response=JSON.stringify(response)>
+    <switch-button :response=response>
 
     </switch-button>
   </div>
