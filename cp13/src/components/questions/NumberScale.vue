@@ -92,7 +92,7 @@ export default {
 
 .container {
   /*border: 1px solid grey;*/
-  width: 700px;
+  width: 800px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;

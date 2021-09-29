@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import SurveyMain from "../components/SurveyMain";
 import NotFound from "../components/NotFound";
 import NotAuthorised from "../components/NotAuthorised";
+import Complete from "../components/Complete";
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/401',
       component: NotAuthorised,
       name: 'NotAuthorised'
+    },
+    {
+      path: '/complete',
+      component: Complete,
+      name: 'Complete'
     }
   ]
 })

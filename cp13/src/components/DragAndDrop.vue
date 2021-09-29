@@ -7,12 +7,7 @@
       </news-frame>
 
       <div class = 'question'>
-        {{isExpanded ? msg : capitalize(msg)}}
-        <button>
-          <span @click = "expandClick" class = "expand">
-            {{isExpanded ? "show less": "show more"}}
-          </span>
-        </button>
+        {{msg}}
       </div>
       <hr>
 
@@ -115,8 +110,15 @@ export default {
       this.newsTitle = jsonObj.newsTitle;
 
       this.imgPath = jsonObj.img;
-
       this.newsDetails = jsonObj.newsDescription;
+
+      if(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id))!=="{}"){
+        let jsonQuestionH = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
+        let jsonObjH = JSON.parse(JSON.stringify(jsonQuestionH));
+        this.items = jsonObjH.answers;
+        this.responseJSON.answers = this.items
+        this.response = JSON.stringify(this.responseJSON)
+      }
     },
     expandClick(){
       this.isExpanded = !this.isExpanded
@@ -156,13 +158,6 @@ export default {
 
 <style scoped>
 
-.qid{
-  font-family: Times New Roman,serif;
-  font-size: 30px;
-  width: 100%;
-  background-color: white;
-  text-align: center;
-}
 .question{
   font-family: Arial,serif;
   font-size: 20px;
@@ -170,11 +165,9 @@ export default {
   background-color: white;
   text-align: center;
 }
-.expand{
-  color: cornflowerblue;
-}
+
 .drop-zone {
-  background-color: rgb(224, 192, 132);
+  background-color: #EFF2F5;
   border-radius:6px 6px 6px 6px;
   margin-bottom: 10px;
   align-items: center;
@@ -189,7 +182,7 @@ export default {
 
 .drag-el {
   width:auto;
-  background-color: rgb(161, 197, 239);
+  background-color: #5DB3EC;
   border-radius:6px 6px 6px 6px;
   margin-bottom: 10px;
   padding: 5px;
@@ -199,9 +192,7 @@ export default {
   text-align: -webkit-center;
 }
 .drag-el:hover{
-  background: #337ab7;
+  background-color: #dfeefc;
 }
-.next {
-  text-align: center;
-}
+
 </style>

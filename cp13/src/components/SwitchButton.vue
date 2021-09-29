@@ -13,6 +13,7 @@
 <script>
 import {tempStorage,storage} from "../utils/storage";
 import {postResp} from "../api/postSurvey";
+import router from "../router"
 
 export default {
   name: "SwitchButton",
@@ -39,6 +40,7 @@ export default {
         this.submit("",this.response).then(response=>{
           if (response.status === 200){
             alert("Thank you for your participation!");
+            router.push({name:'Complete'});
           } else {
             alert("Network Error")
           }
@@ -49,19 +51,18 @@ export default {
     },
     forwardQuestion() {
       let current = tempStorage.get(this.$route.params.id+"CURRENT");
-      let total  = tempStorage.get(this.$route.params.id+"TOTAL");
-      if (current > 1) {
-        current -= 1;
-        // window.scrollTo({
-        //   left: 0,
-        //   top: 0,
-        //   behavior: 'smooth'
-        // })
-        tempStorage.set(this.$route.params.id+"CURRENT",current);
-        location.reload();
-      } else {
-        alert("This is the first question")
-      }
+      if (current >1){
+            if(this.response === "" || this.response === null){
+              tempStorage.set(this.$route.params.id+current+"ANSWER", {});
+            }else{
+              tempStorage.set(this.$route.params.id+current+"ANSWER",JSON.parse(this.response))
+            }
+            current -= 1;
+            tempStorage.set(this.$route.params.id+"CURRENT",current);
+            location.reload();
+        } else {
+            alert("This is the first question!");
+        }
     },
     submit(contactINFO, content) {
       if (this.response === "" || this.response === null) {

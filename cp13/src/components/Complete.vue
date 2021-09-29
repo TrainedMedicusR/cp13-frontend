@@ -1,18 +1,18 @@
 <template>
-  <h1>404 NOT FOUND</h1>
+  <div>
+    <h1>Thank you for your participation!</h1>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "NotFound"
+  name: "Complete"
 }
 </script>
 
 <style scoped>
 h1{
-  width: 300px;
+  width: 560px;
   margin: 0 auto;
 }
-
-
 </style>
