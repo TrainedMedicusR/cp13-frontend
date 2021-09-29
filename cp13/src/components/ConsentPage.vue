@@ -55,7 +55,6 @@ export default {
       this.$emit('consentValue',true);
     },
     disagreeConsent() {
-      console.log("Thank you!");
       alert("Thank you!");
     }
 

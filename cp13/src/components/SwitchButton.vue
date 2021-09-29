@@ -13,6 +13,7 @@
 <script>
 import {tempStorage,storage} from "../utils/storage";
 import {postResp} from "../api/postSurvey";
+import router from "../router"
 
 export default {
   name: "SwitchButton",
@@ -39,6 +40,7 @@ export default {
         this.submit("",this.response).then(response=>{
           if (response.status === 200){
             alert("Thank you for your participation!");
+            router.push({name:'Complete'});
           } else {
             alert("Network Error")
           }

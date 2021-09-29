@@ -12,5 +12,13 @@ export default {
 </script>
 
 <style scoped>
+h1{
+  width: 350px;
+  margin: 0 auto;
+}
 
+h2{
+  width: 400px;
+  margin: 0 auto;
+}
 </style>
