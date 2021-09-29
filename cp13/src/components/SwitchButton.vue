@@ -51,29 +51,14 @@ export default {
     },
     forwardQuestion() {
       let current = tempStorage.get(this.$route.params.id+"CURRENT");
-      let total  = tempStorage.get(this.$route.params.id+"TOTAL");
-      console.log("收到："+this.response);
       if (current >1){
-        this.submit("",this.response).then(response=>{
-          if (response.status === 200){
             tempStorage.set(this.$route.params.id+current+"ANSWER",JSON.parse(this.response))
             current -= 1;
             tempStorage.set(this.$route.params.id+"CURRENT",current);
             location.reload();
-          } else {
-            alert("Network Error")
-          }
-        })
-      } else {
-        this.submit("",this.response).then(response=>{
-          if (response.status === 200){
+        } else {
             alert("This is the first question!");
-          } else {
-            alert("Network Error")
-          }
-        })
-        sessionStorage.clear();
-      }
+        }
     },
     submit(contactINFO, content) {
       if (this.response === "" || this.response === null) {
