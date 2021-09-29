@@ -78,7 +78,7 @@ export default {
     },
     click(tmp,n){
       console.log(n);
-      this.responseJSON = JSON.stringify({"answer": n});
+      this.responseJSON = JSON.stringify({answer: n});
       console.log(this.responseJSON);
     }
   }
