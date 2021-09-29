@@ -33,9 +33,6 @@
                 {{item.title}}
               </button>
             </div>
-
-
-
           </div>
         </div>
         <hr>
@@ -88,11 +85,19 @@ export default {
       this.imgPath = jsonObj.img;
 
       this.newsDetails = jsonObj.newsDescription;
+
+      let  json_History= tempStorage.getQuestionAnswerJSON(this.$route.params.id);
+
+
+      if (JSON.stringify(json_History) !== "{}"){
+        console.log("hitory" + JSON.stringify(json_History));
+        this.responseJSON = JSON.stringify(json_History);
+      };
+
     },
 
     response: function (msg) {
       this.responseJSON = JSON.stringify({"answer": msg});
-      // console.log("Current_Response: "+this.responseJSON);
     }
   }
 }
