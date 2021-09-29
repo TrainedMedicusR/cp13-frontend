@@ -11,22 +11,22 @@ var a = 1
         <table class="listTab">
           <thead>
           <tr>
-            <th v-for="(item) in tableHead" :key="item.key"> {{item.title}}</th>
+            <th v-for="item in tableHead" :key="item.key"> {{item.title}}</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item, index) in tableData" v-bind:key="index">
 
-            <td v-for="(val) in tableHead" :key="val">
+            <td v-for="(val) in tableHead" :key="val.key">
 
-              <div v-if="item[val.key]=='radio'">
+              <div v-if="item[val.key]==='radio'">
                 <input id="Field1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
               </div>
               <div v-else>
-                <div v-if= "val.key == 'category'">
-                  <div v-if="item[val.key]=='Others'">
+                <div v-if= "val.key === 'category'">
+                  <div v-if="item[val.key]==='Others'">
                     {{item[val.key]}}<br>
-                    <input id = "Field2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:keyup.enter="addThingEnter" :name="index"/>
+                    <input id = "Field2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
                   </div>
                   <div v-else> {{item[val.key]}}</div>
                 </div>
@@ -36,7 +36,7 @@ var a = 1
           </tbody>
         </table>
       </div>
-      <switch-button :response = JSON.stringify(responseJSON)>
+      <switch-button :response = response>
 
       </switch-button>
     </div>
@@ -57,7 +57,8 @@ export default {
   data () {
     return {
       host:location.hostname,
-      responseJSON:{},
+      response:"",
+      responseJSON:{answer:[]},
       newsTitle: '',
       imgPath:'',
       newsDetails:'',
@@ -115,7 +116,7 @@ export default {
       for(let i = 0; i< this.responseJSON.answer.length; i++ ){
         if(this.responseJSON.answer[i].index == event.target.name){
           this.responseJSON.answer[i].selection = event.target.value;
-
+          this.response = JSON.stringify(this.responseJSON);
         }
       }
     },
@@ -125,9 +126,9 @@ export default {
     },
     addThingEnter(event){
       for(let i = 0; i< this.responseJSON.answer.length; i++ ){
-        if(this.responseJSON.answer[i].index === event.target.name){
+        if(this.responseJSON.answer[i].index == event.target.name){
           this.responseJSON.answer[i].input = event.target.value;
-
+          this.response = JSON.stringify(this.responseJSON);
         }
       }
     }
@@ -143,70 +144,10 @@ body {
   background-color: #EFF2F5;
 }
 
-.surveyTitle {
-  text-align: center;
-}
-
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-
-.wrapper{
-  width: 1280px;
-  max-width: 100%;
-  overflow: hidden;
-  margin: 0 auto;
-  padding: 40px;
-}
-
-.ele {
-  width: 40%;
-  height: 400px;
-}
-
-.ele:nth-child(3n+1) {
-  width: 100%;
-}
-
-
-
-.question{
-  width: 60%;
-  background-color: white;
-  text-align: center;
-}
-
-
-.picWall{
-  width: 80%;
-  height: 230px;
-  border: 4px solid;
-  /*border-image: linear-gradient(45deg, turquoise, greenyellow) 1;*/
-  margin: 20px auto;
-  overflow: hidden;
-  text-align: left;
-}
-
-.LikertMatrix{
-  transform:scale(0.8, 0.8);
-}
-
 body {
   font-family: "Lucida Grande","Lucida Sans Unicode", Tahoma, sans-serif;
   line-height: 1.4;
   padding: 30px;
-}
-
-.form-header {
-  margin: 0 0 1em 0;
-  padding: 0 0 1em 0;
-  border-bottom: 1px dotted #ccc
 }
 
 .text {
@@ -233,109 +174,7 @@ form li div span {
   width: 50%;
   float: left;
 }
-label span,
-.section span,
-p span,
-.likert span {
-  display: inline;
-  float: none;
-}
-form li div label,
-form li span label {
-  font-size: 50%;
-  padding-top: 0.25em;
-  clear: both;
-  display: block;
-}
-fieldset {
-  display: block;
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-label.desc,
-legend {
-  font-weight: bold;
-  color: #222;
-  padding: 0 0 0.15em 0;
-  margin: 0 0 0.15em 0;
-  display: block;
-}
-label.choice {
-  display: block;
-  cursor: pointer;
-  font-size: 50%;
-  line-height: 50%;
-  margin: -1.25em 0 0 1.5em;
-  padding: 0 0 0.25em 0;
-}
-.likert table {
-  margin: 0 0 1em 0;
-  width: 60%;
-  border: 1px solid #dedede;
-}
-.likert caption {
-  font-weight: bold;
-  text-align: left;
-  margin: 0 0 0.5em 0;
-}
-.likert input {
-  margin: 0.25em 0;
-}
-.likert tbody td label {
-  display: block;
-}
-.likert thead td,
-.likert thead th {
-  background-color: #e6e6e6
-}
-.likert td {
-  border-left: 1px solid rgb(228, 222, 222);
-  border-right: 1px solid rgb(238, 231, 231);
-  text-align: center;
-  padding: 0.25em;
-  width: 100px;
-}
-.likert thead td {
-  font-size: 85%;
-  padding: 5px 6px;
-}
-.likert th,
-.likert td {
-  border-bottom: 1px solid #dedede;
-}
-.likert tbody th {
-  padding: 8px 8px;
-  text-align: left;
-}
-.likert tbody th label {
-  color: #222;
-  font-weight: bold
-}
-.likert tbody tr.alt td,
-.likert tbody tr.alt th {
-  background-color: #f5f5f5;
-}
-.likert tbody tr:hover td,
-.likert tbody tr:hover th {
-  background-color:#FFFFCF;
-}
-form li.section {
-  padding: 1em 0 0 0;
-}
-form li.section h3 {
-  font-size: 11%;
-  line-height: 13%;
-  margin: 0 0 3px 0;
-  padding: 12px 1% 0 1%;
-  border-top: 1px dotted #ccc
-}
 
-
-
-.tableList{
-  width: 100%;
-}
 
 .list{
   width: 98%;
