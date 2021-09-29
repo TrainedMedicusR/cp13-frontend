@@ -1,14 +1,21 @@
 <template>
   <div class="container">
   <div>
-    <h1>{{ newsTitle }}</h1>
+    <h1>{{newsTitle}}</h1>
   </div>
 
   <div class="news">
     <div class="picture">
       <img :src="imgPath" alt="">
     </div>
-    <div class="newsText">{{ description }}</div>
+    <div class="newsText">
+      {{isExpanded ? description : capitalize(description)}}
+      <button>
+          <span @click = "expandClick" class = "expand">
+            {{isExpanded ? "show less": "show more"}}
+          </span>
+      </button>
+    </div>
   </div>
   </div>
 </template>
@@ -28,6 +35,32 @@ export default {
     description: String,
     required: true
   },
+
+  data(){
+    return{
+      isExpanded: true
+    }
+  },
+
+  methods:{
+    expandClick(){
+      this.isExpanded = !this.isExpanded
+    },
+
+    capitalize: function(value){
+      if(!value) return 'NO!'
+      value = value.toString();
+      let index = 300;
+      while(value.charAt(index)!==' '){
+        index--;
+      }
+      if(value.length >index){
+        return value.substr(0,index)
+      }else{
+        return value
+      }
+    },
+  }
 }
 </script>
 
@@ -56,6 +89,9 @@ export default {
   margin-top: 12px;
   /*display:inline-block;*/
   text-align: left;
+}
+.expand{
+  color: cornflowerblue;
 }
 .picture{
   border: 2px solid grey;
