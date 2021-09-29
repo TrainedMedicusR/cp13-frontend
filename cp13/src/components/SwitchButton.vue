@@ -52,7 +52,11 @@ export default {
     forwardQuestion() {
       let current = tempStorage.get(this.$route.params.id+"CURRENT");
       if (current >1){
-            tempStorage.set(this.$route.params.id+current+"ANSWER",JSON.parse(this.response))
+            if(this.response === "" || this.response === null){
+              tempStorage.set(this.$route.params.id+current+"ANSWER", {});
+            }else{
+              tempStorage.set(this.$route.params.id+current+"ANSWER",JSON.parse(this.response))
+            }
             current -= 1;
             tempStorage.set(this.$route.params.id+"CURRENT",current);
             location.reload();

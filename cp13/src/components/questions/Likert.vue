@@ -16,9 +16,7 @@ var a = 1
           </thead>
           <tbody>
           <tr v-for="(item, index) in tableData" v-bind:key="index">
-
             <td v-for="(val) in tableHead" :key="val.key">
-
               <div v-if="item[val.key]==='radio'">
                 <input id="Field1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
               </div>
