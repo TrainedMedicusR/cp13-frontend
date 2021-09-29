@@ -8,18 +8,18 @@
         <!-- This section are all question buttons like share,like,check. -->
         <div class = "QuestionButtons">
           <div class = "buttoninline" v-for="item in this.questionbutton" v-bind:key="item.id">
-            <div v-if="item.title=='share'">
-              <button class="btn-primary btn-lg" v-on:click="response('share')">
+            <div v-if="item.title==='share'">
+              <button class="btn-skip btn-lg" v-on:click="response('share')">
                 <i class="glyphicon glyphicon-share"></i>  Share
               </button>
             </div>
             <div v-else-if="item.title==='check'">
-              <button class="btn-secondary btn-lg" v-on:click="response('check')">
+              <button class="btn-skip btn-lg" v-on:click="response('check')">
                 <i class="glyphicon glyphicon-question-sign"></i>  Check
               </button>
             </div>
             <div v-else-if="item.title==='like'">
-              <button class="btn-info btn-lg" v-on:click="response('like')">
+              <button class="btn-skip btn-lg" v-on:click="response('like')">
                 <i class="glyphicon glyphicon-heart"></i> Like
               </button>
             </div>
@@ -29,7 +29,7 @@
               </button>
             </div>
             <div v-else>
-              <button class="btn-success btn-lg" v-on:click="response(item.title)">
+              <button class="btn-skip btn-lg" v-on:click="response(item.title)">
                 {{item.title}}
               </button>
             </div>
@@ -138,20 +138,21 @@ body {
   display:inline-block;
 }
 
-
 .btn-skip {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
-  background-image: -webkit-linear-gradient(top, #B4CDDE 0%, #B4CDDE 100%);
-  background-image: -o-linear-gradient(top, #B4CDDE 0%, #B4CDDE 100%);
-  background-image: linear-gradient(to bottom, #B4CDDE 0%, #B4CDDE 100%);
   background-repeat: repeat-x;
   border-color: #B4CDDE;
 }
-.btn-skip:hover,
-.btn-skip:focus{
+.btn-skip:hover{
   background-color: #B4CDDE;
-  background-position: 0 -15px;
 }
+.btn-skip:active{
+  background-color: #3497d9;
+}
+.btn-skip:focus{
+  background-color: #3497d9;
+}
+
 </style>
