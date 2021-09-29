@@ -139,8 +139,6 @@ export default {
       this.QType = questionDetails.type;
       this.QOrder = questionDetails.order;
       console.log(this.QType);
-
-
     }
   }
 }
