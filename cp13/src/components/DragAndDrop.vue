@@ -115,8 +115,13 @@ export default {
       this.newsTitle = jsonObj.newsTitle;
 
       this.imgPath = jsonObj.img;
-
       this.newsDetails = jsonObj.newsDescription;
+
+      if(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id))!=="{}"){
+        let jsonQuestionH = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
+        let jsonObjH = JSON.parse(JSON.stringify(jsonQuestionH));
+        this.items = jsonObjH.answers;
+      }
     },
     expandClick(){
       this.isExpanded = !this.isExpanded
@@ -156,13 +161,6 @@ export default {
 
 <style scoped>
 
-.qid{
-  font-family: Times New Roman,serif;
-  font-size: 30px;
-  width: 100%;
-  background-color: white;
-  text-align: center;
-}
 .question{
   font-family: Arial,serif;
   font-size: 20px;
@@ -201,7 +199,5 @@ export default {
 .drag-el:hover{
   background: #337ab7;
 }
-.next {
-  text-align: center;
-}
+
 </style>
