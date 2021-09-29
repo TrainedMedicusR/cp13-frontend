@@ -25,13 +25,9 @@ export default {
       let total  = tempStorage.get(this.$route.params.id+"TOTAL");
       console.log("收到："+this.response);
       if (current < total){
-        // window.scrollTo({
-        //   left: 0,
-        //   top: 0,
-        //   behavior: 'smooth'
-        // })
         this.submit("",this.response).then(response=>{
           if (response.status === 200){
+            tempStorage.set(this.$route.params.id+current+"ANSWER",JSON.parse(this.response))
             current += 1;
             tempStorage.set(this.$route.params.id+"CURRENT",current);
             location.reload();
