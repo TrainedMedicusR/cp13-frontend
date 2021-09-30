@@ -134,10 +134,8 @@ export default {
       this.totalPage = total;
       this.currentPage = current;
       this.progressWidth = Math.floor(current / total * 100) + "%";
-      console.log("total:"+this.totalPage + "currentPage:"+this.currentPage);
       this.QType = questionDetails.type;
       this.QOrder = questionDetails.order;
-      console.log(this.QType);
     }
   }
 }

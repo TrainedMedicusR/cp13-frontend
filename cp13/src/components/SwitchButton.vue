@@ -25,7 +25,7 @@ export default {
   methods:{nextQuestion() {
       let current = tempStorage.get(this.$route.params.id+"CURRENT");
       let total  = tempStorage.get(this.$route.params.id+"TOTAL");
-      console.log("收到："+this.response);
+      // console.log("收到："+this.response);
 
       if (this.requireANS) {
         if (this.response === "" || this.response === null) {
