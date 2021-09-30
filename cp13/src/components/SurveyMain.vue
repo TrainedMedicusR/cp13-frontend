@@ -62,7 +62,7 @@ export default {
     return {
       blockTitle:"",
       surveyID:"",
-      consent: false,
+      consent: true,
       surveyTitle:"",
       QOrder:"",
       QType: "",
