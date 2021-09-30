@@ -77,7 +77,6 @@ export default {
       this.questionContents = jsonObject.questionContents;
       this.options = jsonObject.options;
       this.requireANS = jsonObject.Required;
-      console.log("requiredJSON: "+this.requireANS);
     },
     setAnswer(event){
       let qValue = event.target.value;

@@ -110,7 +110,6 @@ export default {
       this.tableData = jsonObj.tableData;
 
       this.requireANS = jsonObj.Required;
-      console.log("requiredJSON: "+this.requireANS);
 
       if(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id))!=="{}"){
 

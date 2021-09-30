@@ -75,14 +75,11 @@ export default {
   methods: {
     initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
-      console.log("backend_data: "+JSON.stringify(jsonQuestion));
 
       let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
 
-      console.log("description: "+JSON.stringify(jsonObj.description));
       this.description = jsonObj.description;
 
-      console.log("questionbutton: "+JSON.stringify(jsonObj.question_button));
       this.questionbutton = jsonObj.questionbutton;
 
       this.newsTitle = jsonObj.newsTitle;
@@ -92,12 +89,10 @@ export default {
       this.newsDetails = jsonObj.newsDescription;
 
       this.requireANS = jsonObj.Required;
-      console.log("requiredJSON: "+this.requireANS);
     },
 
     response: function (msg) {
       this.responseJSON = JSON.stringify({"answer": msg});
-      // console.log("Current_Response: "+this.responseJSON);
     }
   }
 }

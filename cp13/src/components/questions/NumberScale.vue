@@ -70,7 +70,6 @@ export default {
   methods: {
     initPage(){
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
-      console.log("JSON: "+JSON.stringify(jsonQuestion));
       let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
       this.newsTitle = jsonObject.newsTitle;
       this.imgPath=jsonObject.img;
@@ -78,10 +77,8 @@ export default {
       this.questionContents=jsonObject.questionContents;
       this.rankNumber=jsonObject.rankNumber;
       this.requireANS = jsonObject.Required;
-      console.log("requiredJSON: "+this.requireANS);
     },
     click(tmp,n){
-      console.log(n);
       this.responseJSON = JSON.stringify({answer: n});
     },
     loadData(){
