@@ -1,10 +1,10 @@
 <template>
   <div class="next">
     <br/>
-    <button class="btn-next btn-sm" v-on:click="forwardQuestion">
+    <button class="btn-primary btn-lg" v-on:click="forwardQuestion">
       <i class="glyphicon glyphicon-arrow-left"></i> Prev Question
     </button>
-    <button class="btn-next btn-sm" v-on:click="nextQuestion()">
+    <button class="btn-primary btn-lg" v-on:click="nextQuestion()">
       Next Question <i class="glyphicon glyphicon-arrow-right"></i>
     </button>
   </div>
@@ -94,10 +94,15 @@ export default {
 
 <style scoped>
   .next{
-    width: 300px;
+    width: 450px;
     margin: 0 auto;
   }
   .next button {
     margin-left: 25px;
+  }
+  .btn-primary{
+    text-align:justify;
+    text-align-last:justify;
+    line-height:0;
   }
 </style>
