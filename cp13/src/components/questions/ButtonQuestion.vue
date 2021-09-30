@@ -6,8 +6,9 @@
     <div class="container">
       <div class="ele question">
         <!-- This section are all question buttons like share,like,check. -->
+        {{this.description}}
         <div class = "QuestionButtons">
-          <div class = "buttoninline" v-for="item in this.questionbutton" v-bind:key="item.id">
+          <div class = "buttoninline" v-for="item in this.question_button" v-bind:key="item.id">
             <div v-if="item.title==='share'">
               <button class="btn-skip btn-lg" v-on:click="response('share')">
                 <i class="glyphicon glyphicon-share"></i>  Share
@@ -64,7 +65,7 @@ export default {
       newsTitle: '',
       imgPath:'',
       newsDetails:'',
-      questionbutton:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}],
+      question_button:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}],
       requireANS:false
     }
   },
