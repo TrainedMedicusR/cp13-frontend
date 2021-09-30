@@ -76,7 +76,7 @@ export default {
       this.newsDetails = jsonObject.newsDescription;
       this.questionContents = jsonObject.questionContents;
       this.options = jsonObject.options;
-      this.requireANS = jsonObj.Required;
+      this.requireANS = jsonObject.Required;
       console.log("requiredJSON: "+this.requireANS);
     },
     setAnswer(event){
@@ -87,10 +87,14 @@ export default {
       let jsonQuestion = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
       let answerID = jsonQuestion.answer;
       this.responseJSON = JSON.stringify(jsonQuestion);
-      let radioTag = document.getElementById(answerID);
+      if (this.responseJSON !== "{}") {
+        let radioTag = document.getElementById(answerID);
         document.getElementById(answerID).checked = true;
         document.getElementById("text_choice").value = answerID;
       }
+      }
+
+
     }
   }
 </script>

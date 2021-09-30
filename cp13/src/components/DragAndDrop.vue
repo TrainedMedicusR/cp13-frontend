@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <switch-button :response=response>
+    <switch-button :requireANS="requireANS" :response=response>
 
     </switch-button>
   </div>
