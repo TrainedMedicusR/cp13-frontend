@@ -42,7 +42,7 @@ var a = 1
           </tbody>
         </table>
       </div>
-      <switch-button :response = response>
+      <switch-button :requireANS="requireANS" :response = response>
 
       </switch-button>
     </div>
@@ -69,6 +69,7 @@ export default {
       imgPath:'',
       newsDetails:'',
       msg : "",
+      requireANS:false,
       tableHead:[
         {key:"category",title:"Category"},
         {key:"extreme",title:"Extreme Important"},
@@ -89,8 +90,6 @@ export default {
   mounted(){
     this.initPage();
     this.responseJSON.answer  = this.tableData;
-
-
   },
   methods: {
     initPage() {
@@ -109,6 +108,9 @@ export default {
       this.tableHead = jsonObj.tableHead;
 
       this.tableData = jsonObj.tableData;
+
+      this.requireANS = jsonObj.Required;
+      console.log("requiredJSON: "+this.requireANS);
 
       if(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id))!=="{}"){
 

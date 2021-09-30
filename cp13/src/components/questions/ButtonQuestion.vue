@@ -40,7 +40,7 @@
         </div>
         <hr>
       </div>
-    <SwitchButton :response=responseJSON>
+    <SwitchButton :requireANS="requireANS" :response=responseJSON>
     </SwitchButton>
     </div>
 
@@ -64,7 +64,8 @@ export default {
       newsTitle: '',
       imgPath:'',
       newsDetails:'',
-      questionbutton:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}]
+      questionbutton:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}],
+      requireANS:false
     }
   },
   mounted(){
@@ -80,7 +81,7 @@ export default {
       console.log("description: "+JSON.stringify(jsonObj.description));
       this.description = jsonObj.description;
 
-      console.log("questionbutton: "+JSON.stringify(jsonObj.questionbutton));
+      console.log("questionbutton: "+JSON.stringify(jsonObj.question_button));
       this.questionbutton = jsonObj.questionbutton;
 
       this.newsTitle = jsonObj.newsTitle;
@@ -88,6 +89,9 @@ export default {
       this.imgPath = jsonObj.img;
 
       this.newsDetails = jsonObj.newsDescription;
+
+      this.requireANS = jsonObj.Required;
+      console.log("requiredJSON: "+this.requireANS);
     },
 
     response: function (msg) {

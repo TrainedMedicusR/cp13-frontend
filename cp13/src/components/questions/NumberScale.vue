@@ -33,7 +33,7 @@
 <!--      </div>-->
     </div>
 
-    <switch-button :response="responseJSON">
+    <switch-button :requireANS="requireANS" :response="responseJSON">
 
     </switch-button>
   </div>
@@ -52,6 +52,7 @@ export default {
       newsTitle: '',
       imgPath:'',
       newsDetails:'',
+      requireANS:false,
       questionContents: "Please rank the reliability",
       // firstRange: "Not reliable",
       // secondRange: "Neutral",
@@ -76,6 +77,8 @@ export default {
       this.newsDetails = jsonObject.newsDescription;
       this.questionContents=jsonObject.questionContents;
       this.rankNumber=jsonObject.rankNumber;
+      this.requireANS = jsonObject.Required;
+      console.log("requiredJSON: "+this.requireANS);
     },
     click(tmp,n){
       console.log(n);
@@ -85,6 +88,9 @@ export default {
       let jsonQuestion = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
       let answerID = jsonQuestion.answer;
       this.responseJSON = JSON.stringify(jsonQuestion);
+      if (this.responseJSON === "{}") {
+        return;
+      }
       document.getElementById(answerID).focus();
     }
   }

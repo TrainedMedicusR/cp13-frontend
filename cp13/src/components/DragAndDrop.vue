@@ -54,6 +54,7 @@ export default {
       newsTitle: '',
       imgPath:'',
       newsDetails:'',
+      requireANS:false,
       panels: [
         {
           info: "Waiting for classification",
@@ -108,6 +109,8 @@ export default {
       this.panels = jsonObj.panels;
       this.items = jsonObj.items;
       this.newsTitle = jsonObj.newsTitle;
+      this.requireANS = jsonObj.Required;
+      console.log("requiredJSON: "+this.requireANS);
 
       this.imgPath = jsonObj.img;
       this.newsDetails = jsonObj.newsDescription;

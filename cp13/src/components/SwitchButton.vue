@@ -19,12 +19,29 @@ export default {
   name: "SwitchButton",
   props: {
     response: String,
+    requireANS:Boolean,
     required: true
   },
   methods:{nextQuestion() {
       let current = tempStorage.get(this.$route.params.id+"CURRENT");
       let total  = tempStorage.get(this.$route.params.id+"TOTAL");
       console.log("收到："+this.response);
+
+      if (this.requireANS) {
+        if (this.response === "" || this.response === null) {
+          alert("Please fill in the form!");
+          return;
+        }
+      } else {
+        if (this.response === "" || this.response === null) {
+          tempStorage.set(this.$route.params.id+current+"ANSWER",{})
+          current += 1;
+          tempStorage.set(this.$route.params.id+"CURRENT",current);
+          location.reload();
+          return;
+        }
+      }
+
       if (current < total){
         this.submit("",this.response).then(response=>{
           if (response.status === 200){
@@ -65,10 +82,6 @@ export default {
         }
     },
     submit(contactINFO, content) {
-      if (this.response === "" || this.response === null) {
-        alert("Please fill in the form!");
-        return;
-      }
       let questionID = tempStorage.get(this.$route.params.id+"CURRENT");
       let surveyID = tempStorage.get(this.$route.params.id+"sid");
       let identifier = storage.get(this.$route.params.id);

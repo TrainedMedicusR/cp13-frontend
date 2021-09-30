@@ -31,7 +31,7 @@
 <!--      <button id="preBtn" class="previousButton"><img src="../../assets/leftArrow.png" alt="previous quesiton"></button>-->
 <!--      <button id="nextBtn" class="previousButton"><img src="../../assets/rightArrow.png" alt="next quesiton"></button>-->
 <!--    </div>-->
-    <switch-button :response=responseJSON>
+    <switch-button :requireANS="requireANS" :response=responseJSON>
 
     </switch-button>
   </div>
@@ -52,7 +52,7 @@ export default {
       newsDetails: "news contentsbalabalabalabalabalabalabalabalabala",
       questionContents: "Please choose an option",
       newsTitle: '',
-
+      requireANS:false,
       options: [
         {id: 0, option: "option1", textField: "false"},
         {id: 1, option: "option2", textField: "false"},
@@ -76,6 +76,8 @@ export default {
       this.newsDetails = jsonObject.newsDescription;
       this.questionContents = jsonObject.questionContents;
       this.options = jsonObject.options;
+      this.requireANS = jsonObj.Required;
+      console.log("requiredJSON: "+this.requireANS);
     },
     setAnswer(event){
       let qValue = event.target.value;
