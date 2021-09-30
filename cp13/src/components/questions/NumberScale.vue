@@ -18,7 +18,7 @@
 <!--        <text class="rangeText" id="thirdRange">{{ thirdRange }}</text>-->
       </div>
       <div class="rankButtons" v-for="n in rankNumber">
-        <button class="rankButton" :value="n" @click="click($event,n)">{{n}}</button>
+        <button :id="n" class="rankButton" :value="n" @click="click($event,n)">{{n}}</button>
       </div>
 <!--      <div class="rankButtons">-->
 <!--        <button id="btn1" class="rankButton">1</button>-->
@@ -60,16 +60,17 @@ export default {
       responseJSON: '',
     }
   },
-  mounted() {
+  created(){
     this.initPage();
+  },
+  mounted() {
+    this.loadData();
   },
   methods: {
     initPage(){
-      //TODO
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
       console.log("JSON: "+JSON.stringify(jsonQuestion));
       let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
-
       this.newsTitle = jsonObject.newsTitle;
       this.imgPath=jsonObject.img;
       this.newsDetails = jsonObject.newsDescription;
@@ -79,7 +80,12 @@ export default {
     click(tmp,n){
       console.log(n);
       this.responseJSON = JSON.stringify({answer: n});
-      console.log(this.responseJSON);
+    },
+    loadData(){
+      let jsonQuestion = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
+      let answerID = jsonQuestion.answer;
+      this.responseJSON = JSON.stringify(jsonQuestion);
+      document.getElementById(answerID).focus();
     }
   }
 }

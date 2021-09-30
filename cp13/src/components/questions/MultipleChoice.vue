@@ -5,28 +5,21 @@
     </news-frame>
     <div class="container">
 
-<!--      <div class="news">-->
-<!--        <div class="picture">{{ newsPicture }}</div>-->
-<!--        <div class="newsText">{{ newsText }}</div>-->
-<!--      </div>-->
       <div class="questionContents">{{ questionContents }}</div>
-
-
       <div class="form">
         <form action="#" method="get">
           <table class="choiceTab">
             <tr v-for="item in options">
               <td v-if="item.textField==='false'">
                 <label>
-                  <input name="choice" type="radio" :value="item.option" @click="setAnswer"/>
+                  <input :id="item.option" name="choice" type="radio" :value="item.option" @click="setAnswer"/>
                   {{ item.option }}
                 </label>
               </td>
               <td v-else-if="item.textField==='true'">
                 <label>
-<!--                  <input name="choice" type="radio" :value="item.option"/>-->
                   {{ item.option }}
-                  <input name="text_choice" type="text" v-on:blur="setAnswer" placeholder="type your answer here"/>
+                  <input id="text_choice" name="text_choice" type="text" v-on:blur="setAnswer" placeholder="type your answer here"/>
                 </label>
               </td>
             </tr>
@@ -68,27 +61,36 @@ export default {
       responseJSON: ""
     }
   },
-  mounted() {
+  created() {
     this.initPage();
+  },
+  mounted() {
+    this.loadAnswer();
   },
   methods:{
     initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
-      console.log("JSON: "+JSON.stringify(jsonQuestion));
       let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
-
       this.newsTitle = jsonObject.newsTitle;
-      this.imgPath=jsonObject.img;
+      this.imgPath = jsonObject.img;
       this.newsDetails = jsonObject.newsDescription;
-      this.questionContents=jsonObject.questionContents;
+      this.questionContents = jsonObject.questionContents;
       this.options = jsonObject.options;
-    }, setAnswer(event){
+    },
+    setAnswer(event){
       let qValue = event.target.value;
       this.responseJSON = JSON.stringify({answer: qValue});
+    },
+    loadAnswer(){
+      let jsonQuestion = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
+      let answerID = jsonQuestion.answer;
+      this.responseJSON = JSON.stringify(jsonQuestion);
+      let radioTag = document.getElementById(answerID);
+        document.getElementById(answerID).checked = true;
+        document.getElementById("text_choice").value = answerID;
+      }
     }
   }
-
-}
 </script>
 
 <style scoped>

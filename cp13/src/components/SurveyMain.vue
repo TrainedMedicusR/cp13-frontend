@@ -2,9 +2,8 @@
   <div class="wrapper">
     <hr>
 
-    <div class="progress">
+    <div v-if="this.consent" class="progress">
       <div class="progress-bar" role="progressbar" :style="{width:progressWidth}" :aria-valuenow="currentPage" aria-valuemin="0" :aria-valuemax="totalPage">
-
         {{ progressWidth }}
       </div>
     </div>
@@ -63,7 +62,7 @@ export default {
     return {
       blockTitle:"",
       surveyID:"",
-      consent: true,
+      consent: false,
       surveyTitle:"",
       QOrder:"",
       QType: "",
@@ -139,8 +138,6 @@ export default {
       this.QType = questionDetails.type;
       this.QOrder = questionDetails.order;
       console.log(this.QType);
-
-
     }
   }
 }
