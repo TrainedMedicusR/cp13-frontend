@@ -7,24 +7,24 @@
       <div class="ele question">
         <!-- This section are all question buttons like share,like,check. -->
         <div class = "QuestionButtons">
-          <div class = "buttoninline" v-for="item in this.questionbutton" v-bind:key="item.id">
+          <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
             <div v-if="item.title==='share'">
-              <button class="btn-skip btn-lg" v-on:click="response('share')">
+              <button value = "i" class="btn-skip btn-lg" v-on:click="response('share',i+1)">
                 <i class="glyphicon glyphicon-share"></i>  Share
               </button>
             </div>
             <div v-else-if="item.title==='check'">
-              <button class="btn-skip btn-lg" v-on:click="response('check')">
+              <button class="btn-skip btn-lg" v-on:click="response('check',i+1)">
                 <i class="glyphicon glyphicon-question-sign"></i>  Check
               </button>
             </div>
             <div v-else-if="item.title==='like'">
-              <button class="btn-skip btn-lg" v-on:click="response('like')">
+              <button class="btn-skip btn-lg" v-on:click="response('like',i+1)">
                 <i class="glyphicon glyphicon-heart"></i> Like
               </button>
             </div>
             <div v-else-if="item.title==='skip'">
-              <button class="btn-skip btn-lg" v-on:click="response('skip')">
+              <button class="btn-skip btn-lg" v-on:click="response('skip',i+1)">
                 <i class="glyphicon glyphicon-forward"></i> Skip
               </button>
             </div>
@@ -61,7 +61,7 @@ export default {
       newsTitle: '',
       imgPath:'',
       newsDetails:'',
-      questionbutton:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}]
+      question_button:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}]
     }
   },
   mounted(){
@@ -96,7 +96,8 @@ export default {
 
     },
 
-    response: function (msg) {
+    response: function (msg,id) {
+      console.log("index" + id)
       this.responseJSON = JSON.stringify({"answer": msg});
     }
   }
