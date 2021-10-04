@@ -9,27 +9,27 @@
         <div class = "QuestionButtons">
           <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
             <div v-if="item.title==='share'">
-              <button value = "i" class="btn-skip btn-lg" v-on:click="response('share',i+1)">
+              <button :id = "i" class="btn-skip btn-lg" v-on:click="response('share',i)">
                 <i class="glyphicon glyphicon-share"></i>  Share
               </button>
             </div>
             <div v-else-if="item.title==='check'">
-              <button class="btn-skip btn-lg" v-on:click="response('check',i+1)">
+              <button :id = "i" class="btn-skip btn-lg" v-on:click="response('check',i)">
                 <i class="glyphicon glyphicon-question-sign"></i>  Check
               </button>
             </div>
             <div v-else-if="item.title==='like'">
-              <button class="btn-skip btn-lg" v-on:click="response('like',i+1)">
+              <button :id = "i" class="btn-skip btn-lg" v-on:click="response('like',i)">
                 <i class="glyphicon glyphicon-heart"></i> Like
               </button>
             </div>
             <div v-else-if="item.title==='skip'">
-              <button class="btn-skip btn-lg" v-on:click="response('skip',i+1)">
+              <button :id = "i" class="btn-skip btn-lg" v-on:click="response('skip',i)">
                 <i class="glyphicon glyphicon-forward"></i> Skip
               </button>
             </div>
             <div v-else>
-              <button class="btn-skip btn-lg" v-on:click="response(item.title)">
+              <button :id = "i" class="btn-skip btn-lg" v-on:click="response(item.title,i)">
                 {{item.title}}
               </button>
             </div>
@@ -90,15 +90,15 @@ export default {
 
 
       if (JSON.stringify(json_History) !== "{}"){
-        console.log("hitory" + JSON.stringify(json_History));
         this.responseJSON = JSON.stringify(json_History);
-      };
+        document.getElementById(json_History.answer).focus();
+      }
 
     },
 
     response: function (msg,id) {
       console.log("index" + id)
-      this.responseJSON = JSON.stringify({"answer": msg});
+      this.responseJSON = JSON.stringify({"answer": id});
     }
   }
 }
