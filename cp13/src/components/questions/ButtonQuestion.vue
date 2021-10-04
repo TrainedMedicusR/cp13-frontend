@@ -5,6 +5,7 @@
 
     <div class="container">
       <div class="ele question">
+        {{this.description}}
         <!-- This section are all question buttons like share,like,check. -->
         <div class = "QuestionButtons">
           <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
@@ -74,7 +75,6 @@ export default {
 
       let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
 
-      console.log("description: "+JSON.stringify(jsonObj.description));
       this.description = jsonObj.description;
 
       console.log("questionbutton: "+JSON.stringify(jsonObj.questionbutton));
