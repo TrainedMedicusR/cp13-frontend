@@ -7,8 +7,13 @@
       <div class="ele question">
         {{this.description}}
         <!-- This section are all question buttons like share,like,check. -->
+        {{this.description}}
         <div class = "QuestionButtons">
+<<<<<<< HEAD
           <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
+=======
+          <div class = "buttoninline" v-for="item in this.question_button" v-bind:key="item.id">
+>>>>>>> origin/release/GroupB
             <div v-if="item.title==='share'">
               <button :id = "i" class="btn-skip btn-lg" v-on:click="response('share',i)">
                 <i class="glyphicon glyphicon-share"></i>  Share
@@ -38,7 +43,7 @@
         </div>
         <hr>
       </div>
-    <SwitchButton :response=responseJSON>
+    <SwitchButton :requireANS="requireANS" :response=responseJSON>
     </SwitchButton>
     </div>
 
@@ -62,7 +67,12 @@ export default {
       newsTitle: '',
       imgPath:'',
       newsDetails:'',
+<<<<<<< HEAD
       question_button:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}]
+=======
+      question_button:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}],
+      requireANS:false
+>>>>>>> origin/release/GroupB
     }
   },
   mounted(){
@@ -71,13 +81,11 @@ export default {
   methods: {
     initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
-      console.log("backend_data: "+JSON.stringify(jsonQuestion));
 
       let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
 
       this.description = jsonObj.description;
 
-      console.log("questionbutton: "+JSON.stringify(jsonObj.questionbutton));
       this.questionbutton = jsonObj.questionbutton;
 
       this.newsTitle = jsonObj.newsTitle;
@@ -86,6 +94,7 @@ export default {
 
       this.newsDetails = jsonObj.newsDescription;
 
+<<<<<<< HEAD
       let  json_History= tempStorage.getQuestionAnswerJSON(this.$route.params.id);
 
 
@@ -99,6 +108,13 @@ export default {
     response: function (msg,id) {
       console.log("index" + id)
       this.responseJSON = JSON.stringify({"answer": id});
+=======
+      this.requireANS = jsonObj.Required;
+    },
+
+    response: function (msg) {
+      this.responseJSON = JSON.stringify({"answer": msg});
+>>>>>>> origin/release/GroupB
     }
   }
 }

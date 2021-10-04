@@ -5,28 +5,21 @@
     </news-frame>
     <div class="container">
 
-<!--      <div class="news">-->
-<!--        <div class="picture">{{ newsPicture }}</div>-->
-<!--        <div class="newsText">{{ newsText }}</div>-->
-<!--      </div>-->
       <div class="questionContents">{{ questionContents }}</div>
-
-
       <div class="form">
         <form action="#" method="get">
           <table class="choiceTab">
             <tr v-for="item in options">
               <td v-if="item.textField==='false'">
                 <label>
-                  <input name="choice" type="radio" :value="item.option" @click="setAnswer"/>
+                  <input :id="item.option" name="choice" type="radio" :value="item.option" @click="setAnswer"/>
                   {{ item.option }}
                 </label>
               </td>
               <td v-else-if="item.textField==='true'">
                 <label>
-<!--                  <input name="choice" type="radio" :value="item.option"/>-->
                   {{ item.option }}
-                  <input name="text_choice" type="text" v-on:blur="setAnswer" placeholder="type your answer here"/>
+                  <input id="text_choice" name="text_choice" type="text" v-on:blur="setAnswer" placeholder="type your answer here"/>
                 </label>
               </td>
             </tr>
@@ -38,7 +31,7 @@
 <!--      <button id="preBtn" class="previousButton"><img src="../../assets/leftArrow.png" alt="previous quesiton"></button>-->
 <!--      <button id="nextBtn" class="previousButton"><img src="../../assets/rightArrow.png" alt="next quesiton"></button>-->
 <!--    </div>-->
-    <switch-button :response=responseJSON>
+    <switch-button :requireANS="requireANS" :response=responseJSON>
 
     </switch-button>
   </div>
@@ -59,7 +52,7 @@ export default {
       newsDetails: "news contentsbalabalabalabalabalabalabalabalabala",
       questionContents: "Please choose an option",
       newsTitle: '',
-
+      requireANS:false,
       options: [
         {id: 0, option: "option1", textField: "false"},
         {id: 1, option: "option2", textField: "false"},
@@ -68,27 +61,41 @@ export default {
       responseJSON: ""
     }
   },
-  mounted() {
+  created() {
     this.initPage();
+  },
+  mounted() {
+    this.loadAnswer();
   },
   methods:{
     initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
-      console.log("JSON: "+JSON.stringify(jsonQuestion));
       let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
-
       this.newsTitle = jsonObject.newsTitle;
-      this.imgPath=jsonObject.img;
+      this.imgPath = jsonObject.img;
       this.newsDetails = jsonObject.newsDescription;
-      this.questionContents=jsonObject.questionContents;
+      this.questionContents = jsonObject.questionContents;
       this.options = jsonObject.options;
-    }, setAnswer(event){
+      this.requireANS = jsonObject.Required;
+    },
+    setAnswer(event){
       let qValue = event.target.value;
       this.responseJSON = JSON.stringify({answer: qValue});
+    },
+    loadAnswer(){
+      let jsonQuestion = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
+      let answerID = jsonQuestion.answer;
+      this.responseJSON = JSON.stringify(jsonQuestion);
+      if (this.responseJSON !== "{}") {
+        let radioTag = document.getElementById(answerID);
+        document.getElementById(answerID).checked = true;
+        document.getElementById("text_choice").value = answerID;
+      }
+      }
+
+
     }
   }
-
-}
 </script>
 
 <style scoped>
@@ -166,18 +173,26 @@ export default {
 }
 
 .form{
-  padding: 16px;
+  padding: 25px;
   text-align: left;
+  font-size: 16px;
 }
 
 .form input[type=text]{
-  /*padding: 8px 8px;*/
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out;
+  padding: 5px 5px;
+  width: 300px;
+  -webkit-transition: width 0.5s ease-in-out;
+  transition: width 0.5s ease-in-out;
   border: 2px solid #ccc;
   border-radius: 4px;
 }
 .form input[type=text]:focus {
-  width: 100%;
+  /*width: 100%;*/
+  width: 500px;
+}
+
+.form label{
+  cursor: pointer;
+  margin: 10px;
 }
 </style>

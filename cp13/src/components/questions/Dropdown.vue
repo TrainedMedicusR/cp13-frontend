@@ -65,10 +65,8 @@ export default {
       const surveyJSON = getSurvey(this.$route.params.id).then(response=>{
         if (response.status === 200){
           let identifier = this.$route.params.id + new Date().getTime()
-          console.log(identifier)
           const hashString = this.$md5(identifier);
           storage.set(this.$route.params.id,hashString);
-          console.log(response.data);
         } else {
           alert("Data Error!");
         }}

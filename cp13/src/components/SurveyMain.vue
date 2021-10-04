@@ -1,6 +1,13 @@
 <template>
   <div class="wrapper">
     <hr>
+
+    <div v-if="this.consent" class="progress">
+      <div class="progress-bar" role="progressbar" :style="{width:progressWidth}" :aria-valuenow="currentPage" aria-valuemin="0" :aria-valuemax="totalPage">
+        {{ progressWidth }}
+      </div>
+    </div>
+
     <header class = "surveyTitle">
       <h1 v-if="this.consent">{{surveyTitle}}</h1>
       <h2 v-if="this.consent">{{blockTitle}}</h2>
@@ -39,15 +46,13 @@
 import ButtonQuestion from "./questions/ButtonQuestion";
 import {getSurvey} from "../api/getSurvey";
 
-import {storage,tempStorage} from "../utils/storage";
+import {storage, tempStorage} from "../utils/storage";
 import DragAndDrop from "./DragAndDrop";
 import Likert from "./questions/Likert"
 import NumberScale from "./questions/NumberScale";
 import MultipleChoice from "./questions/MultipleChoice";
 import ConsentPage from "./ConsentPage";
 import router from "../router";
-
-
 
 
 export default {
@@ -63,6 +68,9 @@ export default {
       QType: "",
       hashString:"",
       consentText:"",
+      currentPage:"",
+      totalPage:"",
+      progressWidth:"",
       host:location.hostname,
     }
   },
@@ -80,11 +88,9 @@ export default {
         router.push({name:'NotAuthorised'});
         return;
       }
-
       const resJSON = getSurvey(this.$route.params.id).then(response=>{
         if (response.status === 200){
           let identifier = this.$route.params.id + new Date().getTime();
-
           const hashString = this.$md5(identifier);
           this.hashString = hashString;
           storage.set(this.$route.params.id,hashString);
@@ -96,7 +102,6 @@ export default {
           //Need Optimisation
           tempStorage.set(this.$route.params.id,jsonString.block)
           tempStorage.set(this.$route.params.id+"sid",this.surveyID)
-
           let block = jsonString.block[0]
           this.blockTitle = block.title;
           let questions = block.questions;
@@ -124,10 +129,13 @@ export default {
     renderQuestion(){
       let identifier = this.$route.params.id;
       let current = tempStorage.get(identifier+"CURRENT")
+      let total = tempStorage.get(identifier+"TOTAL")
       let questionDetails = tempStorage.get(identifier+current)
+      this.totalPage = total;
+      this.currentPage = current;
+      this.progressWidth = Math.floor(current / total * 100) + "%";
       this.QType = questionDetails.type;
       this.QOrder = questionDetails.order;
-      console.log(this.QType);
     }
   }
 }

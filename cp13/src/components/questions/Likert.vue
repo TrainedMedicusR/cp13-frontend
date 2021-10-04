@@ -16,17 +16,23 @@ var a = 1
           </thead>
           <tbody>
           <tr v-for="(item, index) in tableData" v-bind:key="index">
-
             <td v-for="(val) in tableHead" :key="val.key">
-
               <div v-if="item[val.key]==='radio'">
                 <input id="Field1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
               </div>
+              <div v-else-if ="item[val.key]==='radio selected'">
+                <input id="Field1_h"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" checked/>
+              </div>
               <div v-else>
                 <div v-if= "val.key === 'category'">
-                  <div v-if="item[val.key]==='Others'">
+                  <div v-if="item[val.key].indexOf('Others') >=0">
                     {{item[val.key]}}<br>
-                    <input id = "Field2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
+                    <div v-if="item['other_content']!==''">
+                      <input id = "Field2" name = "textfield" type = "url" class = "field text medium" :value = "item['other_content']" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
+                    </div>
+                    <div v-else>
+                      <input id = "Field2_2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
+                    </div>
                   </div>
                   <div v-else> {{item[val.key]}}</div>
                 </div>
@@ -36,7 +42,7 @@ var a = 1
           </tbody>
         </table>
       </div>
-      <switch-button :response = response>
+      <switch-button :requireANS="requireANS" :response = response>
 
       </switch-button>
     </div>
@@ -63,6 +69,7 @@ export default {
       imgPath:'',
       newsDetails:'',
       msg : "",
+      requireANS:false,
       tableHead:[
         {key:"category",title:"Category"},
         {key:"extreme",title:"Extreme Important"},
@@ -75,20 +82,14 @@ export default {
         {category:"News source",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
         {category:"Headline claim",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
         {category:"Image associated with post",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
-        {category:"Others",extreme:"radio",slight:"radio",very:"radio",not:"radio"}
-      ]
+        {category:"Others",extreme:"radio",slight:"radio",very:"radio",not:"radio", other_content:""}
+      ],
+      history:[]
     }
   },
   mounted(){
     this.initPage();
-    for(let i = 0; i < this.tableData.length; i++){
-      let answerObject = {};
-      answerObject.index = i;
-      answerObject.selection = "";
-      answerObject.input = "";
-      this.responseJSON.answer.push(answerObject);
-    }
-
+    this.responseJSON.answer  = this.tableData;
   },
   methods: {
     initPage() {
@@ -108,29 +109,39 @@ export default {
 
       this.tableData = jsonObj.tableData;
 
+      this.requireANS = jsonObj.Required;
+
+      if(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id))!=="{}"){
+
+        if(!(((JSON.parse(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id)))).answer).length===0)){
+
+          this.history= ( JSON.parse(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id)))).answer;
+          this.responseJSON.answer = JSON.parse(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id)));
+          this.response = JSON.stringify(this.responseJSON)
+        }
+      }
+
+      if  (!(this.history.length === 0)){
+          this.tableData = this.history;
+      }
+
 
     },
     methodToRunOnSelect(event) {
+      let object = this.tableData[event.target.name];
+      let objectname = event.target.value;
 
+      object[objectname] = "radio selected";
 
-      for(let i = 0; i< this.responseJSON.answer.length; i++ ){
-        if(this.responseJSON.answer[i].index == event.target.name){
-          this.responseJSON.answer[i].selection = event.target.value;
-          this.response = JSON.stringify(this.responseJSON);
-        }
-      }
+      this.responseJSON.answer = this.tableData;
+      this.response = JSON.stringify(this.responseJSON);
     },
-    generateJSON(){
-      let json = {};
-      this.responseJSON = JSON.stringify(json);
-    },
+
     addThingEnter(event){
-      for(let i = 0; i< this.responseJSON.answer.length; i++ ){
-        if(this.responseJSON.answer[i].index == event.target.name){
-          this.responseJSON.answer[i].input = event.target.value;
-          this.response = JSON.stringify(this.responseJSON);
-        }
-      }
+      let object = this.tableData[event.target.name];
+      object["other_content"] = event.target.value;
+      this.responseJSON.answer = this.tableData;
+      this.response = JSON.stringify(this.responseJSON);
     }
   },
 
@@ -244,6 +255,14 @@ table.listTab tbody > tr td .green{
 table.listTab tbody > tr td .red{
   color: #f00;
   font-weight:bold;
+}
+
+div.TableList{
+  width : 700px;
+}
+
+div.list{
+  width : 800px;
 }
 
 </style>
