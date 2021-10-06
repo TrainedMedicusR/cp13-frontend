@@ -6,7 +6,7 @@ var a = 1
     </news-frame>
 
     <div class="TableList">
-      <div> {{msg}}</div>
+      <div class="msg"> {{msg}}</div>
       <div class="list">
         <table class="listTab">
           <thead>
@@ -23,26 +23,26 @@ var a = 1
               <div v-else-if ="item[val.key]==='radio selected'">
                 <input id="Field1_h"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" checked/>
               </div>
-              <div v-else>
+              <div v-else> {{item[val.key]}}</div>
+
+              <div v-if="index === tableData.length-1">
                 <div v-if= "val.key === 'category'">
-                  <div v-if="item[val.key].indexOf('Others') >=0">
-                    {{item[val.key]}}<br>
-                    <div v-if="item['other_content']!==''">
-                      <input id = "Field2" name = "textfield" type = "url" class = "field text medium" :value = "item['other_content']" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
-                    </div>
-                    <div v-else>
-                      <input id = "Field2_2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
-                    </div>
+                  <div v-if="item['other_content']!==''">
+                    <input id = "Field2" name = "textfield" type = "url" class = "field text medium" :value = "item['other_content']" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
                   </div>
-                  <div v-else> {{item[val.key]}}</div>
+                  <div v-else>
+                    <input id = "Field2_2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
+                  </div>
                 </div>
               </div>
+
+
             </td>
           </tr>
           </tbody>
         </table>
       </div>
-      <switch-button :response = response>
+      <switch-button :requireANS="requireANS" :response = response>
 
       </switch-button>
     </div>
@@ -69,12 +69,15 @@ export default {
       imgPath:'',
       newsDetails:'',
       msg : "",
+      requireANS:false,
       tableHead:[
-        {key:"category",title:"Category"},
+
         {key:"extreme",title:"Extreme Important"},
         {key:"very",title:"Very Important"},
         {key:"slight",title:"Slight Important"},
-        {key:"not",title:"Not Important"}
+        {key:"not",title:"Not Important"},
+        {key:"category",title:"Category"}
+
       ],
       tableData:[
         {category:"Your prior knowledge",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
@@ -89,8 +92,6 @@ export default {
   mounted(){
     this.initPage();
     this.responseJSON.answer  = this.tableData;
-
-
   },
   methods: {
     initPage() {
@@ -110,6 +111,8 @@ export default {
 
       this.tableData = jsonObj.tableData;
 
+      this.requireANS = jsonObj.Required;
+
       if(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id))!=="{}"){
 
         if(!(((JSON.parse(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id)))).answer).length===0)){
@@ -121,7 +124,7 @@ export default {
       }
 
       if  (!(this.history.length === 0)){
-          this.tableData = this.history;
+        this.tableData = this.history;
       }
 
 
@@ -192,31 +195,30 @@ form li div span {
   overflow-x:auto;
 }
 table.listTab{
-  width: 100%;
+  width: 89%;
   font-size: 14px;
-  color: #6a6a6a;
+  color: #100f0f;
   border: 1px solid #ececed;
   padding: 1px;
   background-color: #fff;
 }
 table.listTab th{
-  background-color: #ecf0f4;
+  background-color: #1080de;
   padding: 14px 8px;
-  text-align: left;
+  text-align: right;
   font-size: 14px;
   border: 1px solid #ecf0f4;
   min-width: 40px;
-  color:#292d31;
+  color: #101111;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  width: 10%;
 }
-table.listTab th.check{
-  min-width: 20px;
-}
+
 table.listTab tbody > tr td{
   padding: 16px 8px;
-  text-align: left;
+  text-align: right;
   font-size: 14px;
   border-bottom: 1px solid #ececed;
   vertical-align: middle;
@@ -225,9 +227,10 @@ table.listTab tbody > tr td{
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  background-color: rgba(159, 205, 255, 0.99);
 }
-table.listTab tbody > tr td.check{
-  min-width: 20px;
+table.listTab tbody > tr td div input[type=radio]{
+  transform: scale(1.5,1.5);
 }
 table.listTab tbody > tr td:first-child{
   width: 20px;
@@ -241,19 +244,11 @@ table.listTab tbody > tr.check{
 table.listTab tbody > tr:last-child td{
   border-bottom: 0px;
 }
-table.listTab tbody > tr td a{
-  color: #248bfc;
-}
+
 table.listTab tbody > tr td input{
   border:1px solid #248bfc;
-}
-table.listTab tbody > tr td .green{
-  color: #72d34b;
-  font-weight:bold;
-}
-table.listTab tbody > tr td .red{
-  color: #f00;
-  font-weight:bold;
+  color: #4e555b;
+  text-align: right;
 }
 
 div.TableList{
@@ -262,6 +257,10 @@ div.TableList{
 
 div.list{
   width : 800px;
+}
+
+.msg{
+  text-align: right;
 }
 
 </style>
