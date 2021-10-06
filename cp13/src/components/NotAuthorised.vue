@@ -1,7 +1,14 @@
 <template>
-  <div>
-  <h1>401 NOT Authorised</h1>
-  <h2>You have taken this survey!</h2>
+  <div class="error-block">
+    <div class="grids-2">
+      <div class="right-grid">
+        <h2>401</h2>
+        <h3>Authentication Error</h3>
+        <hr>
+        <h3>You have taken this survey before</h3>
+        <h3>Thanks for your participation!</h3>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,13 +19,41 @@ export default {
 </script>
 
 <style scoped>
-h1{
-  width: 350px;
-  margin: 0 auto;
+h1,
+h2,
+h3{
+  margin: 0;
+  padding: 0
 }
 
-h2{
-  width: 400px;
-  margin: 0 auto;
+.error-block {
+  text-align: center;
+  align-items: center;
+}
+
+.error-block h2 {
+  color: #fff;
+  font-size: 16em;
+  margin: 20px;
+  line-height: .8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  -webkit-text-fill-color: transparent;
+  background: -webkit-linear-gradient(transparent, transparent);
+  background: url(../assets/usyd.jpeg) repeat 0px 0px;
+  background-size: contain;
+  background: -o-linear-gradient(transparent, transparent);
+  -webkit-background-clip: text;
+}
+
+.error-block .right-grid {
+  text-align: center;
+  padding: 70px 0px;
+}
+
+.error-block h3 {
+  font-size: 35px;
+  margin-top: 20px;
+  font-weight: 600;
 }
 </style>
