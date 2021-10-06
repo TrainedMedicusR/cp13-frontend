@@ -7,33 +7,41 @@
       <div class="ele question">
         {{this.description}}
         <!-- This section are all question buttons like share,like,check. -->
-        {{this.description}}
         <div class = "QuestionButtons">
-          <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
-            <div v-if="item.title==='share'">
-              <button :id = "i" class="btn-skip btn-lg" v-on:click="response('share',i)">
-                <i class="glyphicon glyphicon-share"></i>  Share
-              </button>
-            </div>
-            <div v-else-if="item.title==='check'">
-              <button :id = "i" class="btn-skip btn-lg" v-on:click="response('check',i)">
-                <i class="glyphicon glyphicon-question-sign"></i>  Check
-              </button>
-            </div>
-            <div v-else-if="item.title==='like'">
-              <button :id = "i" class="btn-skip btn-lg" v-on:click="response('like',i)">
-                <i class="glyphicon glyphicon-heart"></i> Like
-              </button>
-            </div>
-            <div v-else-if="item.title==='skip'">
-              <button :id = "i" class="btn-skip btn-lg" v-on:click="response('skip',i)">
-                <i class="glyphicon glyphicon-forward"></i> Skip
-              </button>
-            </div>
-            <div v-else>
+          <div v-if="this.right_to_left">
+            <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
               <button :id = "i" class="btn-skip btn-lg" v-on:click="response(item.title,i)">
                 {{item.title}}
               </button>
+            </div>
+          </div>
+          <div v-else>
+            <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
+              <div v-if="item.title==='share'">
+                <button :id = "i" class="btn-skip btn-lg" v-on:click="response('share',i)">
+                  <i class="glyphicon glyphicon-share"></i>  Share
+                </button>
+              </div>
+              <div v-else-if="item.title==='check'">
+                <button :id = "i" class="btn-skip btn-lg" v-on:click="response('check',i)">
+                  <i class="glyphicon glyphicon-question-sign"></i>  Check
+                </button>
+              </div>
+              <div v-else-if="item.title==='like'">
+                <button :id = "i" class="btn-skip btn-lg" v-on:click="response('like',i)">
+                  <i class="glyphicon glyphicon-heart"></i> Like
+                </button>
+              </div>
+              <div v-else-if="item.title==='skip'">
+                <button :id = "i" class="btn-skip btn-lg" v-on:click="response('skip',i)">
+                  <i class="glyphicon glyphicon-forward"></i> Skip
+                </button>
+              </div>
+              <div v-else>
+                <button :id = "i" class="btn-skip btn-lg" v-on:click="response(item.title,i)">
+                  {{item.title}}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -64,7 +72,8 @@ export default {
       imgPath:'',
       newsDetails:'',
       question_button:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}],
-      requireANS:false
+      requireANS:false,
+      right_to_left:false
     }
   },
   mounted(){
@@ -78,13 +87,15 @@ export default {
 
       this.description = jsonObj.description;
 
-      this.questionbutton = jsonObj.questionbutton;
+      this.question_button = jsonObj.question_button;
 
       this.newsTitle = jsonObj.newsTitle;
 
       this.imgPath = jsonObj.img;
 
       this.newsDetails = jsonObj.newsDescription;
+
+      this.right_to_left = jsonObj.right_to_left;
 
       let  json_History= tempStorage.getQuestionAnswerJSON(this.$route.params.id);
 
