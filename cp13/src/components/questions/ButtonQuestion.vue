@@ -94,7 +94,7 @@ export default {
       this.imgPath = jsonObj.img;
 
       this.newsDetails = jsonObj.newsDescription;
-
+      this.requireANS = jsonObj.Required;
       this.right_to_left = jsonObj.right_to_left;
 
       let  json_History= tempStorage.getQuestionAnswerJSON(this.$route.params.id);
