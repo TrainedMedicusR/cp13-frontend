@@ -97,7 +97,6 @@ export default {
     },
 
     response: function (msg,id) {
-      console.log("index" + id)
       this.responseJSON = JSON.stringify({"answer": id});
     }
   }
