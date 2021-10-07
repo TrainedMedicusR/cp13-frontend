@@ -97,7 +97,7 @@ export default {
     },
 
     response: function (msg,id) {
-      this.responseJSON = JSON.stringify({"answer": id});
+      this.responseJSON = JSON.stringify({"answer": id,"result":msg});
     }
   }
 }
