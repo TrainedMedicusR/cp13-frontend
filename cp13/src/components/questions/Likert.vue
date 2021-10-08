@@ -6,17 +6,19 @@ var a = 1
     </news-frame>
 
     <div class="TableList">
-      <div class="msg"> {{msg}}</div>
+      <div v-if="rtl===true" class="msg" :style="{textAlign:'right'}"> {{msg}}</div>
+      <div v-if="rtl===false" class="msg" :style="{textAlign:'left'}"> {{msg}}</div>
       <div class="list">
         <table class="listTab">
           <thead>
           <tr>
-            <th v-for="item in tableHead" :key="item.key"> {{item.title}}</th>
+            <th v-if="rtl===true" v-for="item in tableHead" :key="item.key" :style="{textAlign:'right'}"> {{item.title}}</th>
+            <th v-if="rtl===false" v-for="item in tableHead" :key="item.key" :style="{textAlign:'left' }"> {{item.title}}</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item, index) in tableData" v-bind:key="index">
-            <td v-for="(val) in tableHead" :key="val.key">
+            <td v-if="rtl===true"  v-for="(val) in tableHead" :key="val.key" :style="{textAlign:'right'}">
               <div v-if="item[val.key]==='radio'">
                 <input id="Field1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
               </div>
@@ -28,16 +30,40 @@ var a = 1
               <div v-if="index === tableData.length-1">
                 <div v-if= "val.key === 'category'">
                   <div v-if="item['other_content']!==''">
-                    <input id = "Field2" name = "textfield" type = "url" class = "field text medium" :value = "item['other_content']" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
+                    <input id = "Field2" name = "textfield" type = "url" class = "field text medium" :value = "item['other_content']" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index" @input="lefttoright($event)" />
                   </div>
                   <div v-else>
-                    <input id = "Field2_2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
+                    <input id = "Field2_2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20"  tabindex = "36" v-on:input="addThingEnter" :name="index" @input="lefttoright($event)" />
                   </div>
                 </div>
               </div>
 
 
             </td>
+
+            <td v-if="rtl===false"  v-for="(val) in tableHead" :key="val.key" :style="{textAlign:'left'}">
+              <div v-if="item[val.key]==='radio'">
+                <input id="Field1_1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
+              </div>
+              <div v-else-if ="item[val.key]==='radio selected'">
+                <input id="Field1_h_1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" checked/>
+              </div>
+              <div v-else> {{item[val.key]}}</div>
+
+              <div v-if="index === tableData.length-1">
+                <div v-if= "val.key === 'category'">
+                  <div v-if="item['other_content']!==''">
+                    <input id = "Field2_1" name = "textfield" type = "url" class = "field text medium" :value = "item['other_content']" :style="{textAlign:'left', dir:'ltr'}" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index "/>
+                  </div>
+                  <div v-else>
+                    <input id = "Field2_2_1" name = "textfield" type = "url" class = "field text medium" value = "" :style="{textAlign:'left',  dir:'ltr'}" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
+                  </div>
+                </div>
+              </div>
+
+
+            </td>
+
           </tr>
           </tbody>
         </table>
@@ -63,6 +89,7 @@ export default {
   data () {
     return {
       host:location.hostname,
+      rtl:false,
       response:"",
       responseJSON:{answer:[]},
       newsTitle: '',
@@ -144,6 +171,17 @@ export default {
       object["other_content"] = event.target.value;
       this.responseJSON.answer = this.tableData;
       this.response = JSON.stringify(this.responseJSON);
+    },
+    lefttoright: function(e){
+      var inputchar = e.data;
+      var pointerPos = e.target.selectionStart;
+
+      if(inputchar != null){/* 删除字符时是null */
+        pointerPos -= 1;
+      }
+
+      e.target.selectionStart = pointerPos;
+      e.target.selectionEnd = pointerPos;
     }
   },
 
@@ -205,7 +243,6 @@ table.listTab{
 table.listTab th{
   background-color: #1080de;
   padding: 14px 8px;
-  text-align: right;
   font-size: 14px;
   border: 1px solid #ecf0f4;
   min-width: 40px;
@@ -218,7 +255,7 @@ table.listTab th{
 
 table.listTab tbody > tr td{
   padding: 16px 8px;
-  text-align: right;
+
   font-size: 14px;
   border-bottom: 1px solid #ececed;
   vertical-align: middle;
@@ -259,8 +296,6 @@ div.list{
   width : 800px;
 }
 
-.msg{
-  text-align: right;
-}
+
 
 </style>
