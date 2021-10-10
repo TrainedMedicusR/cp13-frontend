@@ -2,7 +2,7 @@
   <div class="wrapper">
     <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
     </news-frame>
-
+<!--    style="direction:rtl; unicode-bidi:bidi-override;"-->
     <div class="container">
       <div class="ele question">
         {{this.description}}
