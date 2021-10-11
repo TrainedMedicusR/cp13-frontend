@@ -6,38 +6,64 @@ var a = 1
     </news-frame>
 
     <div class="TableList">
-      <div> {{msg}}</div>
+      <div v-if="rtl===true" class="msg" :style="{textAlign:'right'}"> {{msg}}</div>
+      <div v-if="rtl===false" class="msg" :style="{textAlign:'left'}"> {{msg}}</div>
       <div class="list">
         <table class="listTab">
           <thead>
           <tr>
-            <th v-for="item in tableHead" :key="item.key"> {{item.title}}</th>
+            <th v-if="rtl===true" v-for="item in tableHead" :key="item.key" :style="{textAlign:'right'}"> {{item.title}}</th>
+            <th v-if="rtl===false" v-for="item in tableHead" :key="item.key" :style="{textAlign:'left' }"> {{item.title}}</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item, index) in tableData" v-bind:key="index">
-            <td v-for="(val) in tableHead" :key="val.key">
+            <td v-if="rtl===true"  v-for="(val) in tableHead" :key="val.key" :style="{textAlign:'right'}">
               <div v-if="item[val.key]==='radio'">
                 <input id="Field1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
               </div>
               <div v-else-if ="item[val.key]==='radio selected'">
                 <input id="Field1_h"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" checked/>
               </div>
-              <div v-else>
+              <div v-else> {{item[val.key]}}</div>
+
+              <div v-if="index === tableData.length-1">
                 <div v-if= "val.key === 'category'">
-                  <div v-if="item[val.key].indexOf('Others') >=0">
-                    {{item[val.key]}}<br>
-                    <div v-if="item['other_content']!==''">
-                      <input id = "Field2" name = "textfield" type = "url" class = "field text medium" :value = "item['other_content']" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
-                    </div>
-                    <div v-else>
-                      <input id = "Field2_2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
-                    </div>
+                  <div v-if="item['other_content']!==''">
+                    <input id = "Field2" name = "textfield" type = "url" class = "field text medium" :value = "item['other_content']" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index" @input="lefttoright($event)" />
                   </div>
-                  <div v-else> {{item[val.key]}}</div>
+                  <div v-else>
+                    <input id = "Field2_2" name = "textfield" type = "url" class = "field text medium" value = "" maxlength="20"  tabindex = "36" v-on:input="addThingEnter" :name="index" @input="lefttoright($event)" />
+                  </div>
                 </div>
               </div>
+
+
             </td>
+
+            <td v-if="rtl===false"  v-for="(val) in tableHead" :key="val.key" :style="{textAlign:'left'}">
+              <div v-if="item[val.key]==='radio'">
+                <input id="Field1_1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" />
+              </div>
+              <div v-else-if ="item[val.key]==='radio selected'">
+                <input id="Field1_h_1"  type="radio"  v-on:click="methodToRunOnSelect" :value = "val.key" :name="index" checked/>
+              </div>
+              <div v-else> {{item[val.key]}}</div>
+
+              <div v-if="index === tableData.length-1">
+                <div v-if= "val.key === 'category'">
+                  <div v-if="item['other_content']!==''">
+                    <input id = "Field2_1" name = "textfield" type = "url" class = "field text medium" :value = "item['other_content']" :style="{textAlign:'left', dir:'ltr'}" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index "/>
+                  </div>
+                  <div v-else>
+                    <input id = "Field2_2_1" name = "textfield" type = "url" class = "field text medium" value = "" :style="{textAlign:'left',  dir:'ltr'}" maxlength="20" tabindex = "36" v-on:input="addThingEnter" :name="index"/>
+                  </div>
+                </div>
+              </div>
+
+
+            </td>
+
           </tr>
           </tbody>
         </table>
@@ -63,6 +89,7 @@ export default {
   data () {
     return {
       host:location.hostname,
+      rtl:false,
       response:"",
       responseJSON:{answer:[]},
       newsTitle: '',
@@ -71,11 +98,13 @@ export default {
       msg : "",
       requireANS:false,
       tableHead:[
-        {key:"category",title:"Category"},
+
         {key:"extreme",title:"Extreme Important"},
         {key:"very",title:"Very Important"},
         {key:"slight",title:"Slight Important"},
-        {key:"not",title:"Not Important"}
+        {key:"not",title:"Not Important"},
+        {key:"category",title:"Category"}
+
       ],
       tableData:[
         {category:"Your prior knowledge",extreme:"radio",very:"radio",slight:"radio",not:"radio"},
@@ -122,7 +151,7 @@ export default {
       }
 
       if  (!(this.history.length === 0)){
-          this.tableData = this.history;
+        this.tableData = this.history;
       }
 
 
@@ -142,6 +171,17 @@ export default {
       object["other_content"] = event.target.value;
       this.responseJSON.answer = this.tableData;
       this.response = JSON.stringify(this.responseJSON);
+    },
+    lefttoright: function(e){
+      var inputchar = e.data;
+      var pointerPos = e.target.selectionStart;
+
+      if(inputchar != null){
+        pointerPos -= 1;
+      }
+
+      e.target.selectionStart = pointerPos;
+      e.target.selectionEnd = pointerPos;
     }
   },
 
@@ -193,31 +233,29 @@ form li div span {
   overflow-x:auto;
 }
 table.listTab{
-  width: 100%;
+  width: 89%;
   font-size: 14px;
-  color: #6a6a6a;
+  color: #100f0f;
   border: 1px solid #ececed;
   padding: 1px;
   background-color: #fff;
 }
 table.listTab th{
-  background-color: #ecf0f4;
+  background-color: #1080de;
   padding: 14px 8px;
-  text-align: left;
   font-size: 14px;
   border: 1px solid #ecf0f4;
   min-width: 40px;
-  color:#292d31;
+  color: #101111;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  width: 10%;
 }
-table.listTab th.check{
-  min-width: 20px;
-}
+
 table.listTab tbody > tr td{
   padding: 16px 8px;
-  text-align: left;
+
   font-size: 14px;
   border-bottom: 1px solid #ececed;
   vertical-align: middle;
@@ -226,9 +264,10 @@ table.listTab tbody > tr td{
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  background-color: rgba(159, 205, 255, 0.99);
 }
-table.listTab tbody > tr td.check{
-  min-width: 20px;
+table.listTab tbody > tr td div input[type=radio]{
+  transform: scale(1.5,1.5);
 }
 table.listTab tbody > tr td:first-child{
   width: 20px;
@@ -242,19 +281,11 @@ table.listTab tbody > tr.check{
 table.listTab tbody > tr:last-child td{
   border-bottom: 0px;
 }
-table.listTab tbody > tr td a{
-  color: #248bfc;
-}
+
 table.listTab tbody > tr td input{
   border:1px solid #248bfc;
-}
-table.listTab tbody > tr td .green{
-  color: #72d34b;
-  font-weight:bold;
-}
-table.listTab tbody > tr td .red{
-  color: #f00;
-  font-weight:bold;
+  color: #4e555b;
+  text-align: right;
 }
 
 div.TableList{
@@ -264,5 +295,7 @@ div.TableList{
 div.list{
   width : 800px;
 }
+
+
 
 </style>
