@@ -8,14 +8,28 @@
     <div class="picture">
       <img :src="imgPath" alt="">
     </div>
-    <div class="newsText">
-      {{isExpanded ? description : capitalize(description)}}
-      <button>
+    <div v-if="rtl">
+      <div class= "newsTextRTL" dir="rtl">
+        {{isExpanded ? description : capitalize(description)}}
+        <button>
           <span @click = "expandClick" class = "expand">
             {{isExpanded ? "show less": "show more"}}
           </span>
-      </button>
+        </button>
+      </div>
     </div>
+
+    <div v-else>
+      <div class="newsText" dir = "ltr">
+        {{isExpanded ? description : capitalize(description)}}
+        <button>
+          <span @click = "expandClick" class = "expand">
+            {{isExpanded ? "show less": "show more"}}
+          </span>
+        </button>
+      </div>
+    </div>
+
   </div>
   </div>
 </template>
@@ -38,7 +52,8 @@ export default {
 
   data(){
     return{
-      isExpanded: true
+      isExpanded: true,
+      rtl: true
     }
   },
 
@@ -90,6 +105,12 @@ export default {
   /*display:inline-block;*/
   text-align: left;
 }
+
+.newsTextRTL{
+  margin-top: 12px;
+  text-align: right;
+}
+
 .expand{
   color: cornflowerblue;
 }
