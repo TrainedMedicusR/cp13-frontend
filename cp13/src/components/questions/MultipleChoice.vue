@@ -31,7 +31,7 @@
 <!--      <button id="preBtn" class="previousButton"><img src="../../assets/leftArrow.png" alt="previous quesiton"></button>-->
 <!--      <button id="nextBtn" class="previousButton"><img src="../../assets/rightArrow.png" alt="next quesiton"></button>-->
 <!--    </div>-->
-    <switch-button :response=responseJSON>
+    <switch-button :requireANS="requireANS" :response=responseJSON>
 
     </switch-button>
   </div>
@@ -52,7 +52,7 @@ export default {
       newsDetails: "news contentsbalabalabalabalabalabalabalabalabala",
       questionContents: "Please choose an option",
       newsTitle: '',
-
+      requireANS:false,
       options: [
         {id: 0, option: "option1", textField: "false"},
         {id: 1, option: "option2", textField: "false"},
@@ -76,6 +76,7 @@ export default {
       this.newsDetails = jsonObject.newsDescription;
       this.questionContents = jsonObject.questionContents;
       this.options = jsonObject.options;
+      this.requireANS = jsonObject.Required;
     },
     setAnswer(event){
       let qValue = event.target.value;
@@ -85,10 +86,14 @@ export default {
       let jsonQuestion = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
       let answerID = jsonQuestion.answer;
       this.responseJSON = JSON.stringify(jsonQuestion);
-      let radioTag = document.getElementById(answerID);
+      if (this.responseJSON !== "{}") {
+        let radioTag = document.getElementById(answerID);
         document.getElementById(answerID).checked = true;
         document.getElementById("text_choice").value = answerID;
       }
+      }
+
+
     }
   }
 </script>
