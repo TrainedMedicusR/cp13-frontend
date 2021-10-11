@@ -1,7 +1,7 @@
 <template>
   <div class = container>
     <div class="picture">
-      <img src="../assets/usyd.jpeg" alt=""/>
+      <img src="../assets/usyd.jpeg" alt="Survey has been finished"/>
     </div>
     <div>
       <h1>Thank you for your participation!</h1>

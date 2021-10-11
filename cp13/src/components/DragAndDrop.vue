@@ -47,7 +47,7 @@ export default {
   components: {SwitchButton, NewsFrame},
   data () {
     return {
-      rtl:'',
+      rtl:true,
       response: "",
       responseJSON:{},
       isExpanded:true,
