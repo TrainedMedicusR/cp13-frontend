@@ -1,16 +1,19 @@
 <template>
   <div class="wrapper">
-    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
-    </news-frame>
+    <p style="text-align:right">
+    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails"></news-frame>
+    </p>
 <!--    style="direction:rtl; unicode-bidi:bidi-override;"-->
     <div class="container">
-      <div class="ele question">
+      <div class="ele question" align="right">
+        <p style="text-align:right">
         {{this.description}}
+        </p>
         <!-- This section are all question buttons like share,like,check. -->
         <div class = "QuestionButtons">
           <div v-if="this.rtl">
             <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
-                <button :id = "i" style="direction:rtl; unicode-bidi:bidi-override;" class="btn-skip btn-lg" v-on:click="response(item.title,i)">
+                <button :id = "i" style="direction:rtl; unicode-bidi:bidi-override;"  class="btn-skip btn-lg" v-on:click="response(item.title,i)">
                   {{item.title}}
                 </button>
             </div>
