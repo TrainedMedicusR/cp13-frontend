@@ -47,7 +47,7 @@ export default {
   components: {SwitchButton, NewsFrame},
   data () {
     return {
-      rtldirection:true,
+      rtl:true,
       response: "",
       responseJSON:{},
       isExpanded:true,
@@ -100,7 +100,7 @@ export default {
       return this.items.length*70+'px';
     },
     dynamicDirection() {
-      if(this.rtldirection){
+      if(this.rtl){
         return "rtl";
       }else{
         return "ltr";

@@ -6,7 +6,7 @@
         <h3>Not Found</h3>
         <hr>
         <h3>Cannot find specified survey</h3>
-        <h3>Please check if you entered the correct route!</h3>
+        <h3>Please check if you entered the correct path!</h3>
       </div>
     </div>
   </div>

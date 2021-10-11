@@ -16,6 +16,15 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  /*border: 1px solid grey;*/
+  width: 700px;
+  /*margin: 0 auto;*/
+  padding: 20px;
+  text-align: center;
+  align-content: center;
+  /*border: 1px solid black;*/
+}
 .picture{
   border: 2px solid grey;
   width: 600px;
