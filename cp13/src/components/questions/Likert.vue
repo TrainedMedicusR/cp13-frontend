@@ -176,7 +176,7 @@ export default {
       var inputchar = e.data;
       var pointerPos = e.target.selectionStart;
 
-      if(inputchar != null){/* 删除字符时是null */
+      if(inputchar != null){
         pointerPos -= 1;
       }
 
