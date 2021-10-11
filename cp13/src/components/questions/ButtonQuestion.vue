@@ -1,13 +1,24 @@
 <template>
   <div class="wrapper">
-    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
-    </news-frame>
-
+    <p style="text-align:right">
+    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails"></news-frame>
+    </p>
+<!--    style="direction:rtl; unicode-bidi:bidi-override;"-->
     <div class="container">
-      <div class="ele question">
+      <div class="ele question" align="right">
+        <p style="text-align:right">
         {{this.description}}
+        </p>
         <!-- This section are all question buttons like share,like,check. -->
         <div class = "QuestionButtons">
+          <div v-if="this.rtl">
+            <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
+                <button :id = "i" style="direction:rtl; unicode-bidi:bidi-override;"  class="btn-skip btn-lg" v-on:click="response(item.title,i)">
+                  {{item.title}}
+                </button>
+            </div>
+          </div>
+          <div v-else>
             <div class = "buttoninline" v-for="(item, i) in this.question_button" v-bind:key="item.id">
               <div v-if="item.title==='share'">
                 <button :id = "i" class="btn-skip btn-lg" v-on:click="response('share',i)">
@@ -35,6 +46,8 @@
                 </button>
               </div>
             </div>
+          </div>
+
         </div>
         <hr>
       </div>
@@ -63,7 +76,8 @@ export default {
       imgPath:'',
       newsDetails:'',
       question_button:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}],
-      requireANS:false
+      requireANS:false,
+      rtl:true
     }
   },
   mounted(){
@@ -86,9 +100,9 @@ export default {
       this.newsDetails = jsonObj.newsDescription;
       this.requireANS = jsonObj.Required;
 
+      this.rtl = jsonObj.right_to_left;
+
       let  json_History= tempStorage.getQuestionAnswerJSON(this.$route.params.id);
-
-
       if (JSON.stringify(json_History) !== "{}"){
         this.responseJSON = JSON.stringify(json_History);
         document.getElementById(json_History.answer).focus();
