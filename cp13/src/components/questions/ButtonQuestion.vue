@@ -77,7 +77,7 @@ export default {
       newsDetails:'',
       question_button:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}],
       requireANS:false,
-      rtl:'true'
+      rtl:true
     }
   },
   mounted(){
