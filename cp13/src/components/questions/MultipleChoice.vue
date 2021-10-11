@@ -4,7 +4,34 @@
 
     </news-frame>
     <div class="container">
+      <div v-if="rtl">
+        <div class="questionContentsRTL" dir="rtl">{{ questionContents }}</div>
+        <div class="formRTL" dir="rtl">
+          <form action="#" method="get">
+            <table class="choiceTab">
+              <tr v-for="item in options">
+                <td v-if="item.textField==='false'">
+                  <label>
+                    <input :id="item.option" name="choice" type="radio" :value="item.option" @click="setAnswer"/>
+                    {{ item.option }}
+                  </label>
+                </td>
+                <td v-else-if="item.textField==='true'">
+                  <label>
+                    {{ item.option }}
+                    <input id="text_choiceRTL" name="text_choiceRTL" type="text" v-on:blur="setAnswer" placeholder="type your answer here"/>
+                  </label>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
 
+
+
+
+      <div v-else>
       <div class="questionContents">{{ questionContents }}</div>
       <div class="form">
         <form action="#" method="get">
@@ -27,7 +54,8 @@
         </form>
       </div>
     </div>
-<!--    <div class="processButtons">-->
+    </div>
+    <!--    <div class="processButtons">-->
 <!--      <button id="preBtn" class="previousButton"><img src="../../assets/leftArrow.png" alt="previous quesiton"></button>-->
 <!--      <button id="nextBtn" class="previousButton"><img src="../../assets/rightArrow.png" alt="next quesiton"></button>-->
 <!--    </div>-->
@@ -58,7 +86,8 @@ export default {
         {id: 1, option: "option2", textField: "false"},
         {id: 2, option: "Other reasons", textField: "true"}
       ],
-      responseJSON: ""
+      responseJSON: "",
+      rtl: true
     }
   },
   created() {
@@ -89,7 +118,11 @@ export default {
       if (this.responseJSON !== "{}") {
         let radioTag = document.getElementById(answerID);
         document.getElementById(answerID).checked = true;
-        document.getElementById("text_choice").value = answerID;
+        if (!this.rtl){
+          document.getElementById("text_choice").value = answerID;
+        }else{
+          document.getElementById("text_choiceRTL").value = answerID;
+        }
       }
       }
 
@@ -129,17 +162,24 @@ export default {
 .picture {
   border: 5px solid grey;
   height: 100px;
-  width: 500px;
+  width: 700px;
   margin: 0 auto;
 }
 
 .questionContents {
-  margin: 10px;
-  margin-left: 30px;
+  margin: 10px 10px 10px 30px;
   /*border: 1px solid black;*/
   text-align: left;
   font-size: 16px;
-  width: 500px;
+  /*width: 500px;*/
+}
+
+.questionContentsRTL {
+  margin: 10px 10px 10px 30px;
+  /*border: 1px solid black;*/
+  text-align: right;
+  font-size: 16px;
+  /*width: 600px;*/
 }
 
 
@@ -175,6 +215,12 @@ export default {
 .form{
   padding: 25px;
   text-align: left;
+  font-size: 16px;
+}
+
+.formRTL{
+  padding: 25px;
+  text-align: right;
   font-size: 16px;
 }
 
