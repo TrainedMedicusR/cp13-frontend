@@ -15,7 +15,7 @@
            @drop = 'onDrop($event,panel.id)'
            @dragenter.prevent
            @dragover.prevent
-           :style="{height: dynamicHeight}">
+           :style="{height: dynamicHeight,direction: dynamicDirection}">
         <hr>
         <h6>{{panel.info}}</h6>
         <hr>
@@ -47,6 +47,7 @@ export default {
   components: {SwitchButton, NewsFrame},
   data () {
     return {
+      rtl:false,
       response: "",
       responseJSON:{},
       isExpanded:true,
@@ -97,6 +98,13 @@ export default {
   computed:{
     dynamicHeight() {
       return this.items.length*70+'px';
+    },
+    dynamicDirection() {
+      if(this.rtl){
+        return "rtl";
+      }else{
+        return "ltr";
+      }
     }
   },
 
@@ -191,7 +199,8 @@ export default {
   padding: 5px;
   display:inline-block;
   vertical-align: middle;
-  margin-left: 50px;
+  margin-left: 25px;
+  margin-right: 25px;
   text-align: -webkit-center;
 }
 .drag-el:hover{
