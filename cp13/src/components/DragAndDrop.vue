@@ -126,8 +126,8 @@ export default {
       if(JSON.stringify(tempStorage.getQuestionAnswerJSON(this.$route.params.id))!=="{}"){
         let jsonQuestionH = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
         let jsonObjH = JSON.parse(JSON.stringify(jsonQuestionH));
-        this.items = jsonObjH.answers;
-        this.responseJSON.answers = this.items
+        this.items = jsonObjH.answer;
+        this.responseJSON.answer = this.items
         this.response = JSON.stringify(this.responseJSON)
       }
     },
@@ -155,8 +155,9 @@ export default {
       const itemID = evt.dataTransfer.getData('itemID')
       const item = this.items.find(item => item.id == itemID)
       item.list = list
-      this.responseJSON.answers = this.items
+      this.responseJSON.answer = this.items
       this.response = JSON.stringify(this.responseJSON)
+      console.log("answer: "+ this.response)
     },
 
     panelListItem: function (value) {
@@ -170,8 +171,6 @@ export default {
 <style scoped>
 
 .question{
-  font-family: Arial,serif;
-  font-size: 20px;
   width: 100%;
   background-color: white;
   text-align: center;
