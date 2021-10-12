@@ -157,7 +157,6 @@ export default {
       item.list = list
       this.responseJSON.answer = this.items
       this.response = JSON.stringify(this.responseJSON)
-      console.log("answer: "+ this.response)
     },
 
     panelListItem: function (value) {
