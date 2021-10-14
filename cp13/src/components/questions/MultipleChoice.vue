@@ -224,6 +224,24 @@ export default {
   font-size: 16px;
 }
 
+.formRTL input[type=text]{
+  padding: 5px 5px;
+  width: 300px;
+  -webkit-transition: width 0.5s ease-in-out;
+  transition: width 0.5s ease-in-out;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+.formRTL input[type=text]:focus {
+  /*width: 100%;*/
+  width: 500px;
+}
+
+.formRTL label {
+  cursor: pointer;
+  margin: 10px;
+}
+
 .form input[type=text]{
   padding: 5px 5px;
   width: 300px;
