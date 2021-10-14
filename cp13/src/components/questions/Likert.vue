@@ -6,8 +6,7 @@ var a = 1
     </news-frame>
 
     <div class="TableList">
-      <div v-if="rtl===true" class="msg" :style="{textAlign:'right'}"> {{msg}}</div>
-      <div v-if="rtl===false" class="msg" :style="{textAlign:'left'}"> {{msg}}</div>
+      <div class="msg" > {{msg}}</div>
       <div class="list">
         <table class="listTab">
           <thead>
@@ -294,6 +293,10 @@ div.TableList{
 
 div.list{
   width : 800px;
+}
+
+.msg{
+  text-align: center;
 }
 
 
