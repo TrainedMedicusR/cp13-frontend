@@ -4,6 +4,11 @@
 
     </news-frame>
     <div class="container">
+
+      <div class="requiredSpan" v-if="requireANS">
+        <span>*required</span>
+      </div>
+
       <div class="questionContents">{{ questionContents }}</div>
       <div v-if="rtl">
 <!--        <div class="questionContentsRTL" dir="rtl">{{ questionContents }}</div>-->
@@ -259,5 +264,10 @@ export default {
 .form label{
   cursor: pointer;
   margin: 10px;
+}
+
+.requiredSpan{
+  font-size: smaller;
+  color: #E44E33;
 }
 </style>
