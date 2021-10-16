@@ -39,6 +39,10 @@
 
     </MultipleChoice>
 
+    <Contact class="container" v-if="QType === 'CTD' && this.consent">
+
+    </Contact>
+
   </div>
 </template>
 
@@ -53,11 +57,12 @@ import NumberScale from "./questions/NumberScale";
 import MultipleChoice from "./questions/MultipleChoice";
 import ConsentPage from "./ConsentPage";
 import router from "../router";
+import Contact from "./Contact";
 
 
 export default {
   name: 'SurveyMain',
-  components: {ConsentPage, MultipleChoice, ButtonQuestion, DragAndDrop, Likert, NumberScale},
+  components: {ConsentPage, MultipleChoice, ButtonQuestion, DragAndDrop, Likert, NumberScale, Contact},
   data () {
     return {
       blockTitle:"",
