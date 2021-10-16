@@ -4,8 +4,9 @@
 
     </news-frame>
     <div class="container">
+      <div class="questionContents">{{ questionContents }}</div>
       <div v-if="rtl">
-        <div class="questionContentsRTL" dir="rtl">{{ questionContents }}</div>
+<!--        <div class="questionContentsRTL" dir="rtl">{{ questionContents }}</div>-->
         <div class="formRTL" dir="rtl">
           <form action="#" method="get">
             <table class="choiceTab">
@@ -32,7 +33,7 @@
 
 
       <div v-else>
-      <div class="questionContents">{{ questionContents }}</div>
+<!--      <div class="questionContents">{{ questionContents }}</div>-->
       <div class="form">
         <form action="#" method="get">
           <table class="choiceTab">
@@ -169,18 +170,18 @@ export default {
 .questionContents {
   margin: 10px 10px 10px 30px;
   /*border: 1px solid black;*/
-  text-align: left;
+  text-align: center;
   font-size: 16px;
   /*width: 500px;*/
 }
 
-.questionContentsRTL {
-  margin: 10px 10px 10px 30px;
-  /*border: 1px solid black;*/
-  text-align: right;
-  font-size: 16px;
-  /*width: 600px;*/
-}
+/*.questionContentsRTL {*/
+/*  margin: 10px 10px 10px 30px;*/
+/*  !*border: 1px solid black;*!*/
+/*  text-align: right;*/
+/*  font-size: 16px;*/
+/*  !*width: 600px;*!*/
+/*}*/
 
 
 .previousButton {

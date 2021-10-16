@@ -20,17 +20,6 @@
       <div class="rankButtons" v-for="n in rankNumber">
         <button :id="n" class="rankButton" :value="n" @click="click($event,n)">{{n}}</button>
       </div>
-<!--      <div class="rankButtons">-->
-<!--        <button id="btn1" class="rankButton">1</button>-->
-<!--        <button id="btn2" class="rankButton">2</button>-->
-<!--        <button id="btn3" class="rankButton">3</button>-->
-<!--        <button id="btn4" class="rankButton">4</button>-->
-<!--        <button id="btn5" class="rankButton">5</button>-->
-<!--        <button id="btn6" class="rankButton">6</button>-->
-<!--        <button id="btn7" class="rankButton">7</button>-->
-<!--        <button id="btn8" class="rankButton">8</button>-->
-<!--        <button id="btn9" class="rankButton">9</button>-->
-<!--      </div>-->
     </div>
 
     <switch-button :requireANS="requireANS" :response="responseJSON">
@@ -143,9 +132,9 @@ export default {
   margin: 10px;
   margin-left: 30px;
   /*border: 1px solid black;*/
-  text-align: left;
+  text-align: center;
   font-size: 16px;
-  width: 500px;
+  /*width: 500px;*/
 }
 
 .range {
