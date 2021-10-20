@@ -11,9 +11,9 @@
       <!--        <div class="picture">{{ newsPicture }}</div>-->
       <!--        <div class="newsText">{{ newsText }}</div>-->
       <!--      </div>-->
-      <div class="requiredSpan" v-if="requireANS">
-        <span>*required</span>
-      </div>
+<!--      <div class="requiredSpan" v-if="requireANS">-->
+<!--        <span>*required</span>-->
+<!--      </div>-->
 
       <div class="questionContents">{{ questionContents }}</div>
       <div v-if="rtl">

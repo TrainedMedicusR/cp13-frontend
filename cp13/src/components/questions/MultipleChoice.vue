@@ -5,9 +5,9 @@
     </news-frame>
     <div class="container">
 
-      <div class="requiredSpan" v-if="requireANS">
-        <span>*required</span>
-      </div>
+<!--      <div class="requiredSpan" v-if="requireANS">-->
+<!--        <span>*required</span>-->
+<!--      </div>-->
 
       <div class="questionContents">{{ questionContents }}</div>
       <div v-if="rtl">
