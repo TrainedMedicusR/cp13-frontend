@@ -26,14 +26,14 @@ export default {
       let current = tempStorage.get(this.$route.params.id+"CURRENT");
       let total  = tempStorage.get(this.$route.params.id+"TOTAL");
       // console.log("收到："+this.response);
-
+      this.response = this.response.trim();
       if (this.requireANS) {
-        if (this.response === "" || this.response === null) {
+        if (this.response === "" || this.response === null||this.response==="{}") {
           alert("Please fill in the form!");
           return;
         }
       } else {
-        if (this.response === "" || this.response === null) {
+        if (this.response === "" || this.response === null||this.response==="{}") {
           tempStorage.set(this.$route.params.id+current+"ANSWER",{})
           current += 1;
           tempStorage.set(this.$route.params.id+"CURRENT",current);

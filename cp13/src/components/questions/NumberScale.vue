@@ -3,39 +3,44 @@
     <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
 
     </news-frame>
-<!--    <div class="surveyTitle">-->
-<!--      <h1>{{ surveyTitle }}</h1>-->
-<!--    </div>-->
+    <!--    <div class="surveyTitle">-->
+    <!--      <h1>{{ surveyTitle }}</h1>-->
+    <!--    </div>-->
     <div class="container">
-<!--      <div class="news">-->
-<!--        <div class="picture">{{ newsPicture }}</div>-->
-<!--        <div class="newsText">{{ newsText }}</div>-->
+      <!--      <div class="news">-->
+      <!--        <div class="picture">{{ newsPicture }}</div>-->
+      <!--        <div class="newsText">{{ newsText }}</div>-->
+      <!--      </div>-->
+<!--      <div class="requiredSpan" v-if="requireANS">-->
+<!--        <span>*required</span>-->
 <!--      </div>-->
+
       <div class="questionContents">{{ questionContents }}</div>
-      <div class="range">
-<!--        <text class="rangeText" id="firstRange">{{ firstRange }}</text>-->
-<!--        <text class="rangeText" id="secondRange">{{ secondRange }}</text>-->
-<!--        <text class="rangeText" id="thirdRange">{{ thirdRange }}</text>-->
+      <div v-if="rtl">
+        <div class="range" dir="rtl">
+          <!--        <text class="rangeText" id="firstRange">{{ firstRange }}</text>-->
+          <!--        <text class="rangeText" id="secondRange">{{ secondRange }}</text>-->
+          <!--        <text class="rangeText" id="thirdRange">{{ thirdRange }}</text>-->
+        </div>
+        <div class="rankButtons rtlButtons" dir="rtl" v-for="n in rankNumber">
+          <button :id="n" class="rankButton" :value="n" @click="click($event,n)">{{ n }}</button>
+        </div>
       </div>
-      <div class="rankButtons" v-for="n in rankNumber">
-        <button :id="n" class="rankButton" :value="n" @click="click($event,n)">{{n}}</button>
+      <div v-else>
+        <div class="range">
+          <!--        <text class="rangeText" id="firstRange">{{ firstRange }}</text>-->
+          <!--        <text class="rangeText" id="secondRange">{{ secondRange }}</text>-->
+          <!--        <text class="rangeText" id="thirdRange">{{ thirdRange }}</text>-->
+        </div>
+        <div class="rankButtons" v-for="n in rankNumber">
+          <button :id="n" class="rankButton" :value="n" @click="click($event,n)">{{ n }}</button>
+        </div>
       </div>
-<!--      <div class="rankButtons">-->
-<!--        <button id="btn1" class="rankButton">1</button>-->
-<!--        <button id="btn2" class="rankButton">2</button>-->
-<!--        <button id="btn3" class="rankButton">3</button>-->
-<!--        <button id="btn4" class="rankButton">4</button>-->
-<!--        <button id="btn5" class="rankButton">5</button>-->
-<!--        <button id="btn6" class="rankButton">6</button>-->
-<!--        <button id="btn7" class="rankButton">7</button>-->
-<!--        <button id="btn8" class="rankButton">8</button>-->
-<!--        <button id="btn9" class="rankButton">9</button>-->
-<!--      </div>-->
+
+      <switch-button :requireANS="requireANS" :response="responseJSON">
+
+      </switch-button>
     </div>
-
-    <switch-button :requireANS="requireANS" :response="responseJSON">
-
-    </switch-button>
   </div>
 </template>
 
@@ -43,6 +48,7 @@
 import {tempStorage} from "../../utils/storage";
 import SwitchButton from "../SwitchButton";
 import NewsFrame from "../NewsFrame";
+
 export default {
   name: "NumberScale",
   components: {SwitchButton, NewsFrame},
@@ -50,38 +56,39 @@ export default {
     return {
       surveyTitle: "survey title",
       newsTitle: '',
-      imgPath:'',
-      newsDetails:'',
-      requireANS:false,
+      imgPath: '',
+      newsDetails: '',
+      requireANS: false,
       questionContents: "Please rank the reliability",
       // firstRange: "Not reliable",
       // secondRange: "Neutral",
       // thirdRange: "Very reliable",
       rankNumber: 40,
       responseJSON: '',
+      rtl: true,
     }
   },
-  created(){
+  created() {
     this.initPage();
   },
   mounted() {
     this.loadData();
   },
   methods: {
-    initPage(){
+    initPage() {
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
       let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
       this.newsTitle = jsonObject.newsTitle;
-      this.imgPath=jsonObject.img;
+      this.imgPath = jsonObject.img;
       this.newsDetails = jsonObject.newsDescription;
-      this.questionContents=jsonObject.questionContents;
-      this.rankNumber=jsonObject.rankNumber;
+      this.questionContents = jsonObject.questionContents;
+      this.rankNumber = jsonObject.rankNumber;
       this.requireANS = jsonObject.Required;
     },
-    click(tmp,n){
+    click(tmp, n) {
       this.responseJSON = JSON.stringify({answer: n});
     },
-    loadData(){
+    loadData() {
       let jsonQuestion = tempStorage.getQuestionAnswerJSON(this.$route.params.id);
       let answerID = jsonQuestion.answer;
       this.responseJSON = JSON.stringify(jsonQuestion);
@@ -95,7 +102,7 @@ export default {
 </script>
 
 <style scoped>
-.wrapper{
+.wrapper {
   text-align: center;
 }
 
@@ -109,7 +116,7 @@ export default {
   /*border: 1px solid black;*/
 }
 
-.news{
+.news {
   text-align: center;
   /*border: 1px solid grey;*/
   font-size: 20px;
@@ -117,16 +124,18 @@ export default {
   margin-bottom: 20px;
 }
 
-.newsText{
+.newsText {
   margin-top: 12px;
 
 }
-.picture{
+
+.picture {
   border: 5px solid grey;
   height: 100px;
   width: 500px;
   margin: 0 auto;
 }
+
 #firstRange {
   margin-right: 100px;
 }
@@ -143,9 +152,9 @@ export default {
   margin: 10px;
   margin-left: 30px;
   /*border: 1px solid black;*/
-  text-align: left;
+  text-align: center;
   font-size: 16px;
-  width: 500px;
+  /*width: 500px;*/
 }
 
 .range {
@@ -161,7 +170,7 @@ export default {
   display: inline-block;
 }
 
-.rankButton{
+.rankButton {
   padding: 8px;
   width: 50px;
   height: 50px;
@@ -171,19 +180,19 @@ export default {
 
 }
 
-.rankButton:hover{
-    background-color: #1947E5;
-    color: white;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
+.rankButton:hover {
+  background-color: #1947E5;
+  color: white;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
 }
 
-.rankButton:focus{
+.rankButton:focus {
   background-color: #1947E5;
   color: white;
 }
 
-.previousButton{
+.previousButton {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -192,20 +201,35 @@ export default {
   text-align: center;
 
 }
-.previousButton:active{
+
+.previousButton:active {
   /*background: black;*/
   /*opacity: 0.5;*/
   box-shadow: 0 3px #666;
   transform: translateY(2px);
 }
-.previousButton img{
+
+.previousButton img {
   width: 30px;
 }
 
-#preBtn{
+#preBtn {
   margin-right: 200px;
 }
-#nextBtn{
+
+#nextBtn {
   margin-left: 200px;
 }
+
+/*.rtlButtons{*/
+/*  direction: rtl;*/
+/*  writing-mode: vertical-rl;*/
+/*}*/
+
+.requiredSpan {
+  font-size: smaller;
+  color: #E44E33;
+}
+
+
 </style>
