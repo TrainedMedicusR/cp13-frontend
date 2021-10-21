@@ -7,7 +7,7 @@
       {{introText}}
     </dev>
     <hr>
-    <button class='nextButton'
+    <button class='nextButton' v-on:click="moveToNext"
             @mousehover="hover=true"
             @mouseleave="hover=false">Next</button>
   </div>
@@ -48,7 +48,8 @@ export default {
         }
       })
 
-    }
+    },
+    moveToNext(){}
   }
 }
 </script>
