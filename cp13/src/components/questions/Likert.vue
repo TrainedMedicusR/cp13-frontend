@@ -6,7 +6,9 @@ var a = 1
     </news-frame>
 
     <div class="TableList">
-      <div class="msg" > {{msg}}</div>
+
+      <div v-if="requireANS===true" class="msg" > {{msg + "(*required)"}}</div>
+      <div v-if="requireANS===false" class="msg" > {{msg}}</div>
       <div class="list">
         <table class="listTab">
           <thead>
@@ -242,7 +244,7 @@ table.listTab{
 table.listTab th{
   background-color: #1080de;
   padding: 14px 8px;
-  font-size: 14px;
+  font-size: 16px;
   border: 1px solid #ecf0f4;
   min-width: 40px;
   color: #101111;
@@ -255,7 +257,7 @@ table.listTab th{
 table.listTab tbody > tr td{
   padding: 16px 8px;
 
-  font-size: 14px;
+  font-size: 16px;
   border-bottom: 1px solid #ececed;
   vertical-align: middle;
   word-break: break-all;
