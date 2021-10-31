@@ -3,11 +3,11 @@
     <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
 
     </news-frame>
-    <div class="container">
+    <div class="container2">
 
-<!--      <div class="requiredSpan" v-if="requireANS">-->
-<!--        <span>*required</span>-->
-<!--      </div>-->
+      <div class="requiredSpan" v-if="requireANS">
+        <span>*required</span>
+      </div>
 
       <div class="questionContents">{{ questionContents }}</div>
       <div v-if="rtl">
@@ -93,7 +93,7 @@ export default {
         {id: 2, option: "Other reasons", textField: "true"}
       ],
       responseJSON: "",
-      rtl: true
+      rtl: false
     }
   },
   created() {
@@ -142,9 +142,10 @@ export default {
   text-align: center;
 }
 
-.container {
-  /*border: 1px solid grey;*/
-  width: 700px;
+.container2 {
+  border: 1px solid grey;
+  /*width: 700px;*/
+  width: 70%;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
@@ -152,76 +153,19 @@ export default {
   /*border: 1px solid black;*/
 }
 
-.news {
-  text-align: center;
-  /*border: 1px solid grey;*/
-  font-size: 20px;
-  /*align-content: center;*/
-  margin-bottom: 20px;
-}
-
-.newsText {
-  margin-top: 12px;
-
-}
-
-.picture {
-  border: 5px solid grey;
-  height: 100px;
-  width: 700px;
-  margin: 0 auto;
-}
 
 .questionContents {
   margin: 10px 10px 10px 30px;
   /*border: 1px solid black;*/
   text-align: center;
   font-size: 16px;
-  /*width: 500px;*/
-}
-
-/*.questionContentsRTL {*/
-/*  margin: 10px 10px 10px 30px;*/
-/*  !*border: 1px solid black;*!*/
-/*  text-align: right;*/
-/*  font-size: 16px;*/
-/*  !*width: 600px;*!*/
-/*}*/
-
-
-.previousButton {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #E44E33;
-  border: white;
-  text-align: center;
-
-}
-
-.previousButton:active {
-  /*background: black;*/
-  /*opacity: 0.5;*/
-  box-shadow: 0 3px #666;
-  transform: translateY(2px);
-}
-
-.previousButton img {
-  width: 30px;
-}
-
-#preBtn {
-  margin-right: 200px;
-}
-
-#nextBtn {
-  margin-left: 200px;
 }
 
 .form{
   padding: 25px;
   text-align: left;
   font-size: 16px;
+  border: 1px solid black;
 }
 
 .formRTL{
@@ -232,15 +176,16 @@ export default {
 
 .formRTL input[type=text]{
   padding: 5px 5px;
-  width: 300px;
+  /*width: 300px;*/
+  width: 80%;
   -webkit-transition: width 0.5s ease-in-out;
   transition: width 0.5s ease-in-out;
   border: 2px solid #ccc;
   border-radius: 4px;
 }
 .formRTL input[type=text]:focus {
-  /*width: 100%;*/
-  width: 500px;
+  width: 100%;
+  /*width: 500px;*/
 }
 
 .formRTL label {
@@ -250,15 +195,16 @@ export default {
 
 .form input[type=text]{
   padding: 5px 5px;
-  width: 300px;
+  /*width: 300px;*/
+  width: 80%;
   -webkit-transition: width 0.5s ease-in-out;
   transition: width 0.5s ease-in-out;
   border: 2px solid #ccc;
   border-radius: 4px;
 }
 .form input[type=text]:focus {
-  /*width: 100%;*/
-  width: 500px;
+  width: 100%;
+  /*width: 500px;*/
 }
 
 .form label{
