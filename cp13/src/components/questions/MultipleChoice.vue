@@ -143,7 +143,7 @@ export default {
 }
 
 .container2 {
-  border: 1px solid grey;
+  /*border: 1px solid grey;*/
   /*width: 700px;*/
   width: 70%;
   margin: 0 auto;
@@ -165,7 +165,7 @@ export default {
   padding: 25px;
   text-align: left;
   font-size: 16px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 
 .formRTL{
