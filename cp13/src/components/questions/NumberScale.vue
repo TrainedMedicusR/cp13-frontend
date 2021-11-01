@@ -3,17 +3,10 @@
     <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
 
     </news-frame>
-    <!--    <div class="surveyTitle">-->
-    <!--      <h1>{{ surveyTitle }}</h1>-->
-    <!--    </div>-->
     <div class="container">
-      <!--      <div class="news">-->
-      <!--        <div class="picture">{{ newsPicture }}</div>-->
-      <!--        <div class="newsText">{{ newsText }}</div>-->
-      <!--      </div>-->
-<!--      <div class="requiredSpan" v-if="requireANS">-->
-<!--        <span>*required</span>-->
-<!--      </div>-->
+      <div class="requiredSpan" v-if="requireANS">
+        <span>*required</span>
+      </div>
 
       <div class="questionContents">{{ questionContents }}</div>
       <div v-if="rtl">
@@ -108,7 +101,8 @@ export default {
 
 .container {
   /*border: 1px solid grey;*/
-  width: 800px;
+  /*width: 800px;*/
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
@@ -132,7 +126,8 @@ export default {
 .picture {
   border: 5px solid grey;
   height: 100px;
-  width: 500px;
+  /*width: 500px;*/
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -154,12 +149,12 @@ export default {
   /*border: 1px solid black;*/
   text-align: center;
   font-size: 16px;
-  /*width: 500px;*/
 }
 
 .range {
   margin: 50px;
-  width: 700px;
+  /*width: 700px;*/
+  width: 100%;
   font-size: 12px;
 }
 
@@ -192,34 +187,6 @@ export default {
   color: white;
 }
 
-.previousButton {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #E44E33;
-  border: white;
-  text-align: center;
-
-}
-
-.previousButton:active {
-  /*background: black;*/
-  /*opacity: 0.5;*/
-  box-shadow: 0 3px #666;
-  transform: translateY(2px);
-}
-
-.previousButton img {
-  width: 30px;
-}
-
-#preBtn {
-  margin-right: 200px;
-}
-
-#nextBtn {
-  margin-left: 200px;
-}
 
 /*.rtlButtons{*/
 /*  direction: rtl;*/
@@ -230,6 +197,12 @@ export default {
   font-size: smaller;
   color: #E44E33;
 }
+
+/*@media screen and(max-width: 960px){*/
+/*  .wrapper{*/
+/*    background-color: orange;*/
+/*  }*/
+/*}*/
 
 
 </style>

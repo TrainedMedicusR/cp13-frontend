@@ -53,7 +53,7 @@ export default {
   data(){
     return{
       isExpanded: true,
-      rtl: true
+      rtl: false
     }
   },
 
@@ -82,8 +82,8 @@ export default {
 <style scoped>
 .container {
   /*border: 1px solid grey;*/
-  width: 700px;
-  /*margin: 0 auto;*/
+  /*width: 700px;*/
+  width: 70%;
   padding: 20px;
   text-align: center;
   align-content: center;
@@ -116,8 +116,8 @@ export default {
 }
 .picture{
   border: 2px solid grey;
-  width: 600px;
-  /*margin: 0 auto;*/
+  /*width: 600px;*/
+  width: 60%;
   display: inline-block;
   vertical-align: middle;
 }
