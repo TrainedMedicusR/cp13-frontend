@@ -1,10 +1,10 @@
 var a = 1
 <template>
-  <div>
+  <div class ="wrapper">
+
     <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
 
     </news-frame>
-
     <div class="TableList">
 
       <div v-if="requireANS===true" class="msg" > {{msg + "(*required)"}}</div>
@@ -192,6 +192,18 @@ export default {
 </script>
 
 <style scoped>
+
+.wrapper {
+  text-align: center;
+}
+
+.TableList{
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  align-content: center;
+}
 
 body {
   background-color: #EFF2F5;
