@@ -94,15 +94,17 @@ export default {
 
 <style scoped>
   .next{
-    width: 450px;
+    /*width: 450px;*/
+    width: 100%;
     margin: 0 auto;
   }
   .next button {
     margin-left: 25px;
   }
   .btn-primary{
-    text-align:justify;
-    text-align-last:justify;
-    line-height:0;
+    /*text-align:justify;*/
+    /*text-align-last:justify;*/
+    text-align: center;
+    /*line-height:0;*/
   }
 </style>
