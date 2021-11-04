@@ -97,7 +97,7 @@ export default {
 
   computed:{
     dynamicHeight() {
-      return this.items.length*70+'px';
+      return this.items.length*(window.innerHeight/18)+'px';
     },
     dynamicDirection() {
       if(this.rtl){
@@ -168,6 +168,10 @@ export default {
 </script>
 
 <style scoped>
+
+.container{
+  width: auto;
+}
 
 .question{
   width: 100%;
