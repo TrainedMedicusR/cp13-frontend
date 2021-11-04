@@ -1,10 +1,10 @@
 var a = 1
 <template>
-  <div>
+  <div class ="wrapper">
+
     <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
 
     </news-frame>
-
     <div class="TableList">
 
       <div v-if="requireANS===true" class="msg" > {{msg + "(*required)"}}</div>
@@ -193,40 +193,17 @@ export default {
 
 <style scoped>
 
-@media screen and (min-width: 900px) {
-  article {
-    padding: 1rem 3rem;
-  }
+.wrapper {
+  text-align: center;
 }
 
-/* Nested within another conditional at-rule */
-@supports (display: flex) {
-  @media screen and (min-width: 900px) {
-    article {
-      display: flex;
-    }
-  }
+.TableList{
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  align-content: center;
 }
-
-@media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* iphone5 */}
-@media only screen and (max-device-width :480px){ }
-@media only screen and (min-device-width :481px){ }
-
-/*6*/
-@media (min-device-width : 375px) and (max-device-width : 667px) and (-webkit-min-device-pixel-ratio : 2){ }
-
-/*6+*/
-@media (min-device-width : 414px) and (max-device-width : 736px) and (-webkit-min-device-pixel-ratio : 3){ }
-
-/*meizu*/
-@media only screen and (min-device-width :1080px) and (-webkit-min-device-pixel-ratio : 2.5){ }
-
-/*mate7*/
-@media only screen and (min-device-width :1080px) and (-webkit-min-device-pixel-ratio : 3){ }
-
-/*4 4s*/
-@media only screen and (device-height :480px) and (-webkit-device-pixel-ratio:2){ }
-
 
 body {
   background-color: #EFF2F5;
@@ -236,6 +213,7 @@ body {
   font-family: "Lucida Grande","Lucida Sans Unicode", Tahoma, sans-serif;
   line-height: 1.4;
   padding: 30px;
+
 }
 
 .text {
@@ -282,7 +260,8 @@ table.listTab th{
   padding: 14px 8px;
   font-size: 16px;
   border: 1px solid #ecf0f4;
-  min-width: 40px;
+  min-width: 40%;
+  /*min-width: 40px;*/
   color: #101111;
   overflow: hidden;
   white-space: nowrap;
@@ -297,7 +276,9 @@ table.listTab tbody > tr td{
   border-bottom: 1px solid #ececed;
   vertical-align: middle;
   word-break: break-all;
-  min-width: 50px;
+
+  /*min-width: 50px;*/
+  min-width: 50%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -307,34 +288,37 @@ table.listTab tbody > tr td div input[type=radio]{
   transform: scale(1.5,1.5);
 }
 table.listTab tbody > tr td:first-child{
-  width: 20px;
+/*width: 20px;*/
+  width: 20%
 }
 table.listTab tbody > tr:hover{
-  background-color: #dfeefc;
+background-color: #dfeefc;
 }
 table.listTab tbody > tr.check{
-  background-color: #dfeefc;
+background-color: #dfeefc;
 }
 table.listTab tbody > tr:last-child td{
-  border-bottom: 0px;
+border-bottom: 0px;
 }
 
 table.listTab tbody > tr td input{
-  border:1px solid #248bfc;
-  color: #4e555b;
-  text-align: right;
+border:1px solid #248bfc;
+color: #4e555b;
+text-align: right;
 }
 
 div.TableList{
-  width : 700px;
+  width :100%;
+/*width : 700px;*/
 }
 
 div.list{
-  width : 800px;
+  width :100%;
+/*width : 800px;*/
 }
 
 .msg{
-  text-align: center;
+text-align: center;
 }
 
 
