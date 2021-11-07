@@ -215,6 +215,16 @@ body {
   padding: 40px;
 }
 
+@media all and (orientation :portrait){
+  .wrapper{
+    padding: 5px;
+  }
+  .container{
+    width: 90%;
+    padding: 5px;
+  }
+}
+
 .next{
   margin:0;padding:0;
   text-align:justify;

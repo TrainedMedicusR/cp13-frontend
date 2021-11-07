@@ -77,7 +77,7 @@ export default {
 .container {
   /*border: 1px solid grey;*/
   /*width: 700px;*/
-  width: 70%;
+  width: 90%;
   padding: 20px;
   text-align: center;
   align-content: center;
