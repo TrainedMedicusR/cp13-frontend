@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <p style="text-align:right">
-    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails"></news-frame>
+    <news-frame :rtl="this.rtl" :newsTitle="this.newsTitle" :imgPath="this.imgPath" :description="this.newsDetails"></news-frame>
     </p>
 <!--    style="direction:rtl; unicode-bidi:bidi-override;"-->
     <div class="container">
@@ -77,14 +77,16 @@ export default {
       newsDetails:'',
       question_button:[{title:"share"}, {title:"like"}, {title:"check"}, {title:"skip"}],
       requireANS:false,
-      rtl:true
+      rtl:false
     }
   },
   mounted(){
     this.initPage();
+    this.$forceUpdate()
   },
   methods: {
     initPage() {
+      this.rtl = "true" === tempStorage.getRTL(this.$route.params.id);
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
 
       let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));

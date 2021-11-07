@@ -1,3 +1,5 @@
+import {unique} from "webpack-merge";
+
 export const storage = {
   set(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
@@ -20,6 +22,14 @@ export const tempStorage = {
   remove(key) {
     sessionStorage.removeItem(key);
   },
+  setRTL(uniqueID,bool){
+    let key = uniqueID+"RTL";
+    sessionStorage.setItem(key,bool);
+  },
+  getRTL(uniqueID){
+    return sessionStorage.getItem(uniqueID + "RTL");
+  },
+
   getQuestionJSON(uniqueID) {
     let current = sessionStorage.getItem(uniqueID+"CURRENT");
     return JSON.parse(sessionStorage.getItem(uniqueID+current));
@@ -32,6 +42,25 @@ export const tempStorage = {
     } else {
       return {};
     }
+  },
+  setStartTime(uniqueID, time) {
+    let key = uniqueID+"STARTTIME";
+    sessionStorage.setItem(key,time);
+  },
+  getStartTime(uniqueID) {
+    return sessionStorage.getItem(uniqueID + "STARTTIME");
+  },
+
+  setDuration(uniqueID, duration) {
+    let key = uniqueID+"DURATION";
+    sessionStorage.setItem(key,duration);
+  },
+  getDuration(uniqueID) {
+    return sessionStorage.getItem(uniqueID + "DURATION");
+  },
+
+  clear() {
+    sessionStorage.clear();
   }
 };
 

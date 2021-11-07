@@ -2,7 +2,7 @@
   <div>
     <div class = 'container'>
 
-      <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
+      <news-frame :rtl="rtl" :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
 
       </news-frame>
 
@@ -110,6 +110,7 @@ export default {
 
   methods: {
     initPage() {
+      this.rtl = "true" === tempStorage.getRTL(this.$route.params.id);
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
       let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));
       this.msg = jsonObj.description;

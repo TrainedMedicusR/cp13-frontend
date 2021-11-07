@@ -77,7 +77,6 @@ export default {
     methodToRunOnSelect(payload) {
           this.object = payload;
           alert('Hello ' + payload.name + '!')
-
     }
   }
 }

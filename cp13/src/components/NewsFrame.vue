@@ -8,7 +8,7 @@
     <div class="picture">
       <img :src="imgPath" alt="">
     </div>
-    <div v-if="rtl">
+    <div v-if="this.rtl">
       <div class= "newsTextRTL" dir="rtl">
         {{isExpanded ? description : capitalize(description)}}
         <button>
@@ -34,29 +34,23 @@
   </div>
 </template>
 <script>
+import {tempStorage} from "../utils/storage";
 export default {
   name: "NewsFrame",
-  // data() {
-  //   return {
-  //     newsTitle: "",
-  //     imgPath:"https://storage.googleapis.com/soft3888/123.jpeg",
-  //     description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices eros in cursus turpis. Nibh venenatis cras sed felis eget velit aliquet sagittis id. Interdum posuere lorem ipsum dolor sit amet. Tristique senectus et netus et malesuada fames. Odio ut sem nulla pharetra diam sit amet. Netus et malesuada fames ac turpis egestas. Sit amet facilisis magna etiam. Praesent tristique magna sit amet purus. Viverra justo nec ultrices dui sapien eget mi.",
-  //   }
-  // },
+
   props: {
     imgPath: String,
     newsTitle: String,
     description: String,
-    required: true
+    required: true,
+    rtl: false
   },
 
   data(){
     return{
       isExpanded: true,
-      rtl: false
     }
   },
-
   methods:{
     expandClick(){
       this.isExpanded = !this.isExpanded

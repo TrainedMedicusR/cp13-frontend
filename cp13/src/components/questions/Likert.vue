@@ -2,7 +2,7 @@ var a = 1
 <template>
   <div class ="wrapper">
 
-    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
+    <news-frame :rtl="rtl" :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
 
     </news-frame>
     <div class="TableList">
@@ -90,7 +90,7 @@ export default {
   data () {
     return {
       host:location.hostname,
-      rtl:false,
+      rtl:true,
       response:"",
       responseJSON:{answer:[]},
       newsTitle: '',
@@ -123,6 +123,8 @@ export default {
   },
   methods: {
     initPage() {
+      this.rtl = "true" === tempStorage.getRTL(this.$route.params.id);
+      console.log(this.rtl);
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
 
       let jsonObj = JSON.parse(JSON.stringify(jsonQuestion));

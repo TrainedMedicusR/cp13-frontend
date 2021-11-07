@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <news-frame :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
+    <news-frame :rtl="this.rtl" :newsTitle="newsTitle" :imgPath="imgPath" :description="newsDetails">
 
     </news-frame>
     <div class="container2">
@@ -10,7 +10,7 @@
       </div>
 
       <div class="questionContents">{{ questionContents }}</div>
-      <div v-if="rtl">
+      <div v-if="this.rtl" :key="1">
 <!--        <div class="questionContentsRTL" dir="rtl">{{ questionContents }}</div>-->
         <div class="formRTL" dir="rtl">
           <form action="#" method="get">
@@ -37,7 +37,7 @@
 
 
 
-      <div v-else>
+      <div v-else :key="2">
 <!--      <div class="questionContents">{{ questionContents }}</div>-->
       <div class="form">
         <form action="#" method="get">
@@ -101,9 +101,12 @@ export default {
   },
   mounted() {
     this.loadAnswer();
+    this.$forceUpdate()
   },
   methods:{
     initPage() {
+      this.rtl = "true" === tempStorage.getRTL(this.$route.params.id);
+      console.log("RTL:"+this.rtl);
       let jsonQuestion = tempStorage.getQuestionJSON(this.$route.params.id);
       let jsonObject = JSON.parse(JSON.stringify(jsonQuestion));
       this.newsTitle = jsonObject.newsTitle;
@@ -124,11 +127,11 @@ export default {
       if (this.responseJSON !== "{}") {
         let radioTag = document.getElementById(answerID);
         document.getElementById(answerID).checked = true;
-        if (!this.rtl){
-          document.getElementById("text_choice").value = answerID;
-        }else{
-          document.getElementById("text_choiceRTL").value = answerID;
-        }
+        // if (!this.rtl){
+        //   document.getElementById("text_choice").value = answerID;
+        // }else{
+        //   document.getElementById("text_choiceRTL").value = answerID;
+        // }
       }
       }
 

@@ -1,7 +1,9 @@
 <template>
   <div class="wrapper">
-    <hr>
 
+    <count-down v-if="this.consent" v-on:end_callback="countDownE_cb(1)" :startTime="startTime" :currentTime="currentTime" :endTime="endTime" :tipText="'Time Remain: '" :dayTxt="' Day'" :hourTxt="' Hour'" :minutesTxt="' Mins'" :secondsTxt="' Seconds'"></count-down>
+
+    <hr>
     <div v-if="this.consent" class="progress">
       <div class="progress-bar" role="progressbar" :style="{width:progressWidth}" :aria-valuenow="currentPage" aria-valuemin="0" :aria-valuemax="totalPage">
         {{ progressWidth }}
@@ -58,11 +60,12 @@ import MultipleChoice from "./questions/MultipleChoice";
 import ConsentPage from "./ConsentPage";
 import router from "../router";
 import Contact from "./Contact";
+import CountDown from "./Countdown"
 
 
 export default {
   name: 'SurveyMain',
-  components: {ConsentPage, MultipleChoice, ButtonQuestion, DragAndDrop, Likert, NumberScale, Contact},
+  components: {ConsentPage, MultipleChoice, ButtonQuestion, DragAndDrop, Likert, NumberScale, Contact, CountDown},
   data () {
     return {
       blockTitle:"",
@@ -77,6 +80,10 @@ export default {
       totalPage:"",
       progressWidth:"",
       host:location.hostname,
+      startTime:-1,
+      endTime:-1,
+      currentTime:0,
+      rtl:false
     }
   },
   created(){
@@ -84,6 +91,7 @@ export default {
   },
   methods: {
     initPage() {
+
       if(tempStorage.get(this.$route.params.id) !== null) {
         this.renderQuestion();
         return;
@@ -93,6 +101,7 @@ export default {
         router.push({name:'NotAuthorised'});
         return;
       }
+
       const resJSON = getSurvey(this.$route.params.id).then(response=>{
         if (response.status === 200){
           let identifier = this.$route.params.id + new Date().getTime();
@@ -101,12 +110,23 @@ export default {
           storage.set(this.$route.params.id,hashString);
           const jsonString = response.data;
           this.surveyID =jsonString.id;
+          this.rtl = jsonString.rtl;
           this.surveyTitle = jsonString.name;
           this.consentText = jsonString.consentText;
           this.consent = !eval(jsonString.consent_required);
           //Need Optimisation
           tempStorage.set(this.$route.params.id,jsonString.block)
           tempStorage.set(this.$route.params.id+"sid",this.surveyID)
+          tempStorage.setRTL(this.$route.params.id,this.rtl);
+          if (tempStorage.getStartTime(this.$route.params.id) === null) {
+            let startTime = Date.parse(new Date());
+            let identifier = this.$route.params.id;
+            tempStorage.setStartTime(identifier,startTime);
+            if (parseInt(jsonString.timelimitMinutes) > 0) {
+              tempStorage.setDuration(identifier,jsonString.timelimitMinutes);
+            }
+          }
+
           let block = jsonString.block[0]
           this.blockTitle = block.title;
           let questions = block.questions;
@@ -141,6 +161,25 @@ export default {
       this.progressWidth = Math.floor(current / total * 100) + "%";
       this.QType = questionDetails.type;
       this.QOrder = questionDetails.order;
+      // if (this.consent && this.startTime == -1){
+        let duration = tempStorage.getDuration(this.$route.params.id);
+        if (duration == null) {
+          duration = 0;
+        }
+        this.startTime = parseInt(tempStorage.getStartTime(identifier));
+        this.endTime = Date.parse(new Date(new Date(this.startTime).getTime()+parseInt(duration)*60000))
+        this.currentTime = Date.parse(new Date());
+      // }
+
+    },
+    countDownE_cb: function (x) {
+      if (tempStorage.getDuration(this.$route.params.id)===null ||tempStorage.getDuration(this.$route.params.id) <= 0){
+        return;
+      }
+      console.log("倒计时结束");
+      tempStorage.clear();
+      alert("Time is up!");
+      router.push({name:'Complete'});
     }
   }
 }

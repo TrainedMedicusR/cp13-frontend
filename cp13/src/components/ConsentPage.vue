@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import {tempStorage} from "../utils/storage";
 
 export default {
   name: "ConsentPage",
@@ -52,6 +53,9 @@ export default {
     },
 
     agreeConsent(){
+      let startTime = Date.parse(new Date());
+      let identifier = this.$route.params.id;
+      tempStorage.setStartTime(identifier,startTime);
       this.$emit('consentValue',true);
     },
     disagreeConsent() {

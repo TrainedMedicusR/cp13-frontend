@@ -56,7 +56,6 @@ export default {
       } else {
         this.submit("",this.response).then(response=>{
           if (response.status === 200){
-            alert("Thank you for your participation!");
             router.push({name:'Complete'});
           } else {
             alert("Network Error")
