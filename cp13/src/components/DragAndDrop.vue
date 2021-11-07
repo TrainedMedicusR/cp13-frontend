@@ -19,7 +19,7 @@
         <hr>
         <h6>{{panel.info}}</h6>
         <hr>
-        <div v-for='item in panelListItem(panel.id)' :key='item.title' class='drag-el' draggable="true"
+        <div v-for='item in panelListItem(panel.id)' :key='item.id' class='drag-el' draggable="true"
              @dragstart = 'startDrag($event,item)'
              @mousehover="hover=true"
              @mouseleave="hover=false"
@@ -97,7 +97,7 @@ export default {
 
   computed:{
     dynamicHeight() {
-      return this.items.length*(window.innerHeight/18)+'px';
+      return this.items.length*((window.innerHeight/17)+5)+50+'px';
     },
     dynamicDirection() {
       if(this.rtl){
@@ -170,7 +170,11 @@ export default {
 <style scoped>
 
 .container{
-  width: auto;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  align-content: center;
 }
 
 .question{
